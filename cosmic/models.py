@@ -18,3 +18,26 @@ class supplier_profile(models.Model):
     phone_number = models.CharField(blank=True, null=True)  # This field type is a guess.
     email = models.TextField(blank=True, null=True)
     comments = models.TextField(blank=True, null=True)
+
+class cosmic_order(models.Model):
+    order_no = models.TextField(primary_key=True)
+    #notify_party2 = models.ForeignKey('customer_profile', related_name='orders_related_to_bank', on_delete=models.CASCADE, db_column='notify_party2',blank=True, null=True)
+    date = models.DateField(blank=False)
+    payment_type = models.TextField(blank=True, null=True)
+    measurement_type = models.TextField(blank=True, null=True)
+    transportation = models.TextField(blank=True, null=True)
+    shipment_type = models.TextField(blank=True, null=True)
+    approved_by = models.TextField(blank=True, null=True)
+    PR_before_vat = models.FloatField(blank=True, null=True)
+    status = models.TextField(blank=True, null=True, default="Pending")
+    
+class cosmic_purchase(models.Model):
+    purchase_no = models.TextField(primary_key=True)
+    date = models.DateField(blank=True, null=True)
+    measurement_type = models.TextField(blank=True, null=True)
+    transportation = models.TextField(blank=True, null=True)
+    shipment_type = models.TextField(blank=True, null=True)
+    payment_type = models.TextField(blank=True, null=True)
+    approved_by = models.TextField(blank=True, null=True)
+    before_vat = models.FloatField(blank=True, null=True)
+    status = models.TextField(blank=True, null=True, default="Pending")
