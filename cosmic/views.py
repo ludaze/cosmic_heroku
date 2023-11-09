@@ -18,3 +18,17 @@ def create_customer(request):
         
         form = CustomerForm()
     return render(request, 'create_customer.html', {'form': form })
+
+def create_supplier(request):
+    
+    if request.method == 'POST':
+        form = SupplierForm(request.POST)
+       
+        if form.is_valid():
+            form.save()
+            return redirect('create_supplier')
+    
+    else:
+        
+        form = SupplierForm()
+    return render(request, 'create_supplier.html', {'form': form })
