@@ -41,3 +41,18 @@ class cosmic_purchase(models.Model):
     approved_by = models.TextField(blank=True, null=True)
     before_vat = models.FloatField(blank=True, null=True)
     status = models.TextField(blank=True, null=True, default="Pending")
+
+class shipping_info(models.Model):
+    agreement = models.TextField(blank=True, null=True)
+    PR_type = models.TextField(blank=True, null=True)
+    unique_no = models.AutoField(primary_key=True)
+    invoice_date = models.DateField(blank=True, null=True)
+    port_of_loading = models.TextField(blank=False, null=True)
+    port_of_discharge = models.TextField(blank=True, null=True)
+    final_destination = models.TextField(blank=True, null=True)
+    container_no = models.IntegerField(blank=True, null=True)
+    truck_waybill_no = models.TextField(blank=True, null=True)
+    country_of_origin = models.TextField(blank=False, null=True)
+    customer_no = models.TextField(blank=True, null=True)
+    freight_amount = models.FloatField(blank=True, null=True)
+    
