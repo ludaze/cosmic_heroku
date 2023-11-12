@@ -32,3 +32,24 @@ def create_supplier(request):
         
         form = SupplierForm()
     return render(request, 'create_supplier.html', {'form': form })
+
+def create_order(request):
+    if request.method == 'POST':
+        form = CosmicOrderForm(request.POST)
+        print(form.data)
+        if form.errors:
+            print(form.errors) 
+        if form.is_valid():
+            print(form.data,"val")
+            form.save()
+            return redirect('create_order')  # Redirect to the list of purchases or any other desired view
+        else:
+            print(form.data,"nval")
+            errors = dict(form.errors.items())
+            return JsonResponse({'form_errors': errors}, status=400)
+        
+    form = CosmicOrderForm()
+    formset = formset_factory(OrderItemForm, extra=1)
+    formset = formset(prefix="items")
+
+    return render(request, 'create_order.html', {'form': form, 'formset': formset, 'customers': customers,'suppliers':suppliers})
