@@ -1,0 +1,280 @@
+{% extends "trial_page.html" %}
+{% load widget_tweaks %}
+
+
+{% block content %}
+{% if form_errors %}
+  <ul>
+    {% for field in form %}
+      {% for error in field.errors %}
+        <li>{{ error }}</li>
+      {% endfor %}
+    {% endfor %}
+  </ul>
+{% endif %}
+{% if error_message %}
+    <div class="alert alert-danger">
+      {{ error_message }}
+    </div>
+    {% endif %}
+    {{ form.non_field_errors }}
+    
+    <div style="background-color: aqua;">
+      {{ form_errors }}
+    </div>
+
+    <div class="container d-flex justify-content-center align-items-center" style="font-size: small; ">
+        <div class="card" style="min-width: 1000px;">
+            <div class="card-body form-floating">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div>
+                        <span class="col-sm-3"></span>
+                        <strong><h1 style="font-weight: 700;">Create Order</h1></strong>
+                    </div>
+                    <div id="error-container">
+                        <!-- Errors will be displayed here -->
+                    </div>
+                    
+                    {% if form.errors %}
+                    <ul>
+                      {% for field in form %}
+                        {% for error in field.errors %}
+                          <li>{{ error }}</li>
+                        {% endfor %}
+                      {% endfor %}
+                    </ul>
+                  {% endif %}
+        
+                    <br>
+        
+        
+                    <form method="post" action="{% url 'create_order' %}" id="form1">
+                        {% csrf_token %}
+                        <div class="row">
+                        <div class="col-sm-5">
+                            <span class="form-group">
+                                <label class="control-label col-sm-8"> Order Number <span style="color: rgb(187, 17, 17);">*</span></label>
+                                <div class="col-sm-11">
+        
+                                    <input type="text" class="form-control" name="order_no">
+                                </div>
+                            </span>
+                            <span class="form-group">
+                                <label class="control-label col-sm-8"> Proforma Ref. No <span style="color: rgb(187, 17, 17);">*</span></label>
+                                <div class="col-sm-11">
+        
+                                    <input type="text" class="form-control" name="ref_no">
+                                </div>
+        
+                            </span>
+        
+                         
+        
+                        </div>
+        
+                       
+                            <div class="col-sm-5">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-10">Order Date <span style="color: rgb(187, 17, 17);padding-top: 0;">*</span></label>
+                                    <div class="col-sm-11">
+                                        <input type="date" name="date" class="form-control datetimepicker-input"
+                                            data-target="#datepicker1" />
+                                    </div>
+                                </div>
+                                
+                                 
+                            
+                            </div>
+                            
+                            
+                       </div>   
+                        
+                        <div class="col-sm-12" style="display: block;">
+        
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <label for="">Measurement Type</label>
+                                    <div class="radio-group">
+                                        <div>
+                                            <input type="radio" name="measurement_type" value="tons" id="tons">
+                                            <label for="tons">Metric Tons</label>
+                                        </div>
+                                        <div>
+                                            <input type="radio" name="measurement_type" value="kgs" id="kgs">
+                                            <label for="kgs">KGs</label>
+                                        </div>
+                                        <div>
+                                            <input type="radio" name="measurement_type" value="meters" id="meters">
+                                            <label for="meters">Meters</label>
+                                        </div>
+                                        <div>
+                                            <input type="radio" name="measurement_type" value="meters" id="ltrs">
+                                            <label for="ltrs">Ltr</label>
+                                        </div>
+                                        <div>
+                                            <input type="radio" name="measurement_type" value="pieces" id="pieces">
+                                            <label for="pieces">PCs</label>
+                                        </div>
+                                        <div>
+                                            <input type="radio" name="measurement_type" value="spools" id="spools">
+                                            <label for="spools">Spools</label>
+                                        </div>
+                                        <div>
+                                            <input type="radio" name="measurement_type" value="sets" id="sets">
+                                            <label for="sets">Sets</label>
+                                        </div>
+                                        <div>
+                                            <input type="radio" name="measurement_type" value="other" id="other">
+                                            <label for="other">Other</label>
+                                        </div>
+                        
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label for="">Payment Terms</label>
+                                    <div class="radio-group">
+                                        <div>
+                                            <input type="radio" name="payment_type" value="Irrevocable LC at Sight" id="lc-sight">
+                                            <label for="lc-sight">Irrevocable LC at Sight</label>
+                                        </div>
+                                        <div>
+                                            <input type="radio" name="payment_type" value="Cash Against Doc" id="cash-doc">
+                                            <label for="cash-doc">Cash Against Doc</label>
+                                        </div>
+                                        <div>
+                                            <input type="radio" name="payment_type" value="Telegraphic Transfer" id="telegraphic-transfer">
+                                            <label for="telegraphic-transfer">Telegraphic Transfer</label>
+                                        </div>
+                                        <div>
+                                            <input type="radio" name="payment_type" value="Confirmed LC" id="confirmed-lc">
+                                            <label for="confirmed-lc">Confirmed LC</label>
+                                        </div>
+                                        <div>
+                                            <input type="radio" name="payment_type" value="Deferred LC" id="deferred-lc">
+                                            <label for="deferred-lc">Deferred LC</label>
+                                        </div>
+                                        <div>
+                                            <input type="radio" name="payment_type" value="Franco Valuta" id="franco-valuta">
+                                            <label for="franco-valuta">Franco Valuta</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <label for="">Mode of Transport</label>
+                                    <div class="radio-group">
+                                        <div>
+                                            <input type="radio" name="transportation" value="Sea" id="sea">
+                                            <label for="lc-sight">Sea</label>
+                                        </div>
+                                        <div>
+                                            <input type="radio" name="transportation" value="Air" id="air">
+                                            <label for="cash-doc">Air</label>
+                                        </div>
+                                        <div>
+                                            <input type="radio" name="transportation" value="Truck" id="truck">
+                                            <label for="telegraphic-transfer">Truck</label>
+                                        </div>
+                                        <div>
+                                            <input type="radio" name="transportation" value="Train" id="train">
+                                            <label for="telegraphic-transfer">Train</label>
+                                        </div>
+                        
+                                    </div>
+                                </div>
+                                
+                            </div>
+                           
+                            
+                            
+                        </div>
+                        <div class="col-sm-12" style="display: flex;">
+                            
+                            <div class="col-sm-3">
+                                <label for="">Shipment Type</label>
+                                <div class="radio-group">
+                                    <div>
+                                        <input type="radio" name="shipment_type" value="FOB" id="fob">
+                                        <label for="fob">FOB</label>
+                                    </div>
+                                    <div>
+                                        <input type="radio" name="shipment_type" value="CFR" id="cfr">
+                                        <label for="cfr">CFR</label>
+                                    </div>
+                                    <div>
+                                        <input type="radio" name="shipment_type" value="FCA" id="fca">
+                                        <label for="fca">FCA</label>
+                                    </div>
+                                    <div>
+                                        <input type="radio" name="shipment_type" value="CIF" id="cif">
+                                        <label for="cif">CIF</label>
+                                    </div>
+                                    <div>
+                                        <input type="radio" name="shipment_type" value="air_freight" id="air_freight">
+                                        <label for="air_freight">Air Freight</label>
+                                    </div>
+                        
+                                </div>
+                            </div>
+                            <div class="col-sm-7">
+                                <div id="input_cfr" style="display: none" class="col-sm-5">
+                                    <label for="fob_label">Freight Price </label>
+                                    <input type="text"  class="form-control col-sm-5" name="freight1">
+                                </div>
+                                <div id="input_fca" style="display: none;" class="col-sm-5">
+                                    <div>
+                                        <label for="fob_label">Freight Price </label>
+                                        <input type="text"  class="form-control col-sm-5" name="freight2">
+                                    </div>
+                                    <div  style=" margin-top: 20px">
+                                        <label for="fob_label" style=" margin-top: 20px">Djbouti Costs </label>
+                                        <input type="text"  class="form-control col-sm-5" name="djbouti_costs">
+                                    </div>
+                                </div>
+                                <div id="input_cif" style="display: none;" class="col-sm-5">
+                                    <div>
+                                        <label for="fob_label">Freight Price </label>
+                                        <input type="text"  class="form-control col-sm-5" name="freight2">
+                                    </div>
+                                    <div  style=" margin-top: 20px">
+                                        <label for="fob_label" style=" margin-top: 20px">Insurance Costs </label>
+                                        <input type="text"  class="form-control col-sm-5" name="djbouti_costs">
+                                    </div>
+                                </div>
+                            </div>
+                           
+                        </div>
+        
+                    </form>
+                </div>
+            </div>
+        </div>
+ </div></div>  
+
+<div class="container" style="font-size: medium;margin-top: 0px;">
+    
+    
+
+    <div class="row">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-5">
+            
+            <button id="submits" class="col-sm-7 btn-lg " 
+            style="background-image:url('../static/back1.PNG');color: aliceblue; margin-left: 100px;font-size: 24px; height: 62px; font-weight: bolder;">
+                Submit
+            </button>
+            <span style="margin: 10px;"></span>
+            <!-- <a href="" class="btn btn-default" style="font-size: large; margin-top: 5px;">Cancel</a> -->
+        </div>
+    </div>
+</div>
+</div></div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        //const radioButtons = document.querySelectorAll('input[type="radio"]');
+    });
+        
+</script>
+
+{% endblock %}
