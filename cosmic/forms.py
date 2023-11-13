@@ -42,7 +42,7 @@ class CosmicOrderForm(forms.ModelForm):
     class Meta:
    
         model = cosmic_order
-        fields = ['order_no','date','payment_type','measurement_type','approved_by','PR_before_vat','transportation','shipment_type']
+        fields = ['customer_name','total_price','order_no','date','payment_type','measurement_type','approved_by','PR_before_vat','transportation','shipment_type']
 
 class CosmicPurchaseForm(forms.ModelForm):
     
@@ -51,7 +51,7 @@ class CosmicPurchaseForm(forms.ModelForm):
     class Meta:
    
         model = cosmic_purchase
-        fields = ['purchase_no','date','payment_type','measurement_type','before_vat','transportation','shipment_type']
+        fields = ['supplier_name','total_price','purchase_no','date','payment_type','measurement_type','before_vat','transportation','shipment_type']
 
 class ShippingForm(forms.ModelForm):
     

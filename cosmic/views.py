@@ -39,8 +39,12 @@ def create_order(request):
         print(form.data)
         if form.errors:
             print(form.errors) 
+
         if form.is_valid():
             print(form.data,"val")
+            customers_name = request.POST.get('customer_name') 
+            customer = customer_profile.objects.get(customer_name=customers_name)
+            form.instance.customer_name = customer
             form.save()
             return redirect('create_order')  # Redirect to the list of purchases or any other desired view
         else:
