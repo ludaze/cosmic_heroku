@@ -19,6 +19,27 @@ def create_customer(request):
         form = CustomerForm()
     return render(request, 'create_customer.html', {'form': form })
 
+def display_customer(request):
+    if request.method == 'GET':
+        customers = cosmic_customer_profile.objects.all()
+        context = {
+                    'my_customer': customers,
+                }
+          
+        return render(request, 'display_customer.html', context)
+
+def display_customer_profile(request):
+    if request.method == 'GET':
+        name = request.GET['customer_name']
+        
+        customers = customer_profile.objects.get(customer_name= name)
+         
+        context = {
+                        
+                        'my_customer': customers,
+                    }
+    return render(request, 'customer_profile.html', context)       
+
 def create_supplier(request):
     
     if request.method == 'POST':
