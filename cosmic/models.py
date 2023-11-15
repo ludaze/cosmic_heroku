@@ -32,6 +32,7 @@ class cosmic_order(models.Model):
     PR_before_vat = models.FloatField(blank=True, null=True)
     total_price = models.FloatField(blank=True, null=True)
     status = models.TextField(blank=True, null=True, default="Pending")
+    ref_no = models.TextField(blank=False, null=True)
     
 class cosmic_purchase(models.Model):
     supplier_name = models.ForeignKey('supplier_profile', on_delete=models.CASCADE, db_column='supplier_name',blank=True, null=True)
@@ -60,3 +61,13 @@ class shipping_info(models.Model):
     customer_no = models.TextField(blank=True, null=True)
     freight_amount = models.FloatField(blank=True, null=True)
     
+class order_item(models.Model):
+    order_no = models.ForeignKey('cosmic_order', on_delete=models.CASCADE, db_column='order_no',blank=True, null=True)
+    id_numeric = models.AutoField(primary_key=True)
+    hs_code = models.TextField(blank=True, null=True)
+    item_name = models.TextField(blank=True, null=True)
+    price = models.FloatField(blank=True, null=True)
+    before_vat = models.FloatField(blank=True, null=True)
+    total_price = models.FloatField(blank=True, null=True)
+    quantity =  models.FloatField(blank=True, null=True)
+    measurement = models.TextField(blank=True, null=True)

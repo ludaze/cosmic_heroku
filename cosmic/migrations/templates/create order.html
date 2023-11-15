@@ -68,7 +68,18 @@
                                 </div>
         
                             </span>
+                            <span class="form-group">
+                                <label class="control-label col-sm-8">Buyer <span style="color: rgb(187, 17, 17);">*</span></label>
+                                <div class="col-sm-11">
+                                    <input type="text" list="the_orders2" class="form-control" name="customer_name">
+                                    <datalist id="the_orders2">
+                                        {% for customer in customers %}
+                                        <option value="{{customer.customer_name}}"></option>
+                                        {% endfor %}
+                                    </datalist>
+                                </div>
         
+                            </span>
                          
         
                         </div>
