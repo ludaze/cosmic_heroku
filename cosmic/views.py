@@ -1,5 +1,13 @@
 from django.shortcuts import render
-
+from django.shortcuts import render, redirect,get_object_or_404
+from django.conf import settings
+from .forms import *
+from .models import *
+from django.forms import formset_factory
+from django.db.models import Sum
+from django.http import JsonResponse,HttpResponse
+from django.template.loader import get_template
+import os
 # Create your views here.
 def create_customer(request):
     
@@ -94,22 +102,45 @@ def display_order(request):
 def create_order_items(request):
     
     if request.method == 'POST':
-        form = OrderItemForm(request.POST)
-        print(form.data)
-        if form.errors:
-            print(form.errors) 
-
-        if form.is_valid():
-            print(form.data,"val")
-            order_no = request.POST.get('order_no') 
-            order_no= = cosmic_cosmic_order.objects.get(order_no=order_no)
-            form.instance.order_no = order_no
-            form.save()
-            return redirect('create_order')  # Redirect to the list of purchases or any other desired view
-        else:
-            print(form.data,"nval")
-            errors = dict(form.errors.items())
-            return JsonResponse({'form_errors': errors}, status=400)
+        formset = formset_factory(OrderItemForm, extra=1, min_num=1)
+        
+        formset = formset(request.POST or None,prefix="items")
+        #print(formset.data,"r")
+      
+        if formset.errors:
+            print(formset.errors)   
+        
+        # Check if 'PR_no' field is empty in each form within the formset
+        for form in formset:
+            print(form,"form")
+        non_empty_forms = [form for form in formset if form.cleaned_data.get('item_name')]
+       
+        if non_empty_forms:
+            print("yes")
+            if formset.is_valid():
+                final_quantity = 0.0
+                pr_no = request.POST.get('order_no')
+                print(pr_no,"pr")
+                pr = cosmic_order.objects.get(order_no = pr_no)
+                for form in non_empty_forms:
+                    form.instance.remaining = form.cleaned_data['quantity']
+                    form.instance.order_no = pr
+                    final_quantity += form.cleaned_data['quantity']
+                    
+                    form.save()
+                
+                pr.total_quantity = final_quantity
+                pr.remaining = final_quantity
+                pr.save()
+                #message.success("successful!")
+            else:
+                print(formset.data,"nval")
+                errors = dict(formset.errors.items())
+                return JsonResponse({'form_errors': errors}, status=400)
+        
+            pr_form = CosmicOrderForm(prefix="orders")
+            formset = formset_factory(OrderItemForm, extra=1)
+            formset = formset(prefix="items")
 
             context = {
                 'pr_form': pr_form,
@@ -119,9 +150,11 @@ def create_order_items(request):
             return render(request, 'create_order.html', context)
     else:
        
-        form = OrderItemForm()
+        formset = formset_factory(OrderItemForm, extra=1)
+        formset = formset(prefix="items")
 
     context = {
         'formset': formset,
     }
     return render(request, 'create_order.html', context)
+
