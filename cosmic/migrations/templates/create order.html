@@ -334,7 +334,57 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         //const radioButtons = document.querySelectorAll('input[type="radio"]');
-    });
+        const submitButton = document.querySelector('#submits');
+        const addMoreBtn = document.getElementById('add-more');
+        
+        const priceFields = document.querySelectorAll('.price');
+        const totalPriceField = $('#total-price');
+        const totalVatField = $('#total-vat');
+        
+        const quantityFields = $('.quantity');
+
+        addMoreBtn.addEventListener('click', add_new_form);
+        function calculateTotalPrice() {
+        var total = 0
+        var total_vat = 0
+        var originalTotal = 0;
+        var originalVat = 0;
+
+        const formsets = $('.item-list');
+        const total_price_fields = document.querySelectorAll('.total_price');
+        const total_vat_fields = document.querySelectorAll('.before_vat');
+        //const discountApplied = discount_checkbox.checked;
+        
+        $('.item-list').each(function() {
+            
+        
+            // Within each formset, select the 'total_price' fields
+            const totalFields = $(this).find('.total_price');
+            const vatFields = $(this).find('.before_vat');
+            totalFields.each(function() {
+            const price = parseFloat($(this).val()) || 0;
+         
+            total += price;
+            originalTotal += price; 
+            });
+            vatFields.each(function() {
+            const vat_price = parseFloat($(this).val()) || 0;
+            total_vat += vat_price;
+            originalVat += vat_price;
+          
+            });
+            
+            console.log(total)
+           
+            univ_total = total;
+            univ_vat = total_vat;
+            totalPriceField.val(total.toFixed(2));  // Update the 'value' of the field
+            totalPriceField.text('Total Price: $' + total.toFixed(2)); 
+            totalVatField.val(total_vat.toFixed(2));  // Update the 'value' of the field
+            totalVatField.text('Total Price: $' + total_vat.toFixed(2));  // Update the displayed text
+        });
+    calculateTotalPrice();
+    }});
         
 </script>
 
