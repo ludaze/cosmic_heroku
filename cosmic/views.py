@@ -78,3 +78,16 @@ def create_order(request):
     formset = formset(prefix="items")
 
     return render(request, 'create_order.html', {'form': form, 'formset': formset, 'customers': customers,'suppliers':suppliers})
+
+def display_order(request):
+    if request.method == 'GET':
+        orders = cosmic_order.objects.all()
+        orders = orders.order_by('order_no')
+
+        orders_data = [orders]
+        
+
+    context = {
+        'my_order': orders_data,
+    }
+    return render(request, 'display_order.html', context)
