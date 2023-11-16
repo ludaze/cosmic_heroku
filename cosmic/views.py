@@ -74,8 +74,7 @@ def create_order(request):
             return JsonResponse({'form_errors': errors}, status=400)
         
     form = CosmicOrderForm()
-    formset = formset_factory(OrderItemForm, extra=1)
-    formset = formset(prefix="items")
+    formset = OrderItemForm()
 
     return render(request, 'create_order.html', {'form': form, 'formset': formset, 'customers': customers,'suppliers':suppliers})
 
@@ -91,3 +90,38 @@ def display_order(request):
         'my_order': orders_data,
     }
     return render(request, 'display_order.html', context)
+
+def create_order_items(request):
+    
+    if request.method == 'POST':
+        form = OrderItemForm(request.POST)
+        print(form.data)
+        if form.errors:
+            print(form.errors) 
+
+        if form.is_valid():
+            print(form.data,"val")
+            order_no = request.POST.get('order_no') 
+            order_no= = cosmic_cosmic_order.objects.get(order_no=order_no)
+            form.instance.order_no = order_no
+            form.save()
+            return redirect('create_order')  # Redirect to the list of purchases or any other desired view
+        else:
+            print(form.data,"nval")
+            errors = dict(form.errors.items())
+            return JsonResponse({'form_errors': errors}, status=400)
+
+            context = {
+                'pr_form': pr_form,
+                'formset': formset,
+                # 'message':success_message,
+            }
+            return render(request, 'create_order.html', context)
+    else:
+       
+        form = OrderItemForm()
+
+    context = {
+        'formset': formset,
+    }
+    return render(request, 'create_order.html', context)
