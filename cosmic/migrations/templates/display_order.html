@@ -28,6 +28,7 @@
                     <tr>
                       <th>Order Number</th>
                       <th>Date</th>
+                      <th>Items</th>
                       <th>Total Price</th>
                       <th>Quantity</th>
                       <th>Customer Name</th>
@@ -37,6 +38,12 @@
                     <tr>
                       <td><a href="#" class="order-link" data-order-id="{{ order.order_no }}">{{ order.order_no }}</a></td>
                       <td>{{ order.date }}</td>
+                      <td>
+                        {% for item in order.order_items.all %}
+                            {{ item.item_name }}
+                            {% if not forloop.last %}<br>{% endif %}
+                        {% endfor %}
+                    </td>
                       <td>{{ order.PR_before_vat }}</td>
                       <td>{{ order.total_quantity }}</td>
                       <td>{{ order.customer_name.customer_name }}</td>

@@ -94,8 +94,18 @@
                                     </div>
                                 </div>
                                 
-                                 
-                            
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-8">Shipper<span style="color: rgb(187, 17, 17);">*</span></label>
+                                <div class="col-sm-11">
+                                    <input type="text" list="the_orders4" class="form-control" name="supplier_name">
+                                <datalist id="the_orders4">
+                                    {% for supplier in suppliers %}
+                                    <option value="{{supplier.supplier_name}}"></option>
+                                    {% endfor %}
+                                </datalist>
+                                </div>
+        
                             </div>
                             
                             
