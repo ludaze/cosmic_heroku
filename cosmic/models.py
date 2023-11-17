@@ -33,6 +33,10 @@ class cosmic_order(models.Model):
     total_price = models.FloatField(blank=True, null=True)
     status = models.TextField(blank=True, null=True, default="Pending")
     ref_no = models.TextField(blank=False, null=True)
+    total_quantity = models.FloatField(blank=True, null=True)
+    remaining =  models.FloatField(blank=True, null=True)
+    supplier_name = models.ForeignKey('supplier_profile', related_name='orders_related_to_supplier',on_delete=models.CASCADE, blank=False, null=True,db_column='supplier_name')
+    
     
 class cosmic_purchase(models.Model):
     supplier_name = models.ForeignKey('supplier_profile', on_delete=models.CASCADE, db_column='supplier_name',blank=True, null=True)
