@@ -344,16 +344,25 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         //const radioButtons = document.querySelectorAll('input[type="radio"]');
+        const radioButtons = document.querySelectorAll('.measurement_type');
+        const submitsButton = document.querySelector('#submitss');
+        const radioButtons2 = document.querySelectorAll('.payment_type');
+        const totalNewForms = document.getElementById('id_items-TOTAL_FORMS')
         const submitButton = document.querySelector('#submits');
         const addMoreBtn = document.getElementById('add-more');
-        
         const priceFields = document.querySelectorAll('.price');
         const totalPriceField = $('#total-price');
         const totalVatField = $('#total-vat');
-        
         const quantityFields = $('.quantity');
 
         addMoreBtn.addEventListener('click', add_new_form);
+        submitsButton.addEventListener('click', function (event) {
+            event.preventDefault();
+            calculateTotalPrice();
+        });
+
+        var univ_total = 0
+        var univ_vat = 0
         function calculateTotalPrice() {
         var total = 0
         var total_vat = 0
