@@ -158,3 +158,23 @@ def create_order_items(request):
     }
     return render(request, 'create_order.html', context)
 
+def display_single_order(request):
+    if request.method == 'GET':
+        pr_no = request.GET['order_no']
+        orders = cosmic_order.objects.get(order_no=pr_no)
+        pr_items = order_item.objects.all()
+        pr_items = pr_items.filter(order_no=pr_no)
+            
+        
+        if pr_items.exists():
+            print(pr_items,"yes")
+            context = {
+                        'pr_items': pr_items,
+                        'my_order': orders,
+                    }
+            return render(request, 'display_single_order.html', context)
+        context = {
+                        
+                        'my_order': orders,
+                    }
+    return render(request, 'display_single_order.html', context)
