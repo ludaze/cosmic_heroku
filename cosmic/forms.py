@@ -42,7 +42,7 @@ class CosmicOrderForm(forms.ModelForm):
     class Meta:
    
         model = cosmic_order
-        fields = ['customer_name','total_price','order_no','date','payment_type','measurement_type','approved_by','PR_before_vat','transportation','shipment_type','total_quantity','supplier_name']
+        fields = ['customer_name','order_no','date','payment_type','measurement_type','approved_by','PR_before_vat','transportation','shipment_type','total_quantity','supplier_name']
 
 class OrderItemForm(forms.ModelForm):
    

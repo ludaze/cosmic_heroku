@@ -91,8 +91,22 @@ def display_order(request):
         orders = cosmic_order.objects.all()
         orders = orders.order_by('order_no')
 
-        orders_data = [orders]
-        
+        orders_data = []
+        for order in orders:
+            # Fetch all order items related to each cosmic order
+            order_items = order_item.objects.filter(order_no=order.order_no)
+
+            # Create a dictionary containing order details and items
+            order_data = {
+                'order_no': order.order_no,
+                'date': order.date,  # Assuming 'date' is a field in CosmicOrder
+                'order_items': order_items,  # Assuming a related name 'order_items' on CosmicOrder pointing to OrderItem
+                'PR_before_vat': order.PR_before_vat,  # Assuming 'PR_before_vat' is a field in CosmicOrder
+                'total_quantity': order.total_quantity,  # Assuming 'total_quantity' is a field in CosmicOrder
+                'customer_name': order.customer_name,  # Assuming 'customer_name' is a field in CosmicOrder
+                'status': order.status,  # Assuming 'status' is a field in CosmicOrder
+            }
+            orders_data.append(order_data)
 
     context = {
         'my_order': orders_data,

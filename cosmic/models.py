@@ -30,7 +30,6 @@ class cosmic_order(models.Model):
     shipment_type = models.TextField(blank=True, null=True)
     approved_by = models.TextField(blank=True, null=True)
     PR_before_vat = models.FloatField(blank=True, null=True)
-    total_price = models.FloatField(blank=True, null=True)
     status = models.TextField(blank=True, null=True, default="Pending")
     ref_no = models.TextField(blank=False, null=True)
     total_quantity = models.FloatField(blank=True, null=True)
