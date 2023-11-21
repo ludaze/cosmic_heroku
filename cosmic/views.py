@@ -228,3 +228,47 @@ def create_shipping(request):
     # Render the form with the supplier choices
     customers = cosmic_customer_profile.objects.all()
     return render(request, 'shipping_details.html', {'form': form, 'formset': formset, 'customers': customers})
+
+def order_approval(request):
+    # Your custom logic here (e.g., fetching data)
+    if not is_admin(request.user):
+        # User is not authenticated to access this view
+        messages.error(request, "You are not authorized to access this page.")
+        return redirect('login')
+
+    pending_orders = cosmic_order.objects.filter(status='Pending')
+    # Handle form submission
+    
+    if request.method == 'POST':
+        form = approvalForm(request.POST)
+        if form.errors:
+            print(form.errors)
+        if form.is_valid():
+            action = form.cleaned_data['action']
+            approval_name = form.cleaned_data['approval']
+            
+            if action == 'approve':
+                for pr_no in form.cleaned_data['selected_orders']:
+                    stats = request.POST.get(f"{pr_no}_status")
+                    purchase_order = cosmic_order.objects.get(order_no=pr_no.order_no)
+                    purchase_order.status = 'approved'
+                    purchase_order.approved_by = approval_name
+                    purchase_order.save()
+            elif action == 'reject':
+                for pr_no in form.cleaned_data['selected_orders']:
+                    purchase_order = cosmic_order.objects.get(order_no=pr_no.order_no)
+                    purchase_order.status = 'rejected'
+                    purchase_order.approved_by = approval_name
+                    purchase_order.save()
+            return redirect('order_approval')
+
+    else:
+        form = approvalForm()
+
+    context = {
+        'pending_orders': pending_orders,
+        'form': form,
+    }
+
+   
+    return render(request, 'admin/order_approval.html', context)

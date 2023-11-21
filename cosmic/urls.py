@@ -14,5 +14,6 @@ urlpatterns = [
     path('display_supplier_profile', views.display_supplier_profile, name='display_supplier_profile'),
     path('create_order', views.create_order, name='create_order'),
     path('create_shipping', views.create_shipping, name='create_shipping'),
+    path('order_approval', views.order_approval, name='order_approval'),
     
 ]
