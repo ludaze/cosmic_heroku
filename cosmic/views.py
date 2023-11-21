@@ -192,3 +192,39 @@ def display_single_order(request):
                         'my_order': orders,
                     }
     return render(request, 'display_single_order.html', context)
+
+def create_shipping(request):
+    if request.method == 'POST':
+        ship_form = ShippingForm(request.POST)
+        number = request.POST.get('order_no') 
+        if ship_form.errors:
+            print(ship_form.errors) 
+        if ship_form.is_valid():
+            
+            print(ship_form.data,"val")
+            print(number) # Assuming you have a field with supplier_id in your form
+            order = cosmic_order.objects.get(order_no=number)
+            
+            try:
+            
+                ship_form.instance.notify_party3 = customer
+            except customer_profile.DoesNotExist:
+                customer = None
+                
+
+            ship_form.instance.order_no = order
+            
+            #print(purchase.vendor_name,"name")
+            ship_form.save()
+            return redirect('shipping_details')  # Redirect to the list of purchases or any other desired view
+        else:
+            print(form.data,"nval")
+    
+        
+    form = ShippingForm()
+    formset = formset_factory(OrderItemForm, extra=1)
+    formset = formset(prefix="items")
+
+    # Render the form with the supplier choices
+    customers = cosmic_customer_profile.objects.all()
+    return render(request, 'shipping_details.html', {'form': form, 'formset': formset, 'customers': customers})
