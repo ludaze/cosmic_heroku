@@ -7,8 +7,14 @@ from django.forms import formset_factory
 from django.db.models import Sum
 from django.http import JsonResponse,HttpResponse
 from django.template.loader import get_template
+from django.contrib.auth.models import User, auth
+
 import os
 # Create your views here.
+
+def is_admin(user):
+    return user.is_superuser
+
 def create_customer(request):
     
     if request.method == 'POST':
@@ -229,6 +235,8 @@ def create_shipping(request):
     customers = cosmic_customer_profile.objects.all()
     return render(request, 'shipping_details.html', {'form': form, 'formset': formset, 'customers': customers})
 
+@login_required 
+@user_passes_test(is_admin)
 def order_approval(request):
     # Your custom logic here (e.g., fetching data)
     if not is_admin(request.user):

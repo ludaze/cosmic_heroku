@@ -82,3 +82,18 @@ class ShippingForm(forms.ModelForm):
    
         model = shipping_info
         fields = ['invoice_date','port_of_loading','port_of_discharge','final_destination','container_no','truck_waybill_no','country_of_origin']
+
+class approvalForm(forms.Form):
+    selected_orders = forms.ModelMultipleChoiceField(
+        queryset= cosmic_cosmic_order.objects.filter(status='Pending'),
+        widget=forms.CheckboxSelectMultiple,
+        required=False
+    )
+    action = forms.ChoiceField(
+        choices=[('approve', 'Approve'), ('reject', 'Reject')],
+        widget=forms.RadioSelect,
+    )
+    approval = forms.CharField(
+        widget=forms.TextInput,
+        required=True  # You can omit this line as TextInput is the default widget for CharField
+    )
