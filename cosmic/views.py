@@ -322,3 +322,21 @@ def order_status(request):
 
    
     return render(request, 'admin/order_status.html', context)
+
+def edit_order(request):
+
+    order_no = request.GET['order_no']
+    cosmic_order_instance = get_object_or_404(cosmic_order, order_no=order_no)
+
+    form = CosmicOrderForm()
+    if request.method == 'POST':
+
+        form = CosmicOrderForm(request.POST, instance=cosmic_order_instance)
+        order_no = request.GET['order_no']
+        cosmic_order_instance = get_object_or_404(cosmic_order, order_no=order_no)
+        if form.is_valid():
+            form.save()
+            return redirect('success')  # Redirect to a success page or another URL
+    
+    return render(request, 'shipping_details.html', {'form': form,'ship_form': ship_form,'cosmic_order_instance':cosmic_order_instance, 'customers':customers})
+
