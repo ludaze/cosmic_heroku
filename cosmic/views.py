@@ -211,16 +211,8 @@ def create_shipping(request):
             print(number) # Assuming you have a field with supplier_id in your form
             order = cosmic_order.objects.get(order_no=number)
             
-            try:
-            
-                ship_form.instance.notify_party3 = customer
-            except customer_profile.DoesNotExist:
-                customer = None
-                
-
             ship_form.instance.order_no = order
             
-            #print(purchase.vendor_name,"name")
             ship_form.save()
             return redirect('shipping_details')  # Redirect to the list of purchases or any other desired view
         else:
@@ -277,8 +269,6 @@ def order_approval(request):
         'pending_orders': pending_orders,
         'form': form,
     }
-
-   
     return render(request, 'admin/order_approval.html', context)
 
 @login_required 
@@ -306,7 +296,6 @@ def order_status(request):
                     stats = request.POST.get(f"{pr_no}_status")
                     purchase_order = cosmic_order.objects.get(order_no=pr_no.order_no)
                     purchase_order.status = stats
-                    print(approval_name,"name")
                     purchase_order.approved_by = approval_name
                     purchase_order.save()
           
