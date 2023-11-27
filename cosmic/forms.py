@@ -15,7 +15,7 @@ class CustomerForm(forms.ModelForm):
     
     class Meta:
    
-        model = cosmic_customer_profile
+        model = customer_profile
         fields = ['customer_name','customer_address','email','phone_number','contact_person','comments']
 
 class SupplierForm(forms.ModelForm):
@@ -32,17 +32,17 @@ class SupplierForm(forms.ModelForm):
     
     class Meta:
    
-        model = cosmic_supplier_profile
+        model = supplier_profile
         fields = ['supplier_name','supplier_address','email','phone_number','contact_person','comments']
 
 class CosmicOrderForm(forms.ModelForm):
     
-     order_no = forms.CharField(widget=forms.TextInput(attrs={'class': 'order_no form-control'}))
+    order_no = forms.CharField(widget=forms.TextInput(attrs={'class': 'order_no form-control'}))
 
     class Meta:
    
         model = cosmic_order
-        fields = ['customer_name','order_no','date','payment_type','measurement_type','approved_by','PR_before_vat','transportation','shipment_type','total_quantity','supplier_name']
+        fields = ['notify_party','consignee','notify_party2','customer_name','order_no','date','payment_type','measurement_type','approved_by','PR_before_vat','transportation','shipment_type','total_quantity','supplier_name']
 
 class OrderItemForm(forms.ModelForm):
    
@@ -85,7 +85,7 @@ class ShippingForm(forms.ModelForm):
 
 class approvalForm(forms.Form):
     selected_orders = forms.ModelMultipleChoiceField(
-        queryset= cosmic_cosmic_order.objects.filter(status='Pending'),
+        queryset= cosmic_order.objects.filter(status='Pending'),
         widget=forms.CheckboxSelectMultiple,
         required=False
     )
