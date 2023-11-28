@@ -80,6 +80,18 @@
                                 </div>
         
                             </span>
+                            <span class="form-group">
+                                <label class="control-label col-sm-8">Add Consignee <span style="color: rgb(187, 17, 17);">*</span></label>
+                                        <div class="col-sm-11">
+                                            <input type="text" list="the_orders5" class="form-control" name="consignee" >
+                                            <datalist id="the_orders5">
+                                                {% for customer in customers %}
+                                                <option value="{{customer.customer_name}}"></option>
+                                                {% endfor %}
+                                            </datalist>
+                                        </div>
+        
+                            </span>
                          
         
                         </div>

@@ -54,8 +54,6 @@ class cosmic_purchase(models.Model):
     status = models.TextField(blank=True, null=True, default="Pending")
 
 class shipping_info(models.Model):
-    agreement = models.TextField(blank=True, null=True)
-    PR_type = models.TextField(blank=True, null=True)
     unique_no = models.AutoField(primary_key=True)
     invoice_date = models.DateField(blank=True, null=True)
     port_of_loading = models.TextField(blank=False, null=True)

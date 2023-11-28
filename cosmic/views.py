@@ -315,10 +315,35 @@ def order_status(request):
 
 def edit_order(request):
 
-    order_no = request.GET['order_no']
-    cosmic_order_instance = get_object_or_404(cosmic_order, order_no=order_no)
+    if request.method == 'GET':
+        order_no = request.GET.get('order_no')
+        cosmic_order_instance = get_object_or_404(cosmic_order, order_no=order_no)
+        items = order_item.objects.all()
+        item = items.filter(order_no=cosmic_order_instance)
+        item_names = []
+        for name in item:
+            item_names.append(name.item_name)
+        print(item_names,"item")
+        form = EditOrderForm(instance=cosmic_order_instance)  # Initialize the form with the instance data
+        # ItemInlineFormset = inlineformset_factory(
+        #     cosmic_order,  # Parent model
+        #     order_item,    # Child model
+        #     fields=('item_name', 'price', 'quantity'),
+        #     extra=1       # Number of extra forms
+        # )
+        #formsets = ItemInlineFormset(instance=cosmic_order_instance,prefix='items')
 
-    form = CosmicOrderForm()
+
+        ship_form = ShippingForm(prefix="ship")
+        customers = customer_profile.objects.all()
+        last_shipping_info = shipping_info.objects.order_by('-invoice_num').first()
+        print(last_shipping_info.invoice_num, "info")
+        last_number = int(last_shipping_info.invoice_num.split('-')[-1]) if last_shipping_info else 0
+        print(last_number,"last")
+        new_number = last_number + 1
+        generated_invoice_num = f"INV-{new_number:03d}"
+        print(generated_invoice_num,"num")
+        
     if request.method == 'POST':
 
         form = CosmicOrderForm(request.POST, instance=cosmic_order_instance)
