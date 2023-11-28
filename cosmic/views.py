@@ -345,13 +345,67 @@ def edit_order(request):
         print(generated_invoice_num,"num")
         
     if request.method == 'POST':
+        form = CosmicOrderForm(request.POST)
+        
 
-        form = CosmicOrderForm(request.POST, instance=cosmic_order_instance)
-        order_no = request.GET['order_no']
+        order_no = request.POST.get('order_no')
         cosmic_order_instance = get_object_or_404(cosmic_order, order_no=order_no)
-        if form.is_valid():
-            form.save()
-            return redirect('success')  # Redirect to a success page or another URL
-    
-    return render(request, 'shipping_details.html', {'form': form,'ship_form': ship_form,'cosmic_order_instance':cosmic_order_instance, 'customers':customers})
+        # ItemInlineFormset = inlineformset_factory(
+        #     cosmic_order,
+        #     order_item,
+        #     fields=('measurement', 'item_name', 'price', 'quantity'),
+        #     extra=1
+        # )
+        # formset = ItemInlineFormset(request.POST, instance=cosmic_order_instance,prefix='items')
+        # print(formset,"formset")
+        #formset.management_form[ItemInlineFormset.TOTAL_FORM_COUNT] = len(formset.forms)
+        # formset.management_form[ItemInlineFormset.INITIAL_FORM_COUNT] = formset.initial_form_count()
+        # print(formset.management_form.cleaned_data) order_item_set-0-item_name
 
+        #print(form,"valid")
+        # Update the instance with form data and save it
+        refs_no = request.POST.get('ref_no')
+        cosmic_order_instance.ref_no = refs_no
+        cosmic_order_instance.measurement_type = request.POST.get('measurement_type')
+        cosmic_order_instance.shipment_type = request.POST.get('shipment_type')
+        cosmic_order_instance.freight = request.POST.get('freight')
+        cosmic_order_instance.payment_type = request.POST.get('payment_type')
+        cosmic_order_instance.transporation = request.POST.get('transporation')
+        cosmic_order_instance.country_of_origin = request.POST.get('country_of_origin')
+        cosmic_order_instance.final_destination = request.POST.get('final_destination')
+        cosmic_order_instance.port_of_discharge = request.POST.get('port_of_discharge')
+        cosmic_order_instance.port_of_loading = request.POST.get('port_of_loading')
+        consignees = request.POST.get('consignee')
+        consignee = customer_profile.objects.get(customer_name=consignees)
+        cosmic_order_instance.consignee = consignee
+        print(cosmic_order_instance.consignee,"instance")
+        notify_partys = request.POST.get('notify_party')
+        notify_party = customer_profile.objects.get(customer_name=notify_partys)
+        cosmic_order_instance.notify_party = notify_party
+        notify_party2s = request.POST.get('notify_party2')
+        try:
+        
+            notify_party2 = customer_profile.objects.get(customer_name=notify_party2s)
+            cosmic_order_instance.notify_party2 = notify_party2
+        except customer_profile.DoesNotExist:
+            cosmic_order_instance.notify_party2  = None
+        
+        
+        cosmic_order_instance.save()
+       
+        my_customers = request.POST.get('customer_name')
+        suppliers = request.POST.get('supplier_name')
+        customer = customer_profile.objects.get(customer_name=my_customers)
+        cosmic_order_instance.customer_name = customer
+        supplier = supplier_profile.objects.get(supplier_name=suppliers)
+        cosmic_order_instance.supplier_name = supplier
+        print(cosmic_order_instance.__dict__) 
+        cosmic_order_instance.save()
+        return redirect('success')  # Redirect to a success page or another URL
+    
+    formset = formset_factory(InvoiceItemForm, extra=1)
+    formset = formset(prefix="items")
+    
+    return render(request, 'shipping_details.html', {'form': form, 'formset':formset, 'ship_form': ship_form,
+                                               'cosmic_order_instance': cosmic_order_instance, 'item_names':item_names,
+                                               'customers': customers,'new_inv':generated_invoice_num, 'item':item})
