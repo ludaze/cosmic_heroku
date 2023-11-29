@@ -69,6 +69,27 @@ def create_supplier(request):
         form = SupplierForm()
     return render(request, 'create_supplier.html', {'form': form })
 
+def display_supplier(request):
+    if request.method == 'GET':
+        customers = supplier_profile.objects.all()
+        context = {
+                    'my_supplier': customers,
+                }
+          
+        return render(request, 'display_supplier.html', context)
+
+def display_supplier_profile(request):
+    if request.method == 'GET':
+        name = request.GET['supplier_name']
+        
+        suppliers = supplier_profile.objects.get(supplier_name= name)
+         
+        context = {
+                        
+                        'my_supplier': suppliers,
+                    }
+    return render(request, 'supplier_profile.html', context) 
+
 def create_order(request):
     if request.method == 'POST':
         form = CosmicOrderForm(request.POST)
