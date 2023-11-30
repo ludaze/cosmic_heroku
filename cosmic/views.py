@@ -433,15 +433,12 @@ def edit_order(request):
 def print_order(request):
     if request.method == 'GET':
         pr_no = request.GET['order_no']
-        #inv_no = request.GET['invoice_num']
-        #print(inv_no,'inv')
         try:
             orders = cosmic_order.objects.get(order_no=pr_no)
             pr_items = order_item.objects.all()
             pr_items = pr_items.filter(order_no=pr_no)
             print(pr_items)
         except cosmic_order.DoesNotExist:
-            # If it's not found in purchase_orders, try searching in import_PR
             try:
                 print("trial")
                 orders = cosmic_purchase.objects.get(purchase_no=pr_no)
@@ -451,7 +448,6 @@ def print_order(request):
                 print(pr_items)
             except cosmic_purchase.DoesNotExist:
                 orders = None
-                # Handle the case where the object doesn't exist in either table.
         
         
         if hasattr(orders, 'PR_before_vat'):
@@ -461,30 +457,7 @@ def print_order(request):
             number = float(orders.before_vat)
             print(orders.before_vat)
 
-        if orders.freight_price:
-            number += float(orders.freight_price)
-        #print(shipping.freight_amount,"fr")
-        dicts = {1:"TEN",2:"TWENTY",3:"THIRTY",4:"FORTY",5:"FIFTY",6:"SIXTY",7:"SEVENTY",8:"EIGHTY",9:"NINTY"}
-        # if shipping:
-        #     if orders.freight_price:
-        #         number += (orders.freight_price)
-        print(number)
-        whole_part, decimal_part = str(number).split('.')
-        number_in_words = num2words(whole_part)
-        number_in_words = number_in_words.replace(',', '')
-        number_in_words = number_in_words.replace('-', ' ')
-        num = number_in_words.upper()
-        if int(decimal_part) in dicts:
-            dec = " AND " + str(dicts[int(decimal_part)]) + " CENTS ONLY"
-        elif decimal_part == "0":
-            dec = " ONLY"
-        else:
-            dec = " AND " + num2words(decimal_part) + " CENTS ONLY"
-        print(decimal_part,dec)
-        num = num.replace(' AND', '')
-        num += dec 
-        print(orders, num)
-        print("no")
+        
         if pr_items.exists():
             print(pr_items,"yes")
             context = {

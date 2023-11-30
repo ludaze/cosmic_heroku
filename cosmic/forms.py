@@ -74,7 +74,7 @@ class CosmicPurchaseForm(forms.ModelForm):
     class Meta:
    
         model = cosmic_purchase
-        fields = ['supplier_name','total_price','purchase_no','date','payment_type','measurement_type','before_vat','transportation','shipment_type']
+        fields = ['supplier_name','purchase_no','date','payment_type','measurement_type','before_vat','transportation','shipment_type']
 
 class ShippingForm(forms.ModelForm):
     
