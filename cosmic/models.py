@@ -70,7 +70,7 @@ class shipping_info(models.Model):
     port_of_discharge = models.TextField(blank=True, null=True)
     final_destination = models.TextField(blank=True, null=True)
     country_of_origin = models.TextField(blank=False, null=True)
-    
+
 class order_item(models.Model):
     order_no = models.ForeignKey('cosmic_order', on_delete=models.CASCADE, db_column='order_no',blank=True, null=True)
     id_numeric = models.AutoField(primary_key=True)
@@ -80,3 +80,13 @@ class order_item(models.Model):
     before_vat = models.FloatField(blank=True, null=True)
     quantity =  models.FloatField(blank=True, null=True)
     measurement = models.TextField(blank=True, null=True)
+
+class invoice_item(models.Model):
+    invoice_num = models.ForeignKey('shipping_info', on_delete=models.CASCADE, db_column='invoice_num',blank=True, null=True, to_field='invoice_num')
+    id_numeric = models.AutoField(primary_key=True)
+    hs_code = models.TextField(blank=True, null=True)
+    item_name = models.TextField(blank=True, null=True)
+    price = models.FloatField(blank=True, null=True)
+    before_vat = models.FloatField(blank=True, null=True)
+    quantity =  models.FloatField(blank=True, null=True)
+    measurement = models.TextField(blank=True, null=True
