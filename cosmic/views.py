@@ -371,21 +371,7 @@ def edit_order(request):
 
         order_no = request.POST.get('order_no')
         cosmic_order_instance = get_object_or_404(cosmic_order, order_no=order_no)
-        # ItemInlineFormset = inlineformset_factory(
-        #     cosmic_order,
-        #     order_item,
-        #     fields=('measurement', 'item_name', 'price', 'quantity'),
-        #     extra=1
-        # )
-        # formset = ItemInlineFormset(request.POST, instance=cosmic_order_instance,prefix='items')
-        # print(formset,"formset")
-        #formset.management_form[ItemInlineFormset.TOTAL_FORM_COUNT] = len(formset.forms)
-        # formset.management_form[ItemInlineFormset.INITIAL_FORM_COUNT] = formset.initial_form_count()
-        # print(formset.management_form.cleaned_data) order_item_set-0-item_name
-
-        #print(form,"valid")
-        # Update the instance with form data and save it
-        refs_no = request.POST.get('ref_no')
+         refs_no = request.POST.get('ref_no')
         cosmic_order_instance.ref_no = refs_no
         cosmic_order_instance.measurement_type = request.POST.get('measurement_type')
         cosmic_order_instance.shipment_type = request.POST.get('shipment_type')

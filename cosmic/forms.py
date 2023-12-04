@@ -97,3 +97,26 @@ class approvalForm(forms.Form):
         widget=forms.TextInput,
         required=True  # You can omit this line as TextInput is the default widget for CharField
     )
+
+class InvoiceItemForm(forms.ModelForm):
+   
+    before_vat = forms.DecimalField(
+        label='Total Price',
+        required=False,
+        widget=forms.TextInput(attrs={'class': 'before_vat form-control', 'readonly': 'readonly'})
+    )
+    measurement = forms.CharField(widget=forms.TextInput(attrs={'class': 'measurement form-control'}), required=False)
+    quantity = forms.FloatField(widget=forms.TextInput(attrs={'class': 'quantity form-control' }))
+    price = forms.DecimalField(widget=forms.TextInput(attrs={'class': 'price form-control'}))
+    
+    item_name = forms.CharField(
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter name','size':'20'}),
+    )
+    hs_code = forms.CharField(
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'HS-CODE'}),
+    )
+    
+    class Meta:
+   
+        model = invoice_item
+        fields = ['item_name','hs_code','price','quantity','before_vat','measurement']
