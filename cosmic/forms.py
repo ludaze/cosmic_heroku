@@ -42,8 +42,8 @@ class CosmicOrderForm(forms.ModelForm):
     class Meta:
    
         model = cosmic_order
-        fields = ['notify_party','consignee','notify_party2','customer_name','order_no','date','payment_type','measurement_type','approved_by','PR_before_vat','transportation','shipment_type','total_quantity','supplier_name']
-
+        fields = ['freight_price','customer_name','supplier_name','order_no','date','payment_type','measurement_type','approved_by','PR_before_vat','total_quantity','transportation','shipment_type','freight','ref_no','notify_party','country_of_origin','final_destination','port_of_discharge','port_of_loading','notify_party2','consignee']
+        
 class OrderItemForm(forms.ModelForm):
    
     before_vat = forms.DecimalField(

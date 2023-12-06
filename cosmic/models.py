@@ -27,6 +27,7 @@ class cosmic_order(models.Model):
     notify_party2 = models.ForeignKey('customer_profile', related_name='orders_related_to_bank', on_delete=models.CASCADE, db_column='notify_party2',blank=True, null=True)
     date = models.DateField(blank=False)
     freight = models.TextField(blank=True, null=True)
+    freight_price = models.FloatField(blank=True, null=True)
     payment_type = models.TextField(blank=True, null=True)
     measurement_type = models.TextField(blank=True, null=True)
     transportation = models.TextField(blank=True, null=True)
@@ -66,10 +67,6 @@ class shipping_info(models.Model):
     vessel = models.TextField(blank=True, null=True)
     total_net_weight = models.FloatField(blank=True, null=True)
     total_gross_weight = models.FloatField(blank=True, null=True)
-    port_of_loading = models.TextField(blank=False, null=True)
-    port_of_discharge = models.TextField(blank=True, null=True)
-    final_destination = models.TextField(blank=True, null=True)
-    country_of_origin = models.TextField(blank=False, null=True)
 
 class order_item(models.Model):
     order_no = models.ForeignKey('cosmic_order', on_delete=models.CASCADE, db_column='order_no',blank=True, null=True)
@@ -89,4 +86,4 @@ class invoice_item(models.Model):
     price = models.FloatField(blank=True, null=True)
     before_vat = models.FloatField(blank=True, null=True)
     quantity =  models.FloatField(blank=True, null=True)
-    measurement = models.TextField(blank=True, null=True
+    measurement = models.TextField(blank=True, null=True)
