@@ -399,7 +399,7 @@ def edit_order(request):
 
         order_no = request.POST.get('order_no')
         cosmic_order_instance = get_object_or_404(cosmic_order, order_no=order_no)
-         refs_no = request.POST.get('ref_no')
+        refs_no = request.POST.get('ref_no')
         cosmic_order_instance.ref_no = refs_no
         cosmic_order_instance.measurement_type = request.POST.get('measurement_type')
         cosmic_order_instance.shipment_type = request.POST.get('shipment_type')
@@ -436,8 +436,7 @@ def edit_order(request):
         cosmic_order_instance.supplier_name = supplier
         print(cosmic_order_instance.__dict__) 
         cosmic_order_instance.save()
-        return redirect('success')  # Redirect to a success page or another URL
-    
+        return redirect('success')  
     formset = formset_factory(InvoiceItemForm, extra=1)
     formset = formset(prefix="items")
     

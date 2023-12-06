@@ -79,7 +79,7 @@ class order_item(models.Model):
     measurement = models.TextField(blank=True, null=True)
 
 class invoice_item(models.Model):
-    invoice_num = models.ForeignKey('shipping_info', on_delete=models.CASCADE, db_column='invoice_num',blank=True, null=True, to_field='invoice_num')
+    #invoice_num = models.ForeignKey('shipping_info', on_delete=models.CASCADE, db_column='invoice_num',blank=True, null=True, to_field='invoice_num')
     id_numeric = models.AutoField(primary_key=True)
     hs_code = models.TextField(blank=True, null=True)
     item_name = models.TextField(blank=True, null=True)
@@ -87,3 +87,6 @@ class invoice_item(models.Model):
     before_vat = models.FloatField(blank=True, null=True)
     quantity =  models.FloatField(blank=True, null=True)
     measurement = models.TextField(blank=True, null=True)
+    net_weight = models.FloatField(blank=True, null=True)
+    gross_weight = models.FloatField(blank=True, null=True)
+    bags = models.FloatField(blank=True, null=True)
