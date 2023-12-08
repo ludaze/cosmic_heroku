@@ -386,12 +386,9 @@ def edit_order(request):
         ship_form = ShippingForm(prefix="ship")
         customers = customer_profile.objects.all()
         last_shipping_info = shipping_info.objects.order_by('-invoice_num').first()
-        print(last_shipping_info.invoice_num, "info")
         last_number = int(last_shipping_info.invoice_num.split('-')[-1]) if last_shipping_info else 0
-        print(last_number,"last")
         new_number = last_number + 1
         generated_invoice_num = f"INV-{new_number:03d}"
-        print(generated_invoice_num,"num")
         
     if request.method == 'POST':
         form = CosmicOrderForm(request.POST)
@@ -513,3 +510,34 @@ def print_order(request):
                     }
        
     return render(request, 'print_order.html', context)
+
+def create_purchase(request):
+    if request.method == 'POST':
+        form = CosmicPurchaseForm(request.POST)
+        if form.errors:
+            print(form.errors) 
+        if form.is_valid():
+            print(form.data,"val")
+            # Save the form, and link the purchase to the selected supplier
+           
+            suppliers_name = request.POST.get('supplier_name') 
+            print(suppliers_name) # Assuming you have a field with supplier_id in your form
+            supplier = supplier_profile.objects.get(supplier_name=suppliers_name)
+            print(supplier)
+            form.instance.supplier_name = supplier
+            #print(purchase.vendor_name,"name")
+            form.save()
+            return redirect('create_purchase')  # Redirect to the list of purchases or any other desired view
+        else:
+            print(form.data,"nval")
+            errors = dict(form.errors.items())
+            return JsonResponse({'form_errors': errors}, status=400)
+        
+   
+        
+    form = CosmicPurchaseForm()
+    formset = formset_factory(PurchaseItemForm, extra=1)
+    formset = formset(prefix="items")
+    # Render the form with the supplier choices
+    suppliers = supplier_profile.objects.all()
+    return render(request, 'create_purchase.html', {'form': form, 'formset': formset ,'suppliers': suppliers})

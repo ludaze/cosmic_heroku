@@ -391,10 +391,28 @@
             {% endif %}
             <form method="post" action="{% url 'create_shipping' %}" id="form2">
                 {% csrf_token %}
-                
-                
-
+       
                 <div>
+                    <div class="col-sm-6">
+                        <!-- <span class="form-group">
+                            <label class="control-label col-sm-4"> Ref. Number <span style="color: rgb(187, 17, 17);">*</span></label>
+                            <div class="col-sm-8">
+    
+                                <input type="text" class="form-control" name="reference_no" >
+                            </div>
+                        </span> -->
+    
+                        <span class="form-group">
+                            <label class="control-label col-sm-7">Invoice Number</label>
+                            <div class="col-sm-8">
+    
+                                <input type="text" class="form-control" name="invoice_num" value="{{new_inv}}">
+                            </div>
+                        </span>
+                        
+    
+    
+                    </div>
                     <div class="col-sm-5">
                         <div class="form-group">
                             <label class="control-label col-sm-4">Invoice Date <span style="color: rgb(187, 17, 17);">*</span></label>
