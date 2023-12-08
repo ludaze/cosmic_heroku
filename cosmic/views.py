@@ -541,3 +541,85 @@ def create_purchase(request):
     # Render the form with the supplier choices
     suppliers = supplier_profile.objects.all()
     return render(request, 'create_purchase.html', {'form': form, 'formset': formset ,'suppliers': suppliers})
+
+def commercial_invoice(request):
+    if request.method == 'GET':
+        pr_no = request.GET['order_no']
+        inv_no = request.GET['invoice_num']
+        print(inv_no,"inv")
+        try:
+            orders = cosmic_order.objects.get(order_no=pr_no)
+            pr_items = order_item.objects.all()
+            pr_items = pr_items.filter(order_no=pr_no)
+            print(pr_items)
+        except cosmic_order.DoesNotExist:
+            # If it's not found in purchase_orders, try searching in import_PR
+            try:
+                orders = cosmic_purchase.objects.get(purchase_no=pr_no)
+                shipping = shipping_info.objects.get(order_no = pr_no)
+                pr_items = purchase_item.objects.all()
+                pr_items = pr_items.filter(purchase_no=pr_no)
+                print(pr_items)
+            except cosmic_purchase.DoesNotExist:
+                order = None
+                # Handle the case where the object doesn't exist in either table.
+            order = None 
+        try:
+            
+            shipping = shipping_info.objects.get(order_no = pr_no, invoice_num=inv_no)
+        except shipping_info.DoesNotExist:
+            shipping = None
+        
+        try:
+            
+            shipping_items = invoice_item.objects.all()
+            shipping_items = shipping_items.filter(invoice_num=inv_no)
+        except shipping_info.DoesNotExist:
+            shipping_items = None
+
+        if hasattr(shipping, 'final_price'):
+            number = shipping.final_price
+            print("yes",number)
+        else:
+            number = shipping.final_price
+            print(shipping.final_price)
+        #print(shipping.freight_amount,"fr")
+        dicts = {1:"TEN",2:"TWENTY",3:"THIRTY",4:"FORTY",5:"FIFTY",6:"SIXTY",7:"SEVENTY",8:"EIGHTY",9:"NINTY"}
+        if shipping:
+            if orders.freight_price:
+                print(number,orders.freight_price,"try")
+                number += float(orders.freight_price)
+        
+        whole_part, decimal_part = str(number).split('.')
+        number_in_words = num2words(whole_part)
+        number_in_words = number_in_words.replace(',', '')
+        number_in_words = number_in_words.replace('-', ' ')
+        num = number_in_words.upper()
+        if int(decimal_part) in dicts:
+            dec = " AND " + str(dicts[int(decimal_part)]) + " CENTS ONLY"
+        elif decimal_part == "0":
+            dec = " ONLY"
+        else:
+            dec = " AND " + num2words(decimal_part) + " CENTS ONLY"
+      
+        num = num.replace(' AND', '')
+        num += dec 
+        if pr_items.exists():
+            print(pr_items,"yes")
+            context = {
+                        'my_order': orders,
+                        'shipping': shipping,
+                        'num': num,
+                        'number':number,
+                        'shipping_items': shipping_items
+                    }
+            return render(request, 'commercial_invoice.html', context)
+        context = {
+                        
+                        'my_order': orders,
+                        'shipping': shipping,
+                        'num': num,
+                        'shipping_items': shipping_items,
+                        'number':number,
+                    }
+    return render(request, 'commercial_invoice.html', context)
