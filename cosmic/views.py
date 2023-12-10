@@ -546,12 +546,10 @@ def commercial_invoice(request):
     if request.method == 'GET':
         pr_no = request.GET['order_no']
         inv_no = request.GET['invoice_num']
-        print(inv_no,"inv")
         try:
             orders = cosmic_order.objects.get(order_no=pr_no)
             pr_items = order_item.objects.all()
             pr_items = pr_items.filter(order_no=pr_no)
-            print(pr_items)
         except cosmic_order.DoesNotExist:
             # If it's not found in purchase_orders, try searching in import_PR
             try:

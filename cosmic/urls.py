@@ -16,6 +16,8 @@ urlpatterns = [
     path('order_approval', views.order_approval, name='order_approval'),
     path('order_status', views.order_status, name='order_status'),
     path('edit_order', views.edit_order, name='edit_order'),
+    path('commercial_invoice', views.commercial_invoice, name='commercial_invoice'),
+   
     #path('print_order', views.print_order, name='print_order'),
     
 ]
