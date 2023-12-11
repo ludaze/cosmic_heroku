@@ -374,14 +374,7 @@ def edit_order(request):
             item_names.append(name.item_name)
         print(item_names,"item")
         form = EditOrderForm(instance=cosmic_order_instance)  # Initialize the form with the instance data
-        # ItemInlineFormset = inlineformset_factory(
-        #     cosmic_order,  # Parent model
-        #     order_item,    # Child model
-        #     fields=('item_name', 'price', 'quantity'),
-        #     extra=1       # Number of extra forms
-        # )
-        #formsets = ItemInlineFormset(instance=cosmic_order_instance,prefix='items')
-
+      
 
         ship_form = ShippingForm(prefix="ship")
         customers = customer_profile.objects.all()
@@ -581,7 +574,6 @@ def commercial_invoice(request):
         else:
             number = shipping.final_price
             print(shipping.final_price)
-        #print(shipping.freight_amount,"fr")
         dicts = {1:"TEN",2:"TWENTY",3:"THIRTY",4:"FORTY",5:"FIFTY",6:"SIXTY",7:"SEVENTY",8:"EIGHTY",9:"NINTY"}
         if shipping:
             if orders.freight_price:

@@ -546,4 +546,119 @@
 </div>
 
 
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        //const radioButtons = document.querySelectorAll('input[type="radio"]');
+        const radioButtons = document.querySelectorAll('.measurement_type');
+        const submitButton = document.querySelector('#submits');
+        const submitsButton = document.querySelector('#submitss');
+        const addMoreBtn = document.getElementById('add-more');
+        const priceFields = document.querySelectorAll('.price');
+        const totalPriceField = $('#total-price');
+        const totalVatField = $('#total-vat');
+        const radioButtons2 = document.querySelectorAll('.payment_type');
+        const totalNewForms = document.getElementById('id_items-TOTAL_FORMS')
+        console.log(totalNewForms)
+        console.log("try")
+        const quantityFields = $('.quantity');
+        //const discount_checkbox = document.getElementById("discountCheckbox");
+        
+        //var discount = false
+
+        submitsButton.addEventListener('click', function (event) {
+            event.preventDefault();
+            calculateTotalPrice();
+            console.log("calc")
+        });
+        addMoreBtn.addEventListener('click', add_new_form);
+        
+        var univ_total = 0
+        var univ_vat = 0
+        function calculateTotalPrice() {
+        var total = 0
+        var total_vat = 0
+        var originalTotal = 0;
+        var originalVat = 0;
+
+        const formsets = $('.item-list');
+        const total_price_fields = document.querySelectorAll('.total_price');
+        const total_vat_fields = document.querySelectorAll('.before_vat');
+        //const discountApplied = discount_checkbox.checked;
+        
+        $('.item-list').each(function() {
+            
+        
+            // Within each formset, select the 'total_price' fields
+            const totalFields = $(this).find('.total_price');
+            const vatFields = $(this).find('.before_vat');
+            totalFields.each(function() {
+            const price = parseFloat($(this).val()) || 0;
+         
+            total += price;
+            originalTotal += price; 
+            });
+            vatFields.each(function() {
+            const vat_price = parseFloat($(this).val()) || 0;
+            total_vat += vat_price;
+            originalVat += vat_price;
+          
+            });
+            
+            console.log(total)
+           
+            // Update the total for this formset
+            univ_total = total;
+            univ_vat = total_vat;
+            totalPriceField.val(total.toFixed(2));  // Update the 'value' of the field
+            totalPriceField.text('Total Price: $' + total.toFixed(2)); 
+            totalVatField.val(total_vat.toFixed(2));  // Update the 'value' of the field
+            totalVatField.text('Total Price: $' + total_vat.toFixed(2));  // Update the displayed text
+        });
+       
+            }
+
+    // Call the calculation function when the page loads
+    calculateTotalPrice();
+
+
+        radioButtons.forEach(button => {
+            button.addEventListener('change', function () {
+                // Hide all input elements
+                hideAllInputs();
+                console.log("trys")
+                // Show the input element corresponding to the selected radio button
+                const inputId = 'input_' + this.value;
+                const inputElement = document.getElementById(inputId);
+                if (inputElement) {
+                    inputElement.style.display = 'block';
+                }
+            });
+        });
+        
+        
+        
+        function add_new_form(args) {
+            // Your code to add a new form here
+            const currentForms = document.getElementsByClassName('item-list')
+            let currentFormsCount = currentForms.length + 1
+            console.log(currentForms.length)
+            console.log(totalNewForms);
+            const copyFormTarget = document.getElementById('form-lists')
+            const copyEmptyForm = document.getElementById('empty-form').cloneNode(true);
+            copyEmptyForm.setAttribute('class', 'item-list form-group col-md-5 text-dark')
+            copyEmptyForm.setAttribute('id', `form-${currentFormsCount}`)
+            // Clear input values in the cloned form
+            const regex = new RegExp('__prefix__', 'g')
+            copyEmptyForm.querySelectorAll('input').forEach(function (input) {
+                input.value = '';
+            });
+            copyEmptyForm.innerHTML = copyEmptyForm.innerHTML.replace(regex, currentFormsCount)
+            // Append the cloned form to the form list
+            totalNewForms.value = currentFormsCount + 1;
+            copyFormTarget.appendChild(copyEmptyForm);
+        }
+    });
+</script>
+
+
 {% endblock %}
