@@ -579,6 +579,7 @@ def commercial_invoice(request):
             if orders.freight_price:
                 print(number,orders.freight_price,"try")
                 number += float(orders.freight_price)
+        print(number)
         
         whole_part, decimal_part = str(number).split('.')
         number_in_words = num2words(whole_part)
