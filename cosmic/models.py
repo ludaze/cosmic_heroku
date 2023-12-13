@@ -58,7 +58,6 @@ class cosmic_purchase(models.Model):
     status = models.TextField(blank=True, null=True, default="Pending")
 
 class shipping_info(models.Model):
-    unique_no = models.TextField(blank=False, null=True)
     invoice_date = models.DateField(blank=True, null=True)
     order_no = models.ForeignKey('cosmic_order', on_delete=models.CASCADE, db_column='order_no',blank=True, null=True)
     invoice_num = models.TextField(primary_key=True)
@@ -70,7 +69,9 @@ class shipping_info(models.Model):
     total_net_weight = models.FloatField(blank=True, null=True)
     total_gross_weight = models.FloatField(blank=True, null=True)
     reference_no = models.TextField(blank=True, null=True)
-
+    total_bags = models.FloatField(blank=True, null=True)
+    total_net_weight = models.FloatField(blank=True, null=True)
+    total_gross_weight = models.FloatField(blank=True, null=True)
 class order_item(models.Model):
     order_no = models.ForeignKey('cosmic_order', on_delete=models.CASCADE, db_column='order_no',blank=True, null=True)
     id_numeric = models.AutoField(primary_key=True)

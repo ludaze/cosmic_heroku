@@ -11,6 +11,12 @@
       {% endif %}
     </strong>
   </div>
+  <!-- <form action="/GRN/print_pr">
+    <div class="form-group col-sm-4" style="display: flex; margin-top: 20px; ">
+      <input type="text" name="PR_no" placeholder="PR No" class="form-control" style=" margin-top: 10px; ">
+      <div style="width: 20%;"><button type="submit" class="btn btn-primary">Search Order</button></div>
+    </div>
+  </form> -->
 
   <br>
   <br>
@@ -60,6 +66,43 @@
 
                 </table>
               </div>
+              <table class="table table-striped table-bordered" style="margin-left: 30px;">
+                {% if my_order.order_no%}
+                <tr>
+                  <th>Select</th>
+                  <th>Invoice Number</th>
+                  <th>Order Number</th>
+                  <th>Invoice Date</th>
+                </tr>
+
+                {% for invoice in the_invoices %}
+                    <tr>
+                      <td><input type="radio" name="selected_invoice" class="invoice-radio" data-invoice-id="{{ invoice.invoice_num }}"></td>
+                      <td><a href="#" class="invoice-link" data-invoice-id="{{ invoice.invoice_num}}">{{invoice.invoice_num}}</a></td>
+                      <td><a href="#" class="order-link" data-order-id="{{ invoice.order_no.order_no }}">{{ invoice.order_no.order_no }}</a></td>
+                      <td>{{ invoice.invoice_date }}</td>
+                    </tr>
+                    {% endfor %}
+                {%else%}
+                <tr>
+                  <th>Purchase Number</th>
+                  <th>Date</th>
+                  <th>Total Price</th>
+                  <th>Vendor Name</th>
+                  <th>Status</th>
+                </tr>
+
+                <tr>
+                  <td><a href="#" class="order-link" data-order-id="{{ my_order.purchase_no }}">{{my_order.purchase_no }}</a></td>
+                  <td>{{ my_order.date }}</td>
+                  <td>{{ my_order.before_vat }}</td>
+                  <td>{{ my_order.supplier_name.supplier_name }}</td>
+                  <td>{{ my_order.status }}</td>
+                </tr>
+
+                {% endif%}
+
+              </table>
               {% if my_order.order_no%}
               <div class="col-md-3">
                 <div style="width: 20%;"><button type="submit" class="btn btn-primary"
@@ -68,21 +111,21 @@
 
 
                 <div style="width: 20%;"><button type="submit" class="btn btn-primary"
-                    onclick="redirectToCommercialInvoice('{{ my_order.order_no }}')">Commercial Invoice</button></div>
+                  onclick="redirectToPage('{{ my_order.order_no }}','commercial_invoice')">Commercial Invoice</button></div>
 
 
 
                 <div style="width: 20%;"><button type="submit" class="btn btn-primary"
-                    onclick="redirectToBillOfLading('{{ my_order.order_no }}')"> Bill of Lading</button></div>
+                  onclick="redirectToPage('{{ my_order.order_no }}','bill_of_lading')"> Bill of Lading</button></div>
 </div>
 <div class="col-sm-5">
                 <div style="width: 20%;"><button type="submit" class="btn btn-primary"
-                    onclick="redirectToTruckWaybill('{{ my_order.order_no }}')"> Truck Waybill</button></div>
+                  onclick="redirectToPage('{{ my_order.order_no }}','truck_waybill')"> Truck Waybill</button></div>
                 <div style="width: 20%;"><button type="submit" class="btn btn-primary"
-                    onclick="redirectToPackingList('{{ my_order.order_no }}')">Packing List</button></div>
+                  onclick="redirectToPage('{{ my_order.order_no }}','packing_list')">Packing List</button></div>
 
                 <div style="width: 20%;"><button type="submit" class="btn btn-primary"
-                    onclick="redirectToShippingDetails('{{ my_order.order_no }}')">Add Shipping Details</button></div>
+                  onclick="redirectToShippingDetails('{{ my_order.order_no }}')">Add Shipping Details</button></div>
 
 
               </div>
@@ -123,6 +166,7 @@
 
 
 </div>
+
 
 <script>
   const orderID = document.getElementById('data-order-id');
