@@ -662,3 +662,54 @@ def bill_of_lading(request):
                         'shipping_items': shipping_items,
                     }
     return render(request, 'bill_of_lading.html', context)
+
+def packing_list(request):
+    if request.method == 'GET':
+        pr_no = request.GET['order_no']
+        inv_no = request.GET['invoice_num']
+        try:
+            orders = cosmic_order.objects.get(order_no=pr_no)
+            pr_items = order_item.objects.all()
+            pr_items = pr_items.filter(order_no=pr_no)
+            print(pr_items)
+        except cosmic_order.DoesNotExist:
+            # If it's not found in purchase_orders, try searching in import_PR
+            try:
+                orders = cosmic_purchase.objects.get(purchase_no=pr_no)
+                shipping = shipping_info.objects.get(order_no = pr_no)
+                pr_items = purchase_item.objects.all()
+                pr_items = pr_items.filter(purchase_no=pr_no)
+                print(pr_items)
+            except cosmic_purchase.DoesNotExist:
+                order = None
+                # Handle the case where the object doesn't exist in either table.
+            order = None 
+        try:
+            
+            shipping = shipping_info.objects.get(order_no = pr_no, invoice_num=inv_no)
+        except shipping_info.DoesNotExist:
+            shipping = None
+        try:
+            
+            shipping_items = invoice_item.objects.all()
+            shipping_items = shipping_items.filter(invoice_num=inv_no)
+        except invoice_item.DoesNotExist:
+            shipping_items = None
+        print(orders)
+        print("no")
+        if pr_items.exists():
+            print(pr_items,"yes")
+            context = {
+                        'pr_items': pr_items,
+                        'my_order': orders,
+                        'shipping': shipping,
+                        'shipping_items':shipping_items,
+                    }
+            return render(request, 'packing_list.html', context)
+        context = {
+                        
+                        'my_order': orders,
+                        'shipping': shipping,
+                        'shipping_items':shipping_items,
+                    }
+    return render(request, 'packing_list.html', context)

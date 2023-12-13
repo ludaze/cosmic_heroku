@@ -19,4 +19,5 @@ urlpatterns = [
     path('commercial_invoice', views.commercial_invoice, name='commercial_invoice'),
     path('print_order', views.print_order, name='print_order'),
     path('bill_of_lading', views.bill_of_lading, name='bill_of_lading'),
+    path('packing_list', views.packing_list, name='packing_list'),
 ]
