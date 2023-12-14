@@ -120,3 +120,22 @@ class InvoiceItemForm(forms.ModelForm):
    
         model = invoice_item
         fields = ['item_name','hs_code','price','quantity','before_vat','measurement']
+
+class restoreForm(forms.Form):
+    selected_orders = forms.ModelMultipleChoiceField(
+        queryset= cosmic_order.objects.filter(status='rejected'),
+        widget=forms.CheckboxSelectMultiple,
+        required=False
+    )
+    action = forms.ChoiceField(
+        choices=[('approve', 'Approve'), ('delete', 'Delete'),('restore', 'Restore')],
+        widget=forms.RadioSelect,
+    )
+    approval = forms.CharField(
+        widget=forms.TextInput,
+        required=True  # You can omit this line as TextInput is the default widget for CharField
+    )
+class CosmicPurchaseForm(forms.ModelForm):
+    
+    total_quantity = forms.FloatField(widget=forms.TextInput(attrs={'class': 'total_quantity form-control' }),required=False)
+    purchase_no = forms.CharField(widget=forms.TextInput(attrs={'class': 'purchase_no form-control'}))

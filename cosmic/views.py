@@ -713,3 +713,47 @@ def packing_list(request):
                         'shipping_items':shipping_items,
                     }
     return render(request, 'packing_list.html', context)
+
+@login_required 
+@user_passes_test(is_admin)
+def rejected_orders(request):
+    # Your custom logic here (e.g., fetching data)
+    if not is_admin(request.user):
+        # User is not authenticated to access this view
+        messages.error(request, "You are not authorized to access this page.")
+        return redirect('login')
+
+    pending_orders = cosmic_order.objects.filter(status='rejected')
+    # Handle form submission
+    
+    if request.method == 'POST':
+        form = restoreForm(request.POST)
+        if form.errors:
+            print(form.errors)
+        if form.is_valid():
+            action = form.cleaned_data['action']
+            approval_name = form.cleaned_data['approval']
+            
+            if action == 'restore':
+                for pr_no in form.cleaned_data['selected_orders']:
+                    stats = request.POST.get(f"{pr_no}_status")
+                    purchase_order = cosmic_order.objects.get(order_no=pr_no.order_no)
+                    purchase_order.status = 'Pending'
+                    purchase_order.approved_by = approval_name
+                    purchase_order.save()
+            elif action == 'delete':
+                for pr_no in form.cleaned_data['selected_orders']:
+                    purchase_order = cosmic_order.objects.get(order_no=pr_no.order_no)
+                    purchase_order.delete()
+            return redirect('rejected_orders')
+
+    else:
+        form = restoreForm()
+
+    context = {
+        'pending_orders': pending_orders,
+        'form': form,
+    }
+
+   
+    return render(request, 'admin/rejected_orders.html', context)
