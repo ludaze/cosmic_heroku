@@ -72,6 +72,11 @@ class shipping_info(models.Model):
     total_bags = models.FloatField(blank=True, null=True)
     total_net_weight = models.FloatField(blank=True, null=True)
     total_gross_weight = models.FloatField(blank=True, null=True)
+    invoice_remark = models.TextField(blank=True, null=True)
+    lading_remark = models.TextField(blank=True, null=True)
+    waybill_remark = models.TextField(blank=True, null=True)
+    packing_remark = models.TextField(blank=True, null=True)
+    final_price = models.FloatField(blank= True, null=True)
 class order_item(models.Model):
     order_no = models.ForeignKey('cosmic_order', on_delete=models.CASCADE, db_column='order_no',blank=True, null=True)
     id_numeric = models.AutoField(primary_key=True)
