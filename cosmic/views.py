@@ -100,9 +100,16 @@ def create_order(request):
         if form.is_valid():
             print(form.data,"val")
             customers_name = request.POST.get('customer_name') 
+            notify_party = request.POST.get('notify_party') 
+            suppliers_name = request.POST.get('supplier_name') 
+# Assuming you have a field with supplier_id in your form
             customer = customer_profile.objects.get(customer_name=customers_name)
+            if notify_party:
+                notify_1 = customer_profile.objects.get(customer_name=notify_party)
+                form.instance.notify_party = notify_1
+            supplier = supplier_profile.objects.get(supplier_name=suppliers_name)
             form.instance.customer_name = customer
-            form.save()
+            form.instance.supplier_name = supplier
             return redirect('create_order')  # Redirect to the list of purchases or any other desired view
         else:
             print(form.data,"nval")
@@ -110,7 +117,12 @@ def create_order(request):
             return JsonResponse({'form_errors': errors}, status=400)
         
     form = CosmicOrderForm()
-    formset = OrderItemForm()
+    formset = formset_factory(OrderItemForm, extra=1)
+    formset = formset(prefix="items")
+
+    # Render the form with the supplier choices
+    customers = customer_profile.objects.all()
+    suppliers = supplier_profile.objects.all()
 
     return render(request, 'create_order.html', {'form': form, 'formset': formset, 'customers': customers,'suppliers':suppliers})
 
