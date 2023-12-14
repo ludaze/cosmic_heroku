@@ -782,3 +782,63 @@ def rejected_orders(request):
 
    
     return render(request, 'admin/rejected_orders.html', context)
+
+def create_invoice_items(request):
+    
+    if request.method == 'POST':
+        formset = formset_factory(InvoiceItemForm, extra=1, min_num=1)
+        
+        formset = formset(request.POST or None,prefix="items")
+        #print(formset.data,"r")
+      
+        if formset.errors:
+            print(formset.errors)   
+        
+        # Check if 'PR_no' field is empty in each form within the formset
+        for form in formset:
+            print(form,"form")
+        non_empty_forms = [form for form in formset if form.cleaned_data.get('item_name')]
+        pr_no = request.POST.get('order_no')
+        invoice_no = request.POST.get('invoice_num')
+        pr = cosmic_order.objects.get(order_no = pr_no)
+        invoice = shipping_info.objects.get(invoice_num = invoice_no)
+        if non_empty_forms:
+            print("yes")
+            if formset.is_valid():
+                final_price = 0.00
+                
+                for form in non_empty_forms:
+                    #form.instance.remaining = form.cleaned_data['quantity']
+                    form.instance.order_no = pr
+                    form.instance.invoice_num = invoice
+                    #final_quantity += form.cleaned_data['quantity']
+                    final_price += float(form.cleaned_data['before_vat'])
+                    print(form.cleaned_data['before_vat'])
+                    form.save()
+                
+                invoice.final_price = final_price
+                #pr.total_quantity = final_quantity
+                #pr.remaining = final_quantity
+                invoice.save()
+                pr.save()
+                #message.success("successful!")
+            else:
+                print(formset.data,"nval")
+                # errors = dict(formset.errors.items())
+                # return JsonResponse({'form_errors': errors}, status=400)
+        
+            
+            context = {
+                'formset': formset,
+                # 'message':success_message,
+            }
+            return render(request, 'trial_edit.html', context)
+    else:
+       
+        formset = formset_factory(InvoiceItemForm, extra=1)
+        formset = formset(prefix="items")
+
+    context = {
+        'formset': formset,
+    }
+    return render(request, 'trial_edit.html', context)
