@@ -21,4 +21,6 @@ urlpatterns = [
     path('bill_of_lading', views.bill_of_lading, name='bill_of_lading'),
     path('rejected_orders', views.rejected_orders, name='rejected_orders'),
     path('packing_list', views.packing_list, name='packing_list'),
+    path('truck_waybill', views.truck_waybill, name='truck_waybill'),
+    path('display_single_order', views.display_single_order, name='display_single_order'),
 ]

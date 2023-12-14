@@ -81,7 +81,7 @@ class ShippingForm(forms.ModelForm):
     class Meta:
    
         model = shipping_info
-        fields = [ 'customer_no','invoice_date','vessel','container_no','truck_waybill_no']
+        fields = [ 'invoice_num','final_price','waybill_remark','packing_remark','lading_remark', 'invoice_remark','customer_no','invoice_date','vessel','container_no','truck_waybill_no']
 
 class approvalForm(forms.Form):
     selected_orders = forms.ModelMultipleChoiceField(

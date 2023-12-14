@@ -172,17 +172,21 @@ def create_order_items(request):
         if non_empty_forms:
             print("yes")
             if formset.is_valid():
+                print()
                 final_quantity = 0.0
-                pr_no = request.POST.get('order_no')
+                final_price = 0.00
+                
                 print(pr_no,"pr")
-                pr = cosmic_order.objects.get(order_no = pr_no)
+                pr = cosmic_order.objects.get(order_no=pr_no)
                 for form in non_empty_forms:
                     form.instance.remaining = form.cleaned_data['quantity']
                     form.instance.order_no = pr
                     final_quantity += form.cleaned_data['quantity']
+                    final_price += float(form.cleaned_data['before_vat'])
                     
                     form.save()
                 
+                pr.PR_before_vat = final_price
                 pr.total_quantity = final_quantity
                 pr.remaining = final_quantity
                 pr.save()
@@ -273,10 +277,19 @@ def create_shipping(request):
             print(number) # Assuming you have a field with supplier_id in your form
             order = cosmic_order.objects.get(order_no=number)
             
-            ship_form.instance.order_no = order
+            try:
             
+                customer = customer_profile.objects.get(customer_name=notify_party_new)
+                ship_form.instance.notify_party3 = customer
+            except customer_profile.DoesNotExist:
+                customer = None
+                
+
+            ship_form.instance.order_no = order
+            ship_form.instance.final_price = 0.00
+            #print(purchase.vendor_name,"name")
             ship_form.save()
-            return redirect('shipping_details')  # Redirect to the list of purchases or any other desired view
+            return redirect('create_order')  # Redirect to the list of purchases or any other desired view
         else:
             print(form.data,"nval")
     
