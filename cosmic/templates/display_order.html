@@ -22,8 +22,9 @@
                       <th>Order Number</th>
                       <th>Date</th>
                       <th>Items</th>
-                      <th>Total Price</th>
                       <th>Quantity</th>
+                      <th>Unit Price</th>
+                      <th>Total Price</th>
                       <th>Customer Name</th>
                       <th>Status</th>
                     </tr>
@@ -37,12 +38,24 @@
                             {% if not forloop.last %}<br>{% endif %}
                         {% endfor %}
                     </td>
-                      <td>{{ order.PR_before_vat }}</td>
-                      <td>{{ order.total_quantity }}</td>
+                    <td>{% for item in order.order_items.all %}
+                      {{ item.quantity }}
+                      {% if not forloop.last %}<br>{% endif %}
+                  {% endfor %}</td>
+                    <td>
+                      {% for item in order.order_items.all %}
+                          {{ item.price }}
+                          {% if not forloop.last %}<br>{% endif %}
+                      {% endfor %}
+                  </td>
+                      <td>{% for item in order.order_items.all %}
+                        {{ item.before_vat }}
+                        {% if not forloop.last %}<br>{% endif %}
+                    {% endfor %}</td>
+                      
                       <td>{{ order.customer_name.customer_name }}</td>
                       <td>{{ order.status }}</td>
                     </tr>
-                    {% endfor %}
                     
                   </table>
               </div>
