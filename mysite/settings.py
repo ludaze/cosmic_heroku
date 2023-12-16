@@ -38,6 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'cosmic',
+    'widget_tweaks',
+    'django_htmx',
+    
 ]
 
 MIDDLEWARE = [

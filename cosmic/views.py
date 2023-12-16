@@ -126,6 +126,9 @@ def create_order(request):
 
     return render(request, 'create_order.html', {'form': form, 'formset': formset, 'customers': customers,'suppliers':suppliers})
 
+def index(request):
+    return render(request,'index.html')
+    
 def display_order(request):
     if request.method == 'GET':
         orders = cosmic_order.objects.all()
