@@ -36,7 +36,7 @@ def create_customer(request):
 
 def display_customer(request):
     if request.method == 'GET':
-        customers = cosmic_customer_profile.objects.all()
+        customers = customer_profile.objects.all()
         context = {
                     'my_customer': customers,
                 }

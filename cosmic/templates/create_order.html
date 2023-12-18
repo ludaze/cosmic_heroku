@@ -23,8 +23,8 @@
       {{ form_errors }}
     </div>
 
-    <div class="container d-flex justify-content-center align-items-center" style="font-size: small; ">
-        <div class="card" style="min-width: 1000px;">
+    <div class="container d-flex justify-content-center align-items-center" style="font-size: small; margin: 5%;">
+        <div class="card" style="min-width: 90%;">
             <div class="card-body form-floating">
             <div class="row">
                 <div class="col-sm-12">
@@ -488,6 +488,25 @@
 .catch(error => {
     console.error('Error:', error);
 });
+        });
+        function updateTotalPrice(form) {
+            var quantity = parseFloat(form.find('.quantity').val());
+            var price = parseFloat(form.find('.price').val());
+            var total = quantity * price || 0;
+            var total_price = total + (total * 0.15)
+            form.find('.before_vat').val(total.toFixed(2));
+            form.find('.total_price').val(total_price.toFixed(2));
+        }
+
+        $(document).on('input', '.item-list .quantity, .item-list .price', function () {
+            var form = $(this).closest('.item-list');
+            updateTotalPrice(form);
+        });
+
+        // Apply initial calculation for existing forms
+        $('.item-list').each(function () {
+            var form = $(this);
+            updateTotalPrice(form);
         });
         function add_new_form(args) {
             // Your code to add a new form here

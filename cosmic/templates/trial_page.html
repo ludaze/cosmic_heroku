@@ -73,7 +73,7 @@ nav .navbar{
 }
     /* Custom styles */
     .header {
-      background-image: url('../static/space1.JPEG'); /* Replace 'path_to_your_image.jpg' with your image path */
+      background-image: url('./back1.PNG'); /* Replace 'path_to_your_image.jpg' with your image path */
     
       color: white;
       padding: 20px 0;
@@ -83,8 +83,7 @@ nav .navbar{
       color: white;
     }
     body{
-        background-image: url('../static/space3.JPG'); 
-        
+        background-image: url('../static/space3.jpg'); 
         font-family: "Roboto", sans-serif;
     }   
  
@@ -93,8 +92,8 @@ nav .navbar{
 
 <body>
         <div class="container">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light" style="font-size: medium;">
-                <a class="navbar-brand" href="{% url 'index' %}">Cosmic</a>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light"  >
+                <a class="navbar-brand" href="{% url 'index' %}">Cosmics</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                   <span class="navbar-toggler-icon"></span>
                 </button>
