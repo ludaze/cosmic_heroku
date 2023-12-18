@@ -105,24 +105,115 @@
                                             data-target="#datepicker1" />
                                     </div>
                                 </div>
-                                
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-sm-8">Shipper<span style="color: rgb(187, 17, 17);">*</span></label>
-                                <div class="col-sm-11">
-                                    <input type="text" list="the_orders4" class="form-control" name="supplier_name">
-                                <datalist id="the_orders4">
-                                    {% for supplier in suppliers %}
-                                    <option value="{{supplier.supplier_name}}"></option>
-                                    {% endfor %}
-                                </datalist>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-8">Shipper<span style="color: rgb(187, 17, 17);">*</span></label>
+                                    <div class="col-sm-11">
+                                        <input type="text" list="the_orders4" class="form-control" name="supplier_name">
+                                    <datalist id="the_orders4">
+                                        {% for supplier in suppliers %}
+                                        <option value="{{supplier.supplier_name}}"></option>
+                                        {% endfor %}
+                                    </datalist>
+                                    </div>
+            
                                 </div>
-        
+                                <div class="form-group">
+                                    <label class="control-label col-sm-8">Notify Party<span style="color: rgb(187, 17, 17);">*</span></label>
+                                    <div class="col-sm-11">
+                                        <input type="text" list="the_orders7" class="form-control" name="notify_party">
+                                    <datalist id="the_orders7">
+                                        {% for customer in customers %}
+                                        <option value="{{customer.customer_name}}"></option>
+                                        {% endfor %}
+                                    </datalist>
+                                    </div>
+            
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-8">Add Notify Party<span style="color: rgb(187, 17, 17);">*</span></label>
+                                    <div class="col-sm-11">
+                                        <input type="text" list="the_orders8" class="form-control" name="notify_party2">
+                                    <datalist id="the_orders8">
+                                        {% for customer in customers %}
+                                        <option value="{{customer.customer_name}}"></option>
+                                        {% endfor %}
+                                    </datalist>
+                                    </div>
+            
+                                </div>
                             </div>
+                            
                             
                             
                        </div>   
-                        
+                       <div class="row" style="margin-top: 20px;">
+                        <div class="col-sm-5">
+                            <span class="form-group">
+                                <label class="control-label col-sm-8"> Country of Origin<span style="color: rgb(187, 17, 17);">*</span></label>
+                                <div class="col-sm-11">
+        
+                                    <input type="text" class="form-control" name="country_of_origin" >
+                                </div>
+                            </span>
+        
+                            <span class="form-group">
+                                <label class="control-label col-sm-8">Final Destination<span style="color: rgb(187, 17, 17);">*</span></label>
+                                <div class="col-sm-11">
+                                    <input type="text" class="form-control" name="final_destination">
+                                    
+                                </div>
+        
+                            </span>
+        
+        
+                        </div>
+        
+                       
+                            <div class="col-sm-5">
+                                <span class="form-group">
+                                    <label class="control-label col-sm-8"> Port of Loading<span style="color: rgb(187, 17, 17);">*</span></label>
+                                    <div class="col-sm-11">
+            
+                                        <input type="text" class="form-control" name="port_of_loading" >
+                                    </div>
+                                </span>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-8">Port of Discharge<span style="color: rgb(187, 17, 17);">*</span></label>
+                                    <div class="col-sm-11">
+                                        <input type="text" class="form-control" name="port_of_discharge" >
+                                        
+                                    </div>
+            
+                                </div>
+                                <!--
+                                    <div class="form-group">
+                                    <label class="control-label col-sm-8">Consignee<span style="color: rgb(187, 17, 17);">*</span></label>
+                                    <div class="col-sm-11">
+                                        <input type="text" list="the_orders" class="form-control" name="notify_party">
+                                        <datalist id="the_orders">
+                                            {% for customer in customers %}
+                                            <option value="{{customer.customer_name}}"></option>
+                                            {% endfor %}
+                                        </datalist>
+                                    </div>
+            
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-8">Notify Party 2</label>
+                                    <div class="col-sm-11">
+                                        <input type="text" list="the_orders3" class="form-control" name="notify_party2">
+                                        <datalist id="the_orders3">
+                                            {% for customer in customers %}
+                                            <option value="{{customer.customer_name}}"></option>
+                                            {% endfor %}
+                                        </datalist>
+                                    </div>
+            
+                                </div> -->
+                            </div>
+                            
+                            
+                       </div>
                         <div class="col-sm-12" style="display: block;">
         
                             <div class="row">
