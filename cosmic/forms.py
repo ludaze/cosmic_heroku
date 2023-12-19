@@ -119,7 +119,7 @@ class InvoiceItemForm(forms.ModelForm):
     class Meta:
    
         model = invoice_item
-        fields = ['item_name','hs_code','price','quantity','before_vat','measurement']
+        fields = ['item_name','hs_code','price','quantity','before_vat','measurement','bags','net_weight','gross_weight']
 
 class restoreForm(forms.Form):
     selected_orders = forms.ModelMultipleChoiceField(

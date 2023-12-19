@@ -233,10 +233,8 @@ def display_single_order(request):
             # If it's not found in purchase_orders, try searching in import_PR
             try:
                 orders = cosmic_purchase.objects.get(purchase_no=pr_no)
-                print(orders,"not in")
                 pr_items = purchase_item.objects.all()
                 pr_items = pr_items.filter(purchase_no=pr_no)
-                print(pr_items)
             except cosmic_purchase.DoesNotExist:
                 order = None
             order = None 
@@ -276,8 +274,6 @@ def create_shipping(request):
             print(ship_form.errors) 
         if ship_form.is_valid():
             
-            print(ship_form.data,"val")
-            print(number) # Assuming you have a field with supplier_id in your form
             order = cosmic_order.objects.get(order_no=number)
             
             try:
