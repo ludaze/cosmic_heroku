@@ -464,15 +464,13 @@ def print_order(request):
             orders = cosmic_order.objects.get(order_no=pr_no)
             pr_items = order_item.objects.all()
             pr_items = pr_items.filter(order_no=pr_no)
-            print(pr_items)
+            
         except cosmic_order.DoesNotExist:
             try:
-                print("trial")
                 orders = cosmic_purchase.objects.get(purchase_no=pr_no)
                 
                 pr_items = purchase_item.objects.all()
                 pr_items = pr_items.filter(purchase_no=pr_no)
-                print(pr_items)
             except cosmic_purchase.DoesNotExist:
                 orders = None
         

@@ -54,7 +54,6 @@ class cosmic_purchase(models.Model):
     payment_type = models.TextField(blank=True, null=True)
     approved_by = models.TextField(blank=True, null=True)
     before_vat = models.FloatField(blank=True, null=True)
-    total_price = models.FloatField(blank=True, null=True)
     status = models.TextField(blank=True, null=True, default="Pending")
 
 class shipping_info(models.Model):
