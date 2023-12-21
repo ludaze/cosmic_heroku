@@ -308,7 +308,7 @@ def order_approval(request):
     if not is_admin(request.user):
         # User is not authenticated to access this view
         messages.error(request, "You are not authorized to access this page.")
-        return redirect('login')
+        return redirect('admin')
 
     pending_orders = cosmic_order.objects.filter(status='Pending')
     # Handle form submission
