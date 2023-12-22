@@ -5,14 +5,16 @@
 
 <head>
     <script src="https://unpkg.com/htmx.org@1.9.6"></script>
+    <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet"> 
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}">
+    <!-- <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}"> -->
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha384-KyZXEAg3QhqLMpG8r+tdXAdVB65f/9U6HcWfIw0WyjsQ8lThhRRNenPVE5DzjG8P" crossorigin="anonymous"> -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 
     <style>
         #form-lists {
@@ -87,12 +89,13 @@ ul ul a {
         <nav id="sidebar" style="background-image:url('../static/back1.PNG'); margin-top: 0%; ">
             <div class="sidebar-header" style=" background-color: transparent;color:white ">
                 <h3>  COSMIC</h3>
+
             </div>
 
             <ul class="list-unstyled components">
                 <br>
                 <li class="active" style="font-size:larger; font-weight: 500;">
-                    <a href="#approvalSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Approvals</a>
+                    <a href="#approvalSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"> <i class="fas fa-check"></i>Approvals</a>
                     <ul class="collapse list-unstyled" id="approvalSubmenu">
                         <li style="font-size: large;">
                             <a href="{% url 'order_approval' %}">Order Approval</a>
@@ -114,10 +117,10 @@ ul ul a {
                    
                 </li>
                 <li class="active" style="font-size:larger; font-weight: 500;">
-                    <a href="#customerSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Customer</a>
+                    <a href="#customerSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"> <i class="fas fa-user-circle"></i> Customer</a>
                     <ul class="collapse list-unstyled" id="customerSubmenu">
                         <li style="font-size: large;">
-                            <a href="{% url 'create_customer' %}">Create Customer</a>
+                            <a href="{% url 'create_customer' %}"> Create Customer</a>
                         </li>
                         <li style="font-size: large;">
                             <a href="{% url 'display_customer' %}">Display Customers</a>
@@ -128,10 +131,10 @@ ul ul a {
 
                 <li style="font-size:larger; font-weight: 500;">
                     <a href="#supplierSubmenu" data-toggle="collapse" aria-expanded="false"
-                        class="dropdown-toggle">Supplier</a>
+                        class="dropdown-toggle"> <i class="fas fa-user"></i> Supplier</a>
                     <ul class="collapse list-unstyled" id="supplierSubmenu">
                         <li style="font-size: large;">
-                            <a href="{% url 'create_supplier' %}">Create Supplier</a>
+                            <a href="{% url 'create_supplier' %}">Create Suppliers</a>
                         </li>
                         <li style="font-size: large;">
                             <a href="{% url 'display_supplier' %}">Display Suppliers</a>
