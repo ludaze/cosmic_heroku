@@ -3,6 +3,9 @@ body {
     font-family: 'Poppins', sans-serif;
     background: #fafafa;
 }
+.profile_div{
+    margin: 100px;
+}
 .input-container {
     display: flex;
     justify-content: space-between;
