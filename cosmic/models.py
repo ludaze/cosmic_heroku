@@ -98,3 +98,8 @@ class invoice_item(models.Model):
     net_weight = models.FloatField(blank=True, null=True)
     gross_weight = models.FloatField(blank=True, null=True)
     bags = models.FloatField(blank=True, null=True)
+
+class item_codes(models.Model):
+    hs_code = models.TextField(primary_key=True)
+    item_name = models.TextField(blank=True, null=True)
+    
