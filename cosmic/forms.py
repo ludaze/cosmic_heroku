@@ -58,14 +58,12 @@ class OrderItemForm(forms.ModelForm):
     item_name = forms.CharField(
         widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter name'}),
     )
-    hs_code = forms.CharField(
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'HS-CODE'}),
-    )
+    
     
     class Meta:
    
         model = order_item
-        fields = [ 'item_name','hs_code','price','quantity','before_vat','measurement']
+        fields = [ 'item_name','price','quantity','before_vat','measurement']
 
 class CosmicPurchaseForm(forms.ModelForm):
     

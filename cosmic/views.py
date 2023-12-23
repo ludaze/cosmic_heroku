@@ -110,6 +110,7 @@ def create_order(request):
             supplier = supplier_profile.objects.get(supplier_name=suppliers_name)
             form.instance.customer_name = customer
             form.instance.supplier_name = supplier
+            form.save()
             return redirect('create_order')  # Redirect to the list of purchases or any other desired view
         else:
             print(form.data,"nval")
@@ -171,19 +172,20 @@ def create_order_items(request):
         for form in formset:
             print(form,"form")
         non_empty_forms = [form for form in formset if form.cleaned_data.get('item_name')]
-       
+        pr_no = request.POST.get('order_no')
         if non_empty_forms:
-            print("yes")
             if formset.is_valid():
-                print()
                 final_quantity = 0.0
                 final_price = 0.00
-                
-                print(pr_no,"pr")
                 pr = cosmic_order.objects.get(order_no=pr_no)
                 for form in non_empty_forms:
                     form.instance.remaining = form.cleaned_data['quantity']
                     form.instance.order_no = pr
+                    items = form.cleaned_data['item_name']
+                    item = item_codes.objects.all()
+                    item = item.filter(item_name = items).first()
+                    code = item.hs_code
+                    form.instance.hs_code = code
                     final_quantity += form.cleaned_data['quantity']
                     final_price += float(form.cleaned_data['before_vat'])
                     
