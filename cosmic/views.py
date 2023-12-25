@@ -114,7 +114,9 @@ def create_order(request):
             return redirect('create_order')  # Redirect to the list of purchases or any other desired view
         else:
             print(form.data,"nval")
+           # print(form_errors,"ers")
             errors = dict(form.errors.items())
+            print(errors,"errors")
             return JsonResponse({'form_errors': errors}, status=400)
         
     form = CosmicOrderForm()

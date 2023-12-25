@@ -32,7 +32,7 @@
                         <span class="col-sm-3"></span>
                         <strong><h1 style="font-weight: 700;">Create Order</h1></strong>
                     </div>
-                    <div id="error-container">
+                    <div id="error-container" style="height:50px;">
                         <!-- Errors will be displayed here -->
                     </div>
                     
@@ -534,8 +534,7 @@
             // Serialize form data
             const formData1 = new FormData(form1);
             const formData2 = new FormData(form2);
-            //console.log(univ_total,"tots")
-            //const freightPrice = formData1.get('freight1');
+
             const prNoValue = formData1.get('order_no');
 
             //formData1.set('PR_total_price', univ_total);
@@ -554,6 +553,7 @@
 })
 .then(response => {
     if (!response.ok) {
+        // console.log(form_errors)
         return response.json().then(data => {
             // Display form 1 errors in the error container
             const errorContainer = document.getElementById('error-container');
