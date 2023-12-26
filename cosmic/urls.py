@@ -25,6 +25,5 @@ urlpatterns = [
     path('index',views.index,name='index'),
     path('create_order_items', views.create_order_items, name='create_order_items'),
     path('create_invoice_items', views.create_invoice_items, name='create_invoice_items'),
-    
     path('display_single_order', views.display_single_order, name='display_single_order'),
 ]

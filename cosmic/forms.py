@@ -87,8 +87,6 @@ class EditOrderForm(forms.ModelForm):
     order_no = forms.CharField(widget=forms.TextInput(attrs={'class': 'order_no form-control'}))
 
     
-    
-    
     class Meta:
    
         model = cosmic_order
@@ -107,7 +105,7 @@ class approvalForm(forms.Form):
     )
     approval = forms.CharField(
         widget=forms.TextInput,
-        required=True  # You can omit this line as TextInput is the default widget for CharField
+        required=True 
     )
 
 class InvoiceItemForm(forms.ModelForm):
@@ -145,7 +143,7 @@ class restoreForm(forms.Form):
     )
     approval = forms.CharField(
         widget=forms.TextInput,
-        required=True  # You can omit this line as TextInput is the default widget for CharField
+        required=True 
     )
 class CosmicPurchaseForm(forms.ModelForm):
     
