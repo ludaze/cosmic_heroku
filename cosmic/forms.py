@@ -81,6 +81,20 @@ class ShippingForm(forms.ModelForm):
         model = shipping_info
         fields = [ 'invoice_num','final_price','waybill_remark','packing_remark','lading_remark', 'invoice_remark','customer_no','invoice_date','vessel','container_no','truck_waybill_no']
 
+class EditOrderForm(forms.ModelForm):
+    
+    total_quantity = forms.IntegerField(widget=forms.TextInput(attrs={'class': 'total_quantity form-control' }),required=False)
+    order_no = forms.CharField(widget=forms.TextInput(attrs={'class': 'order_no form-control'}))
+
+    
+    
+    
+    class Meta:
+   
+        model = cosmic_order
+        fields = ['customer_name','supplier_name','order_no','date','payment_type','measurement_type','approved_by','PR_before_vat','total_quantity','transportation','shipment_type','freight','ref_no','notify_party']
+        exclude = ['order_no'] 
+
 class approvalForm(forms.Form):
     selected_orders = forms.ModelMultipleChoiceField(
         queryset= cosmic_order.objects.filter(status='Pending'),
