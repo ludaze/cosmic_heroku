@@ -118,6 +118,9 @@ class InvoiceItemForm(forms.ModelForm):
     measurement = forms.CharField(widget=forms.TextInput(attrs={'class': 'measurement form-control'}), required=False)
     quantity = forms.FloatField(widget=forms.TextInput(attrs={'class': 'quantity form-control' }))
     price = forms.DecimalField(widget=forms.TextInput(attrs={'class': 'price form-control'}))
+    bags = forms.DecimalField(widget=forms.TextInput(attrs={'class': 'bags form-control'}))
+    net_weight = forms.DecimalField(widget=forms.TextInput(attrs={'class': 'net_weight form-control'}))
+    gross_weight = forms.DecimalField(widget=forms.TextInput(attrs={'class': 'gross_weight form-control'}))
     
     item_name = forms.CharField(
         widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter name','size':'20'}),
