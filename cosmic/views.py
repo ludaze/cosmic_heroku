@@ -428,6 +428,7 @@ def edit_order(request):
         cosmic_order_instance.final_destination = request.POST.get('final_destination')
         cosmic_order_instance.port_of_discharge = request.POST.get('port_of_discharge')
         cosmic_order_instance.port_of_loading = request.POST.get('port_of_loading')
+        cosmic_order_instance.freight_price = request.POST.get('freight_price')
         consignees = request.POST.get('consignee')
         consignee = customer_profile.objects.get(customer_name=consignees)
         cosmic_order_instance.consignee = consignee
