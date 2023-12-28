@@ -755,7 +755,25 @@
     // Handle any general errors during form submission
 });
         });
-        
+        function updateTotalPrice(form) {
+            var quantity = parseFloat(form.find('.quantity').val());
+            var price = parseFloat(form.find('.price').val());
+            var total = quantity * price || 0;
+            var total_price = total + (total * 0.15)
+            form.find('.before_vat').val(total.toFixed(2));
+            form.find('.total_price').val(total_price.toFixed(2));
+        }
+
+        $(document).on('input', '.item-list .quantity, .item-list .price', function () {
+            var form = $(this).closest('.item-list');
+            updateTotalPrice(form);
+        });
+
+        // Apply initial calculation for existing forms
+        $('.item-list').each(function () {
+            var form = $(this);
+            updateTotalPrice(form);
+        });
         function add_new_form(args) {
             // Your code to add a new form here
             const currentForms = document.getElementsByClassName('item-list')
