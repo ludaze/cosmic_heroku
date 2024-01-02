@@ -18,11 +18,28 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 
     <style>
+       
         #form-lists {
         display: flex;
         flex-wrap: wrap;
         gap: 10px; /* Adjust the gap between items */
     }
+    .pending {
+        background-image: url('../static/APPROVED.PNG');
+        position: relative; /* Add position to enable z-index */
+        z-index: 1;
+    }
+    @media print {
+        
+        body.block-print {
+                display: none;
+            }
+    }
+    @media print {
+            .block-print {
+                display: none;
+            }
+        }
     .item-list {
         flex: 0 0 calc(50% - 10px); /* Set width for two elements with a 10px margin in between */
         margin-bottom: 10px; /* Add margin bottom to create space */

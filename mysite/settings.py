@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'cosmic',
     'widget_tweaks',
     'django_htmx',
+    'django.contrib.humanize',
     
 ]
 

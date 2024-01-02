@@ -1,9 +1,9 @@
 {% extends 'cosmic_base.html' %}
 {% load humanize %}
 {% block content %}
-<div class="form-group pull-left" style="margin-top: 0;margin-left: 0;">
+<div class="form-group pull-left {% if my_order.status == 'Pending' %} pending block-print {% else %} default {% endif %}" style="margin-top: 0;margin-left: 0;background-position-x: center;background-position-y: center;background-repeat: no-repeat;">
 
-    <div class="table-responsive ">
+    <div class="table-responsive " >
         <table class="table table-nowrap mb-0" style="margin-bottom: 0;margin-left: 0;">
             <thead>
                 <tr style="margin-left: 100px;">
