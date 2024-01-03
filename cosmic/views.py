@@ -894,3 +894,12 @@ def create_invoice_items(request):
         'formset': formset,
     }
     return render(request, 'trial_edit.html', context)
+
+def display_items(request):
+    if request.method == 'GET':
+        items = item_codes.objects.all()
+        context = {
+            'items':items,
+        }
+
+        return render(request,' items_display.html')

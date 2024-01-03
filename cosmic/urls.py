@@ -26,4 +26,5 @@ urlpatterns = [
     path('create_order_items', views.create_order_items, name='create_order_items'),
     path('create_invoice_items', views.create_invoice_items, name='create_invoice_items'),
     path('display_single_order', views.display_single_order, name='display_single_order'),
+    path('display_items', views.display_items, name='display_items'),
 ]
