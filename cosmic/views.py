@@ -903,3 +903,6 @@ def display_items(request):
         }
 
         return render(request,' items_display.html')
+
+def index(request):
+    return render(request,'index.html')
