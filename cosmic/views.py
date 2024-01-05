@@ -759,7 +759,6 @@ def packing_list(request):
                 print(pr_items)
             except cosmic_purchase.DoesNotExist:
                 order = None
-                # Handle the case where the object doesn't exist in either table.
             order = None 
         try:
             

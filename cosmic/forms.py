@@ -19,7 +19,7 @@ class CustomerForm(forms.ModelForm):
         fields = ['customer_name','customer_address','email','phone_number','contact_person','comments']
 
 class SupplierForm(forms.ModelForm):
-    
+    #phone_number = 
     phone_number = forms.CharField(widget=forms.TextInput(attrs={'class': 'phone_number form-control' }))
     supplier_address = forms.CharField(widget=forms.TextInput(attrs={'class': 'customer_address form-control'}))
 

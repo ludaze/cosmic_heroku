@@ -88,6 +88,8 @@ class order_item(models.Model):
 
 class invoice_item(models.Model):
     #invoice_num = models.ForeignKey('shipping_info', on_delete=models.CASCADE, db_column='invoice_num',blank=True, null=True, to_field='invoice_num')
+    #invoice_num = models.ForeignKey('shipping_info', on_delete=models.CASCADE, db_column='invoice_num',blank=True, null=True, to_field='invoice_num')
+   
     id_numeric = models.AutoField(primary_key=True)
     hs_code = models.TextField(blank=True, null=True)
     item_name = models.TextField(blank=True, null=True)
@@ -102,4 +104,5 @@ class invoice_item(models.Model):
 class item_codes(models.Model):
     hs_code = models.TextField(primary_key=True)
     item_name = models.TextField(blank=True, null=True)
-    
+
+   
