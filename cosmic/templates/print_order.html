@@ -2,23 +2,24 @@
 {% load humanize %}
 {% block content %}
 <div class="form-group pull-left {% if my_order.status == 'Pending' %} pending block-print {% else %} default {% endif %}" style="margin-top: 0;margin-left: 0;background-position-x: center;background-position-y: center;background-repeat: no-repeat;">
-
+    <div style="display: flex;">
+        <img src="../static/new_logo.png" alt="" style="width: 150px;text-align: right;">
+        <div class="mb-4">
+            <div class="text-muted">
+                <h3 class="mb-1" style="margin-left: 52px;">Cosmic Connection FZE</h3>
+                <p class="mb-1" style="margin-left: 20px; text-align: center;">Free Zone, Djbouti
+                    <br>Email: paresh.bavishi@technotransgroup.com <br>TEL.+253-77 81 55 70
+                </p>
+    
+            </div>
+            <h4 class="mb-1 text-muted" style="margin-left: 132px;">Proforma Invoice</h4>
+    
+        </div>
+    </div>
     <div class="table-responsive " >
         <table class="table table-nowrap mb-0" style="margin-bottom: 0;margin-left: 0;">
             <thead>
-                <tr style="margin-left: 100px;">
-                    <div class="mb-4">
-                        <div class="text-muted">
-                            <h3 class="mb-1" style="margin-left: 152px;">Cosmic Connection FZE</h3>
-                            <p class="mb-1" style="margin-left: 120px; text-align: center;">Free Zone, Djbouti
-                                <br>Email: paresh.bavishi@technotransgroup.com <br>TEL.+253-77 81 55 70
-                            </p>
-
-                        </div>
-                        <h4 class="mb-1 text-muted" style="margin-left: 232px;">Proforma Invoice</h4>
-
-                    </div>
-                </tr>
+              
                 <tr>
                     <th style="width: 400px;">
                         <h4 class="text-muted text-sm-end font-size-15 mb-1">Seller Details</h4>
