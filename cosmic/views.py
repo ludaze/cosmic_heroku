@@ -897,11 +897,12 @@ def create_invoice_items(request):
 def display_items(request):
     if request.method == 'GET':
         items = item_codes.objects.all()
+        print(items)
         context = {
             'items':items,
         }
 
-        return render(request,' items_display.html')
+        return render(request,'items_display.html')
 
 def index(request):
     return render(request,'index.html')
