@@ -152,3 +152,14 @@ class CosmicPurchaseForm(forms.ModelForm):
     
     total_quantity = forms.FloatField(widget=forms.TextInput(attrs={'class': 'total_quantity form-control' }),required=False)
     purchase_no = forms.CharField(widget=forms.TextInput(attrs={'class': 'purchase_no form-control'}))
+
+class CosmicItemForm(forms.ModelForm):
+    
+    item_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'item_name form-control'}))
+    hs_code = forms.DecimalField(widget=forms.TextInput(attrs={'class': 'hs_code form-control'}))
+    
+    class Meta:
+   
+        model = cosmic_order
+        fields = ['item_name','hs_code']
+        

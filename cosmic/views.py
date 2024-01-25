@@ -130,9 +130,7 @@ def create_order(request):
 
     return render(request, 'create_order.html', {'form': form, 'formset': formset, 'customers': customers,'suppliers':suppliers})
 
-def index(request):
-    return render(request,'index.html')
-    
+ 
 def display_order(request):
     if request.method == 'GET':
         orders = cosmic_order.objects.all()
@@ -895,14 +893,25 @@ def create_invoice_items(request):
     return render(request, 'trial_edit.html', context)
 
 def display_items(request):
-    if request.method == 'GET':
-        items = item_codes.objects.all()
-        print(items)
-        context = {
-            'items':items,
-        }
+    if request.method == 'POST':
+        form = CosmicItemForm(request.POST)
 
-        return render(request,'items_display.html')
+        if form.errors:
+            print(form.errors)
 
-def index(request):
-    return render(request,'index.html')
+        if form.is_valid():
+            form.save()
+            return redirect('items_display')
+    
+    form = CosmicItemForm()
+    items = item_codes.objects.all()
+    print(items)
+    context = {
+        'items':items,
+        'form':form,
+    }
+
+    return render(request,'items_display.html',context)
+
+def index_home(request):
+    return render(request,'index_home.html')

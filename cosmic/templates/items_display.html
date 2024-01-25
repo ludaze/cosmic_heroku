@@ -47,10 +47,16 @@
   
 
   <div>
-    <div>
-        <input type="text" class="form-control col-sm-4" >
-        <input type="text" class="form-control col-sm-4" >
-    </div>
+    <div class="col-sm-12">
+      <div class=" col-sm-4">
+        <input type="text" class="form-control"  name="item_name" placeholder="Item name">
+        
+      </div>
+      <div class="col-sm-4">
+        <input type="text" class="form-control col-sm-2" name = "hs_code" placeholder="HS Code">
+   
+      </div>
+         </div>
     <button id="submits" class="col-sm-2 btn-sm " 
   style="background-image:url('../static/back1.PNG');color: aliceblue; margin-left: 100px;font-size: 24px; height: 62px; font-weight: bolder;">
       Submit
@@ -60,26 +66,7 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
-      const orderLinks = document.querySelectorAll('.order-link');
-      console.log("p1")
-      orderLinks.forEach(function (link) {
-          link.addEventListener('click', function (event) {
-              event.preventDefault();
-              console.log("p2")
-              const orderID = this.getAttribute('data-order-id');
-              window.location.href = `/cosmic/display_single_order?order_no=${orderID}`;
-          });
-      });
-      const orderLinks2 = document.querySelectorAll('.order-link2');
-      console.log("p1")
-      orderLinks2.forEach(function (link) {
-          link.addEventListener('click', function (event) {
-              event.preventDefault();
-              console.log("p2")
-              const orderID = this.getAttribute('data-order-id');
-              window.location.href = `/GRN/display_single_order?PR_no=${orderID}`;
-          });
-      });
+      
   });
 </script>
 {% endblock %}

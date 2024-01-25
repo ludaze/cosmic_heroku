@@ -6,6 +6,7 @@ urlpatterns = [
 
     path('create_customer', views.create_customer, name='create_customer'),
     path('create_supplier', views.create_supplier, name='create_supplier'),
+    path('display_items', views.display_items, name='display_items'),
     path('display_customer', views.display_customer, name='display_customer'),
     path('display_customer_profile', views.display_customer_profile, name='display_customer_profile'),
     path('display_supplier', views.display_supplier, name='display_supplier'),
@@ -22,9 +23,9 @@ urlpatterns = [
     path('rejected_orders', views.rejected_orders, name='rejected_orders'),
     path('packing_list', views.packing_list, name='packing_list'),
     path('truck_waybill', views.truck_waybill, name='truck_waybill'),
-    path('index',views.index,name='index'),
+    path('indexs', views.index_home, name='indexs'),
     path('create_order_items', views.create_order_items, name='create_order_items'),
     path('create_invoice_items', views.create_invoice_items, name='create_invoice_items'),
     path('display_single_order', views.display_single_order, name='display_single_order'),
-    path('display_items', views.display_items, name='display_items'),
+    
 ]
