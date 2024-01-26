@@ -915,3 +915,6 @@ def display_items(request):
 
 def index_home(request):
     return render(request,'index_home.html')
+
+def sales_contract(request):
+    return render(request,'sales_contract.html')

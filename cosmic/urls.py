@@ -27,5 +27,7 @@ urlpatterns = [
     path('create_order_items', views.create_order_items, name='create_order_items'),
     path('create_invoice_items', views.create_invoice_items, name='create_invoice_items'),
     path('display_single_order', views.display_single_order, name='display_single_order'),
+    path('sales_contract', views.sales_contract, name='sales_contract'),
+    
     
 ]

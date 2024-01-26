@@ -104,5 +104,7 @@ class invoice_item(models.Model):
 class item_codes(models.Model):
     hs_code = models.TextField(primary_key=True)
     item_name = models.TextField(blank=True, null=True)
+   # item_id = models.TextField(primary_key = True)
+
 
    
