@@ -45,23 +45,26 @@
     </div>
   </section>
   
-
-  <div>
-    <div class="col-sm-12">
-      <div class=" col-sm-4">
-        <input type="text" class="form-control"  name="item_name" placeholder="Item name">
-        
-      </div>
-      <div class="col-sm-4">
-        <input type="text" class="form-control col-sm-2" name = "hs_code" placeholder="HS Code">
-   
-      </div>
-         </div>
-    <button id="submits" class="col-sm-2 btn-sm " 
-  style="background-image:url('../static/back1.PNG');color: aliceblue; margin-left: 100px;font-size: 24px; height: 62px; font-weight: bolder;">
-      Submit
-  </button>
-  </div>
+  <form method="post" action="{% url 'display_items' %}" id="form9">
+    {% csrf_token %}
+    <div>
+      <div class="col-sm-12">
+        <div class=" col-sm-4">
+          <input type="text" class="form-control"  name="item_name" placeholder="Item name">
+          
+        </div>
+        <div class="col-sm-4">
+          <input type="text" class="form-control col-sm-2" name = "hs_code" placeholder="HS Code">
+     
+        </div>
+           </div>
+      <button  class="col-sm-2 btn-sm " 
+    style="background-image:url('../static/back1.PNG');color: aliceblue; margin-left: 100px;font-size: 12px; height: 32px; font-weight: bold;">
+        Add Item
+    </button>
+    </div>
+  </form>
+  
 </div>
 
 <script>

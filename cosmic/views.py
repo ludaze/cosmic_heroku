@@ -901,7 +901,7 @@ def display_items(request):
 
         if form.is_valid():
             form.save()
-            return redirect('items_display')
+            return redirect('display_items')
     
     form = CosmicItemForm()
     items = item_codes.objects.all()
