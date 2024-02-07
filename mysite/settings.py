@@ -86,11 +86,11 @@ DATABASES = {
    # },
     'default': {
        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'mohan_groups',
-       'USER': 'mohan',
+        'NAME': 'trial',
+       'USER': 'postgres',
        'PASSWORD': 'mohanPLC',
        'HOST': '127.0.0.1', 
-        'PORT': '1234',
+        'PORT': '5432',
    }
     
 }
