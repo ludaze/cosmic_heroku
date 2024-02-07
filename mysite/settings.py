@@ -1,3 +1,4 @@
+
 """
 Django settings for mysite project.
 
@@ -25,7 +26,7 @@ SECRET_KEY = 'django-insecure-(5^hj@86qa32py$7#kj!6%kmalf!4v=s23*($^=g+*f%yzk!+3
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -85,11 +86,11 @@ DATABASES = {
    # },
     'default': {
        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'trial',
-       'USER': 'postgres',
+        'NAME': 'mohan_groups',
+       'USER': 'mohan',
        'PASSWORD': 'mohanPLC',
        'HOST': '127.0.0.1', 
-        'PORT': '5432',
+        'PORT': '1234',
    }
     
 }
