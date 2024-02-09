@@ -222,6 +222,70 @@ def create_order_items(request):
     }
     return render(request, 'create_order.html', context)
 
+def create_purchase_items(request):
+    
+    if request.method == 'POST':
+        formset = formset_factory(PurchaseItemForm, extra=1, min_num=1)
+        
+        formset = formset(request.POST or None,prefix="items")
+        #print(formset.data,"r")
+      
+        if formset.errors:
+            print(formset.errors)   
+        
+        # Check if 'PR_no' field is empty in each form within the formset
+        for form in formset:
+            print(form,"form")
+        non_empty_forms = [form for form in formset if form.cleaned_data.get('item_name')]
+        pr_no = request.POST.get('purchase_no')
+        if non_empty_forms:
+            if formset.is_valid():
+                final_quantity = 0.0
+                final_price = 0.00
+                pr = cosmic_purchase.objects.get(purchase=pr_no)
+                for form in non_empty_forms:
+                    form.instance.remaining = form.cleaned_data['quantity']
+                    form.instance.order_no = pr
+                    items = form.cleaned_data['item_name']
+                    item = item_codes.objects.all()
+                    item = item.filter(item_name = items).first()
+                    code = item.hs_code
+                    form.instance.hs_code = code
+                    final_quantity += form.cleaned_data['quantity']
+                    final_price += float(form.cleaned_data['before_vat'])
+                    
+                    form.save()
+                
+                pr.PR_before_vat = final_price
+                pr.total_quantity = final_quantity
+                pr.remaining = final_quantity
+                pr.save()
+                #message.success("successful!")
+            else:
+                print(formset.data,"nval")
+                errors = dict(formset.errors.items())
+                return JsonResponse({'form_errors': errors}, status=400)
+        
+            pr_form = CosmicPurchaseForm(prefix="orders")
+            formset = formset_factory(PurchaseItemForm, extra=1)
+            formset = formset(prefix="items")
+
+            context = {
+                'pr_form': pr_form,
+                'formset': formset,
+                # 'message':success_message,
+            }
+            return render(request, 'create_purchase.html', context)
+    else:
+       
+        formset = formset_factory(OrderItemForm, extra=1)
+        formset = formset(prefix="items")
+
+    context = {
+        'formset': formset,
+    }
+    return render(request, 'create_order.html', context)
+
 def display_single_order(request):
     if request.method == 'GET':
         pr_no = request.GET['order_no']

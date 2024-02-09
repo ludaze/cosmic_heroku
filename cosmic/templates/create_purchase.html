@@ -30,7 +30,7 @@
                 <div class="col-sm-12">
                     <div>
                         <span class="col-sm-3"></span>
-                        <strong><h1 style="font-weight: 700;">Create Order</h1></strong>
+                        <strong><h1 style="font-weight: 700;">Create Purchase</h1></strong>
                     </div>
                     <div id="error-container" style="height:50px;">
                         <!-- Errors will be displayed here -->
@@ -535,7 +535,7 @@
             const formData1 = new FormData(form1);
             const formData2 = new FormData(form2);
 
-            const prNoValue = formData1.get('order_no');
+            const prNoValue = formData1.get('purchase_no');
 
             //formData1.set('PR_total_price', univ_total);
             formData1.set('PR_before_vat', univ_vat);
@@ -544,7 +544,7 @@
             const amount = 1
            
             console.log(prNoValue)
-            formData2.append('order_no', prNoValue)
+            formData2.append('purchase_no', prNoValue)
 
             // Use fetch to submit both forms asynchronously
             fetch(form1.action, {
