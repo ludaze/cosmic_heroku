@@ -13,6 +13,7 @@ urlpatterns = [
     path('display_order', views.display_order, name='display_order'),
     path('display_supplier_profile', views.display_supplier_profile, name='display_supplier_profile'),
     path('create_order', views.create_order, name='create_order'),
+    path('create_purchase', views.create_purchase, name='create_purchase'),
     path('create_shipping', views.create_shipping, name='create_shipping'),
     path('order_approval', views.order_approval, name='order_approval'),
     path('order_status', views.order_status, name='order_status'),

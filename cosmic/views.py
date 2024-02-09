@@ -103,7 +103,7 @@ def create_order(request):
             customers_name = request.POST.get('customer_name') 
             notify_party = request.POST.get('notify_party') 
             suppliers_name = request.POST.get('supplier_name') 
-# Assuming you have a field with supplier_id in your form
+
             customer = customer_profile.objects.get(customer_name=customers_name)
             if notify_party:
                 notify_1 = customer_profile.objects.get(customer_name=notify_party)
@@ -538,11 +538,16 @@ def create_purchase(request):
         if form.is_valid():
             print(form.data,"val")
             # Save the form, and link the purchase to the selected supplier
-           
+            customers_name = request.POST.get('customer_name') 
+            notify_party = request.POST.get('notify_party') 
             suppliers_name = request.POST.get('supplier_name') 
-            print(suppliers_name) # Assuming you have a field with supplier_id in your form
+
+            customer = customer_profile.objects.get(customer_name=customers_name)
+            if notify_party:
+                notify_1 = customer_profile.objects.get(customer_name=notify_party)
+                form.instance.notify_party = notify_1
             supplier = supplier_profile.objects.get(supplier_name=suppliers_name)
-            print(supplier)
+            form.instance.customer_name = customer
             form.instance.supplier_name = supplier
             #print(purchase.vendor_name,"name")
             form.save()

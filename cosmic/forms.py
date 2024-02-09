@@ -65,6 +65,27 @@ class OrderItemForm(forms.ModelForm):
         model = order_item
         fields = [ 'item_name','price','quantity','before_vat','measurement']
 
+class PurchaseItemForm(forms.ModelForm):
+   
+    before_vat = forms.DecimalField(
+        label='Total Price',
+        required=False,
+        widget=forms.TextInput(attrs={'class': 'before_vat form-control', 'readonly': 'readonly'})
+    )
+    measurement = forms.CharField(widget=forms.TextInput(attrs={'class': 'measurement form-control'}), required=False)
+    quantity = forms.FloatField(widget=forms.TextInput(attrs={'class': 'quantity form-control' }))
+    price = forms.DecimalField(widget=forms.TextInput(attrs={'class': 'price form-control'}))
+
+    item_name = forms.CharField(
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter name'}),
+    )
+    
+    
+    class Meta:
+   
+        model = purchase_item
+        fields = [ 'item_name','price','quantity','before_vat','measurement']
+
 class CosmicPurchaseForm(forms.ModelForm):
     
     purchase_no = forms.CharField(widget=forms.TextInput(attrs={'class': 'purchase_no form-control'}))
@@ -72,7 +93,7 @@ class CosmicPurchaseForm(forms.ModelForm):
     class Meta:
    
         model = cosmic_purchase
-        fields = ['freight_price','customer_name','supplier_name','purchase_no','date','payment_type','measurement_type','approved_by','PR_before_vat','total_quantity','transportation','shipment_type','freight','ref_no','notify_party','country_of_origin','final_destination','port_of_discharge','port_of_loading','notify_party2','consignee']
+        fields = ['freight_price','customer_name','supplier_name','purchase_no','date','payment_type','measurement_type','approved_by','before_vat','total_quantity','transportation','shipment_type','freight','ref_no','notify_party','country_of_origin','final_destination','port_of_discharge','port_of_loading','notify_party2','consignee']
         
 class ShippingForm(forms.ModelForm):
     
@@ -148,10 +169,6 @@ class restoreForm(forms.Form):
         widget=forms.TextInput,
         required=True 
     )
-class CosmicPurchaseForm(forms.ModelForm):
-    
-    total_quantity = forms.FloatField(widget=forms.TextInput(attrs={'class': 'total_quantity form-control' }),required=False)
-    purchase_no = forms.CharField(widget=forms.TextInput(attrs={'class': 'purchase_no form-control'}))
 
 class CosmicItemForm(forms.ModelForm):
     
