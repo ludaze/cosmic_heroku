@@ -45,9 +45,15 @@ class cosmic_order(models.Model):
     country_of_origin = models.TextField(blank=False, null=True)
     
 class cosmic_purchase(models.Model):
+    customer_name = models.ForeignKey('customer_profile', related_name='purchase_related_to_customer',on_delete=models.CASCADE, db_column='customer_name',blank=False, null=True)
     supplier_name = models.ForeignKey('supplier_profile', on_delete=models.CASCADE, db_column='supplier_name',blank=True, null=True)
     purchase_no = models.TextField(primary_key=True)
+    notify_party = models.ForeignKey('customer_profile', related_name='purchase_notify_party_one',on_delete=models.CASCADE, blank=True, null=True,db_column='notify_party')
+    consignee = models.ForeignKey('customer_profile', related_name='purchase_consignee',on_delete=models.CASCADE, blank=True, null=True,db_column='consignee')
+    notify_party2 = models.ForeignKey('customer_profile', related_name='purchase_related_to_bank', on_delete=models.CASCADE, db_column='notify_party2',blank=True, null=True)
     date = models.DateField(blank=True, null=True)
+    freight = models.TextField(blank=True, null=True)
+    freight_price = models.FloatField(blank=True, null=True)
     measurement_type = models.TextField(blank=True, null=True)
     transportation = models.TextField(blank=True, null=True)
     shipment_type = models.TextField(blank=True, null=True)
@@ -55,6 +61,12 @@ class cosmic_purchase(models.Model):
     approved_by = models.TextField(blank=True, null=True)
     before_vat = models.FloatField(blank=True, null=True)
     status = models.TextField(blank=True, null=True, default="Pending")
+    ref_no = models.TextField(blank=False, null=True)
+    total_quantity = models.FloatField(blank=True, null=True)
+    port_of_loading = models.TextField(blank=False, null=True)
+    port_of_discharge = models.TextField(blank=True, null=True)
+    final_destination = models.TextField(blank=True, null=True)
+    country_of_origin = models.TextField(blank=False, null=True)
 
 class shipping_info(models.Model):
     invoice_date = models.DateField(blank=True, null=True)
