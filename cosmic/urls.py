@@ -11,6 +11,7 @@ urlpatterns = [
     path('display_customer_profile', views.display_customer_profile, name='display_customer_profile'),
     path('display_supplier', views.display_supplier, name='display_supplier'),
     path('display_order', views.display_order, name='display_order'),
+    path('display_purchase', views.display_purchase, name='display_purchase'),
     path('display_supplier_profile', views.display_supplier_profile, name='display_supplier_profile'),
     path('create_order', views.create_order, name='create_order'),
     path('create_purchase', views.create_purchase, name='create_purchase'),

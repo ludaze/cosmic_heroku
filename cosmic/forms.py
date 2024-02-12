@@ -177,6 +177,6 @@ class CosmicItemForm(forms.ModelForm):
     
     class Meta:
    
-        model = cosmic_order
+        model = item_codes
         fields = ['item_name','hs_code']
         

@@ -158,6 +158,35 @@ def display_order(request):
     }
     return render(request, 'display_order.html', context)
 
+def display_purchase(request):
+    if request.method == 'GET':
+        orders = cosmic_purchase.objects.all()
+        orders = orders.order_by('purchase_no')
+
+        print("ord")
+        orders_data = []
+        print(orders)
+        for order in orders:
+            # Fetch all order items related to each cosmic order
+            order_items = purchase_item.objects.filter(purchase_no=order.purchase_no)
+            print(purchase_item.objects.all())
+            # Create a dictionary containing order details and items
+            order_data = {
+                'purchase_no': order.purchase_no,
+                'date': order.date,  # Assuming 'date' is a field in CosmicOrder
+                'order_items': order_items,  # Assuming a related name 'order_items' on CosmicOrder pointing to OrderItem
+                'before_vat': order.before_vat,  # Assuming 'PR_before_vat' is a field in CosmicOrder
+                'total_quantity': order.total_quantity,  # Assuming 'total_quantity' is a field in CosmicOrder
+                'supplier_name': order.supplier_name,  # Assuming 'customer_name' is a field in CosmicOrder
+                'status': order.status,  # Assuming 'status' is a field in CosmicOrder
+            }
+            orders_data.append(order_data)
+            print(orders_data)
+    context = {
+        'my_purchase': orders_data,
+    }
+    return render(request, 'display_purchase.html', context)
+
 def create_order_items(request):
     
     if request.method == 'POST':
@@ -238,14 +267,15 @@ def create_purchase_items(request):
             print(form,"form")
         non_empty_forms = [form for form in formset if form.cleaned_data.get('item_name')]
         pr_no = request.POST.get('purchase_no')
+        print(pr_no,"pr_no")
         if non_empty_forms:
             if formset.is_valid():
                 final_quantity = 0.0
                 final_price = 0.00
-                pr = cosmic_purchase.objects.get(purchase=pr_no)
+                pr = cosmic_purchase.objects.get(purchase_no=pr_no)
                 for form in non_empty_forms:
                     form.instance.remaining = form.cleaned_data['quantity']
-                    form.instance.order_no = pr
+                    form.instance.purchase_no = pr
                     items = form.cleaned_data['item_name']
                     item = item_codes.objects.all()
                     item = item.filter(item_name = items).first()
@@ -256,7 +286,7 @@ def create_purchase_items(request):
                     
                     form.save()
                 
-                pr.PR_before_vat = final_price
+                pr.before_vat = final_price
                 pr.total_quantity = final_quantity
                 pr.remaining = final_quantity
                 pr.save()

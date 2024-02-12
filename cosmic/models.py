@@ -62,6 +62,7 @@ class cosmic_purchase(models.Model):
     before_vat = models.FloatField(blank=True, null=True)
     status = models.TextField(blank=True, null=True, default="Pending")
     ref_no = models.TextField(blank=False, null=True)
+    remaining = models.FloatField(blank=True, null=True)
     total_quantity = models.FloatField(blank=True, null=True)
     port_of_loading = models.TextField(blank=False, null=True)
     port_of_discharge = models.TextField(blank=True, null=True)
@@ -97,8 +98,9 @@ class order_item(models.Model):
     before_vat = models.FloatField(blank=True, null=True)
     quantity =  models.FloatField(blank=True, null=True)
     measurement = models.TextField(blank=True, null=True)
+
 class purchase_item(models.Model):
-    purchase_no = models.ForeignKey('cosmic_order', on_delete=models.CASCADE, db_column='order_no',blank=True, null=True)
+    purchase_no = models.ForeignKey('cosmic_purchase', on_delete=models.CASCADE, db_column='purchase_no',blank=True, null=True)
     id_numeric = models.AutoField(primary_key=True)
     hs_code = models.TextField(blank=True, null=True)
     item_name = models.TextField(blank=True, null=True)
@@ -106,6 +108,7 @@ class purchase_item(models.Model):
     before_vat = models.FloatField(blank=True, null=True)
     quantity =  models.FloatField(blank=True, null=True)
     measurement = models.TextField(blank=True, null=True)
+    remaining = models.TextField(blank= True, null=True)
 class invoice_item(models.Model):
     #invoice_num = models.ForeignKey('shipping_info', on_delete=models.CASCADE, db_column='invoice_num',blank=True, null=True, to_field='invoice_num')
     #invoice_num = models.ForeignKey('shipping_info', on_delete=models.CASCADE, db_column='invoice_num',blank=True, null=True, to_field='invoice_num')
