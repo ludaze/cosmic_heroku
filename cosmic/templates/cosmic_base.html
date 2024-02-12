@@ -174,6 +174,19 @@ ul ul a {
                     </ul>
                 </li>
                 <li style="font-size:larger; font-weight: 500;">
+                    <a href="#purchaseSubmenu" data-toggle="collapse" aria-expanded="false"
+                        class="dropdown-toggle">Purchase</a>
+                    <ul class="collapse list-unstyled" id="purchaseSubmenu">
+                        <li style="font-size:larger; font-weight: 500;">
+                            <a href="{% url 'create_purchase' %}">Create Purchase</a>
+                        </li> 
+                        <li style="font-size:larger; font-weight: 500;">
+                            <a href="{% url 'display_purchase' %}">Display Purchase</a>
+                        </li> 
+                     
+                    </ul>
+                </li>
+                <li style="font-size:larger; font-weight: 500;">
                     <a href="{% url 'display_items' %}">Display Items</a>
                 </li> 
                 
