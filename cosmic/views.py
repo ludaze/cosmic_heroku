@@ -440,7 +440,7 @@ def order_approval(request):
         'pending_orders': pending_orders,
         'form': form,
     }
-    return render(request, 'admin/order_approval.html', context)
+    return render(request, 'order_approval.html', context)
 
 @login_required 
 @user_passes_test(is_admin)
