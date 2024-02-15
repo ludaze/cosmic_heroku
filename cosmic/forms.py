@@ -127,8 +127,22 @@ class approvalForm(forms.Form):
     approval = forms.CharField(
         widget=forms.TextInput,
         required=True 
-    )
+    ) 
 
+class PurchaseApprovalForm(forms.Form):
+    selected_orders = forms.ModelMultipleChoiceField(
+        queryset= cosmic_purchase.objects.filter(status='Pending'),
+        widget=forms.CheckboxSelectMultiple,
+        required=False
+    )
+    action = forms.ChoiceField(
+        choices=[('approve', 'Approve'), ('reject', 'Reject')],
+        widget=forms.RadioSelect,
+    )
+    approval = forms.CharField(
+        widget=forms.TextInput,
+        required=True 
+    ) 
 class InvoiceItemForm(forms.ModelForm):
    
     before_vat = forms.DecimalField(

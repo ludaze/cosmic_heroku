@@ -17,6 +17,7 @@ urlpatterns = [
     path('create_purchase', views.create_purchase, name='create_purchase'),
     path('create_shipping', views.create_shipping, name='create_shipping'),
     path('order_approval', views.order_approval, name='order_approval'),
+    path('purchase_approval', views.purchase_approval, name='purchase_approval'),
     path('order_status', views.order_status, name='order_status'),
     path('edit_order', views.edit_order, name='edit_order'),
     path('commercial_invoice', views.commercial_invoice, name='commercial_invoice'),

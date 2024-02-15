@@ -492,6 +492,49 @@ def order_approval(request):
 
 @login_required 
 @user_passes_test(is_admin)
+def purchase_approval(request):
+    # Your custom logic here (e.g., fetching data)
+    if not is_admin(request.user):
+        # User is not authenticated to access this view
+        messages.error(request, "You are not authorized to access this page.")
+        return redirect('admin')
+
+    pending_orders = cosmic_purchase.objects.filter(status='Pending')
+    # Handle form submission
+    
+    if request.method == 'POST':
+        form = PurchaseApprovalForm(request.POST)
+        if form.errors:
+            print(form.errors)
+        if form.is_valid():
+            action = form.cleaned_data['action']
+            approval_name = form.cleaned_data['approval']
+            
+            if action == 'approve':
+                for pr_no in form.cleaned_data['selected_orders']:
+                    stats = request.POST.get(f"{pr_no}_status")
+                    purchase_order = cosmic_purchase.objects.get(purchase_no=pr_no.purchase_no)
+                    purchase_order.status = 'approved'
+                    purchase_order.approved_by = approval_name
+                    purchase_order.save()
+            elif action == 'reject':
+                for pr_no in form.cleaned_data['selected_orders']:
+                    purchase_order = cosmic_purchase.objects.get(purchase_no=pr_no.purchase_no)
+                    purchase_order.status = 'rejected'
+                    purchase_order.approved_by = approval_name
+                    purchase_order.save()
+            return redirect('purchase_approval')
+
+    else:
+        form = PurchaseApprovalForm()
+
+    context = {
+        'pending_orders': pending_orders,
+        'form': form,
+    }
+    return render(request, 'purchase_approval.html', context)
+@login_required 
+@user_passes_test(is_admin)
 def order_status(request):
     # Your custom logic here (e.g., fetching data)
     if not is_admin(request.user):

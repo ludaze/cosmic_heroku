@@ -80,7 +80,7 @@
             </thead><!-- end thead -->
             <tbody>
                 <tr>
-                    {% if my_order.order_no%}
+                    
                     <th>
                         <h4 class="text-muted text-sm-end font-size-13 mb-1">Buyer Details</h4>
                         <div class="text-muted font-size: small;">
@@ -89,15 +89,18 @@
 
                         </div>
                     </th>
-                    {%else%}
+                    {% if my_order.notify_party%}
+                    
                     <th style="width: 400px;">
                         <h4 class="text-muted text-sm-end font-size-13 mb-1">Notify Party</h4>
                         <div class="text-muted font-size: small;">
                             <p class="mb-1">{{my_order.customer_name.customer_name}}</p>
-                            <p class="mb-1">{{my_order.customer_name.customer_name}}</p>
+                            <p class="mb-1">{{my_order.customer_name.customer_address}}</p>
 
                         </div>
                     </th>
+                    {%else%}
+                    <p></p>
                     {%endif%}
                     <th>
                         <div class="text-muted">
