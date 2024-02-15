@@ -24,8 +24,6 @@ executing==2.0.1
 fastjsonschema==2.19.1
 fqdn==1.5.1
 idna==3.6
-ipykernel==6.28.0
-ipython==8.19.0
 isoduration==20.11.0
 jedi==0.19.1
 Jinja2==3.1.2

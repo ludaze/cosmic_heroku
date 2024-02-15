@@ -363,6 +363,54 @@ def display_single_order(request):
                         'the_invoices':invoices
                     }
     return render(request, 'display_single_order.html', context)
+
+def display_single_purchase(request):
+    if request.method == 'GET':
+        pr_no = request.GET['purchase_no']
+        print(pr_no,"nada")
+            
+        try:
+            orders = cosmic_order.objects.get(order_no=pr_no)
+            pr_items = order_item.objects.all()
+            pr_items = pr_items.filter(order_no=pr_no)
+            print(pr_items)
+        except cosmic_order.DoesNotExist:
+            # If it's not found in purchase_orders, try searching in import_PR
+            try:
+                orders = cosmic_purchase.objects.get(purchase_no=pr_no)
+                pr_items = purchase_item.objects.all()
+                pr_items = pr_items.filter(purchase_no=pr_no)
+            except cosmic_purchase.DoesNotExist:
+                order = None
+            order = None 
+        try:
+            
+            invoices = shipping_info.objects.all()
+            invoices = invoices.filter(order_no = pr_no)
+        except shipping_info.DoesNotExist:
+            try:
+                print("trial")
+                invoices = shipping_info.objects.all()
+                invoices = invoices.filter(order_no = pr_no)
+            except shipping_info.DoesNotExist:
+                invoices = None
+            invoices = None
+        print(orders)
+        print("no")
+        if pr_items.exists():
+            print(pr_items,"yes")
+            context = {
+                        'pr_items': pr_items,
+                        'my_order': orders,
+                        'the_invoices':invoices,
+                    }
+            return render(request, 'display_single_order.html', context)
+        context = {
+                        
+                        'my_order': orders,
+                        'the_invoices':invoices
+                    }
+    return render(request, 'display_single_order.html', context)
 def create_shipping(request):
     if request.method == 'POST':
         ship_form = ShippingForm(request.POST)
@@ -557,6 +605,83 @@ def edit_order(request):
                                                'customers': customers,'new_inv':generated_invoice_num, 'item':item})
 def print_order(request):
     if request.method == 'GET':
+        
+        if 'order_no' in request.GET:
+            pr_no = request.GET['order_no']
+        elif 'purchase_no' in request.GET:
+            pr_no = request.GET['purchase_no']
+        print(pr_no)
+        try:
+            orders = cosmic_order.objects.get(order_no=pr_no)
+            pr_items = order_item.objects.all()
+            pr_items = pr_items.filter(order_no=pr_no)
+            proforma_type= "order"
+            
+        except cosmic_order.DoesNotExist:
+            try:
+                orders = cosmic_purchase.objects.get(purchase_no=pr_no)
+                
+                pr_items = purchase_item.objects.all()
+                pr_items = pr_items.filter(purchase_no=pr_no)
+                proforma_type = "purchase"
+            except cosmic_purchase.DoesNotExist:
+                orders = None
+        
+        
+        if hasattr(orders, 'PR_before_vat'):
+            number = float(orders.PR_before_vat)
+            print("yes")
+        else:
+            number = float(orders.before_vat)
+            print(orders.before_vat)
+
+        if orders.freight_price:
+            number += float(orders.freight_price)
+        #print(shipping.freight_amount,"fr")
+        dicts = {1:"TEN",2:"TWENTY",3:"THIRTY",4:"FORTY",5:"FIFTY",6:"SIXTY",7:"SEVENTY",8:"EIGHTY",9:"NINTY"}
+        
+        print(number)
+        whole_part, decimal_part = str(number).split('.')
+        number_in_words = num2words(whole_part)
+        number_in_words = number_in_words.replace(',', '')
+        number_in_words = number_in_words.replace('-', ' ')
+        num = number_in_words.upper()
+        if int(decimal_part) in dicts:
+            dec = " AND " + str(dicts[int(decimal_part)]) + " CENTS ONLY"
+        elif decimal_part == "0":
+            dec = " ONLY"
+        else:
+            dec = " AND " + num2words(decimal_part) + " CENTS ONLY"
+        print(decimal_part,dec)
+        num = num.replace(' AND', '')
+        num += dec 
+        print(orders, num)
+        print("no")
+        
+        if pr_items.exists():
+            print(pr_items,"yes")
+            context = {
+                        'pr_items': pr_items,
+                        'my_order': orders,
+                        'num': num,
+                        'number':number,
+                        'type': proforma_type,
+                        # 'shipping':shipping,
+                    }
+            return render(request, 'print_order.html', context)
+       
+        context = {
+                        
+                        'my_order': orders,
+                        'num': num,
+                        'number':number,
+                        'type': proforma_type,
+                        # 'shipping':shipping,
+                    }
+       
+    return render(request, 'print_order.html', context)
+def print_purchase(request):
+    if request.method == 'GET':
         pr_no = request.GET['order_no']
         try:
             orders = cosmic_order.objects.get(order_no=pr_no)
@@ -612,7 +737,7 @@ def print_order(request):
                         'number':number,
                         # 'shipping':shipping,
                     }
-            return render(request, 'print_order.html', context)
+            return render(request, 'print_purchase.html', context)
        
         context = {
                         
@@ -622,7 +747,7 @@ def print_order(request):
                         # 'shipping':shipping,
                     }
        
-    return render(request, 'print_order.html', context)
+    return render(request, 'print_purchase.html', context)
 
 def create_purchase(request):
     if request.method == 'POST':
