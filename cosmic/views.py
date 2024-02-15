@@ -657,8 +657,10 @@ def create_purchase(request):
     formset = formset_factory(PurchaseItemForm, extra=1)
     formset = formset(prefix="items")
     # Render the form with the supplier choices
+    
+    customers = customer_profile.objects.all()
     suppliers = supplier_profile.objects.all()
-    return render(request, 'create_purchase.html', {'form': form, 'formset': formset ,'suppliers': suppliers})
+    return render(request, 'create_purchase.html', {'form': form, 'formset': formset ,'suppliers': suppliers,'customers':customers})
 
 def commercial_invoice(request):
     if request.method == 'GET':
