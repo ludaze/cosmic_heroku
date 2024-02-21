@@ -132,10 +132,13 @@
               {%else%}
               <div class="col-md-6">
                 <div style="width: 20%;"><button type="submit" class="btn btn-primary"
-                    onclick="redirectToPrintOrder('{{ my_order.purchase_no }}')">Proforma Invoice</button></div>
+                    onclick="redirectToPrintOrder('{{ my_order.purchase_no }}')">Purchase Order</button></div>
+                    <div style="width: 20%;"><button type="submit" class="btn btn-primary"
+                      onclick="redirectToEditOrder('{{ my_order.purchase_no }}')">Edit Purchase Order</button>
+                  </div>
+  
 
-
-
+<!-- 
                 <div style="width: 20%;"><button type="submit" class="btn btn-primary"
                     onclick="redirectToCommercialInvoice('{{ my_order.purchase_no }}')">Commercial Invoice</button>
                 </div>
@@ -151,7 +154,7 @@
                     onclick="redirectToPackingList('{{ my_order.purchase_no }}')"> Packing List</button></div>
                 <div style="width: 20%;"><button type="submit" class="btn btn-primary"
                     onclick="redirectToShippingDetails('{{ my_order.purchase_no }}')"> Shipping Details</button></div>
-
+ -->
 
 
               </div>
@@ -170,6 +173,7 @@
 <script>
   const orderID = document.getElementById('data-order-id');
   
+
     
 function redirectToPage(orderID, page) {
     let invoiceID = ''; 
@@ -221,6 +225,13 @@ function redirectToPage(orderID, page) {
     
     //window.location.href = `/cosmic/print_order?order_no=${orderID}&invoice_num=${invoiceID}`;  
   }
+  function redirectToEditOrder(orderID) {
+
+window.location.href = `/cosmic/edit_purchase?order_no=${orderID}`;
+
+//window.location.href = `/cosmic/print_order?order_no=${orderID}&invoice_num=${invoiceID}`;  
+}
+   
   function redirectToShippingDetails(orderID) {
 
 window.location.href = `/cosmic/edit_order?order_no=${orderID}`;

@@ -1,5 +1,5 @@
 from django.db import models
-
+import uuid
 # Create your models here.
 class customer_profile(models.Model):
     #customer_id = models.AutoField(primary_key=True)
@@ -125,8 +125,10 @@ class invoice_item(models.Model):
     bags = models.FloatField(blank=True, null=True)
 
 class item_codes(models.Model):
-    hs_code = models.TextField(primary_key=True)
+    hs_code = models.TextField(blank=True, null=True)
     item_name = models.TextField(blank=True, null=True)
+    new_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    
    # item_id = models.TextField(primary_key = True)
 
 
