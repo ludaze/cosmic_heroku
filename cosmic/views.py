@@ -663,15 +663,9 @@ def edit_purchase(request):
         print(item_names,"item")
         form = EditOrderForm(instance=cosmic_order_instance)  # Initialize the form with the instance data
       
-        ship_form = ShippingForm(prefix="ship")
+        
         customers = customer_profile.objects.all()
-        last_shipping_info = shipping_info.objects.order_by('-invoice_num').first()
-        print(last_shipping_info.invoice_num, "info")
-        last_number = int(last_shipping_info.invoice_num.split('-')[-1]) if last_shipping_info else 0
-        print(last_number,"last")
-        new_number = last_number + 1
-        generated_invoice_num = f"COS-{new_number:03d}"
-        print(generated_invoice_num,"num")
+        
         
     if request.method == 'POST':
         form = CosmicPurchaseForm(request.POST)
@@ -733,9 +727,8 @@ def edit_purchase(request):
     formset = formset_factory(InvoiceItemForm, extra=1)
     formset = formset(prefix="items")
     
-    return render(request, 'edit_purchase.html', {'form': form, 'formset':formset, 'ship_form': ship_form,
-                                               'cosmic_order_instance': cosmic_order_instance, 'item_names':item_names,
-                                               'customers': customers,'new_inv':generated_invoice_num, 'item':item})
+    return render(request, 'edit_purchase.html', {'form': form,'cosmic_order_instance': cosmic_order_instance, 
+                                               'customers': customers})
 
 def print_order(request):
     if request.method == 'GET':
