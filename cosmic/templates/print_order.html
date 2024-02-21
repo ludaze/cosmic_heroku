@@ -65,6 +65,13 @@
                                 <h5 class="font-size-15 mb-1" style="margin: 0;">Purchase Invoice No:</h5>
                                 {%endif%}
                                 <p style="margin: 0;font-size: small;"> {{my_order.ref_no}}</p>
+                                {% if my_order.freight%}
+                        <div class="text-muted">
+                            <h5 class="font-size-15 mb-1" style="line-height: 0.7;">Freight</h5>
+                            <p class="mb-1" style="line-height: 1.2;font-size: small;">{{my_order.freight}}</p>
+
+                        </div>
+                        {% endif%}
                             </div>
                             
                             {%if shipping.customer_no%}
@@ -72,7 +79,8 @@
                                 <h5 class="font-size-15 mb-1">Customer Ref. no</h5>
                                 <p class="mb-1" style="font-size: small;">{{shipping.customer_no}}</p>
 
-                            </div>
+
+</div>
                             {%endif%}
                         </div>
                     </th>
@@ -105,12 +113,12 @@
                     <th>
                         <div class="text-muted">
                             <h5 class="font-size-15 mb-1" style="line-height: 0.7;">Port of Loading</h5>
-                            <p class="mb-1" style="line-height: 1.2;font-size: small;">Djbouti</p>
+                            <p class="mb-1" style="line-height: 1.2;font-size: small;">{{my_order.port_of_loading}}</p>
 
                         </div>
                         <div class="text-muted">
                             <h5 class="font-size-15 mb-1" style="line-height: 0.7;">Port Of Discharge</h5>
-                            <p class="mb-1" style="line-height: 1.2;font-size: small;">Addis Ababa</p>
+                            <p class="mb-1" style="line-height: 1.2;font-size: small;">{{my_order.port_of_discharge}}</p>
 
                         </div>
 
@@ -123,17 +131,21 @@
                     </th>
                     <th>
                         <div class="text-muted">
+                            <h5 class="text-muted text-sm-end font-size-15 mb-1" style="line-height: 0.7;"> Country of Origin</h5>
+                            <!-- <p class="mb-1">Bole Sub city, Kebele 02,House No. 393/2</p> -->
+                            <p class="mb-1" style="font-size: small;line-height: 1.2;">{{my_order.country_of_origin}}</p>
+                        </div>
+                        <div class="text-muted">
+                            <h5 class="text-muted text-sm-end font-size-15 mb-1" style="line-height: 0.7;"> Final Destination</h5>
+                            <!-- <p class="mb-1">Bole Sub city, Kebele 02,House No. 393/2</p> -->
+                            <p class="mb-1" style="font-size: small;line-height: 1.2;">{{my_order.final_destination}}</p>
+                        </div>
+                        <div class="text-muted">
                             <h5 class="font-size-15 mb-1" style="line-height: 0.7;">Payment Terms</h5>
                             <p class="mb-1" style="line-height: 1.2;font-size: small;">{{my_order.payment_type}}</p>
 
                         </div>
-                        {% if my_order.freight%}
-                        <div class="text-muted">
-                            <h5 class="font-size-15 mb-1" style="line-height: 0.7;">Freight</h5>
-                            <p class="mb-1" style="line-height: 1.2;font-size: small;">{{my_order.freight}}</p>
-
-                        </div>
-                        {% endif%}
+                        
                         <div class="text-muted">
                             <h5 class="text-muted text-sm-end font-size-15 mb-1" style="line-height: 0.7;"> Shipment Terms</h5>
                             <!-- <p class="mb-1">Bole Sub city, Kebele 02,House No. 393/2</p> -->
@@ -151,7 +163,8 @@
                         <p id="shipping_price">${{my_order.freight_amount}}</p>
                     </td>
 
-                    <!-- end tr -->
+
+<!-- end tr -->
                 <tr>
                     <th scope="row" colspan="4" class="text-end">Sub Total</th>
                     <td class="text-end" id="total_price">${{my_order.PR_total_price|add:my_order.freight_amount }}</td>
@@ -236,8 +249,12 @@
                         <th scope="row" colspan="1" class="text-end" style="margin: 0;line-height: 1;padding: 0;">Total
                         </th>
                         <td colspan="3" >Amount in Words: USD {{num}} </td>
+                        {% if my_order.order_no %}
                         <td class="text-end" id="total_price">
                             ${{my_order.PR_before_vat|intcomma }}</td>
+                        {%else%}
+                        <td class="text-end" id="total_price">${{my_order.before_vat|intcomma }}</td>
+                        {%endif%}
                     </tr>
                     {% endif %}
 
