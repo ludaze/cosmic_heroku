@@ -86,8 +86,14 @@ DATABASES = {
    #     'ENGINE': 'django.db.backends.sqlite3',
      #   'NAME': BASE_DIR / 'mohangroups.db',
    # },
-    'default': dj_database_url.config(default=os.getenv('postgres://rjgataqpbsqqfj:e20fc0199a90f693323514ccb9186456512cf6a54570a770396b6311c9629b5f@ec2-34-236-199-229.compute-1.amazonaws.com:5432/dcshq5pcejm773'))
-    
+    'default': {
+       'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'trial',
+       'USER': 'postgres',
+       'PASSWORD': 'mohanPLC',
+       'HOST': '127.0.0.1', 
+        'PORT': '5432',
+   }
 }
 
 

@@ -10,7 +10,7 @@
         {% endfor %}
 </ul>
 {% endif %}
-<div class="container">
+<!-- <div class="container">
     <div class="row">
         <div class="col-md-12">
             <div>
@@ -162,19 +162,6 @@
                                     </div>
             
                                 </div>
-                                <!--
-                                    <div class="form-group">
-                                    <label class="control-label col-sm-8">Consignee<span style="color: rgb(187, 17, 17);">*</span></label>
-                                    <div class="col-sm-11">
-                                        <input type="text" list="the_orders" class="form-control" name="notify_party">
-                                        <datalist id="the_orders">
-                                            {% for customer in customers %}
-                                            <option value="{{customer.customer_name}}"></option>
-                                            {% endfor %}
-                                        </datalist>
-                                    </div>
-            
-                                </div> -->
                                
                             </div>
                             
@@ -360,8 +347,8 @@
                     </form>
         </div>
     </div>
-</div>
-<div class="container">
+</div> -->
+<div class="container" style="margin: 30px;">
     <div class="row">
         <div class="col-md-12">
 
@@ -379,7 +366,15 @@
             {% endif %}
             <form method="post" action="{% url 'create_shipping' %}" id="form2">
                 {% csrf_token %}
-       
+                <div class="row">
+                    <div class="col-sm-5">
+                        <span class="form-group">
+                            <label class="control-label col-sm-8"> Order Number <span style="color: rgb(187, 17, 17);">*</span></label>
+                            <div class="col-sm-11">
+    
+                                <input type="text" class="form-control" name="order_no" value="{{cosmic_order_instance.order_no}}" readonly>
+                            </div>
+                        </span> </div> </div>
                 <div>
                     <div class="col-sm-6">
                      
@@ -435,7 +430,7 @@
                     <div class="form-group">
                         <label class="control-label col-sm-7">Customer Order Number<span style="color: rgb(187, 17, 17);">*</span></label>
                         <div class="col-sm-8">
-                            <input type="text"  class="form-control" name="customer_no" value="{{form.instance.customer_name.customer_name}}">
+                            <input type="text"  class="form-control" name="customer_no" value="{{form.instance.customer_name.customer_no}}">
                             
                         </div>
 
@@ -454,7 +449,7 @@
                             </div>
                         </span>
                         <div class="form-group">
-                            <label class="control-label col-sm-4">Vessel</label>
+                            <label class="control-label col-sm-7">Vessel</label>
                             <div class="col-sm-8">
                                 <input type="text"  class="form-control" name="vessel" value="">
                                 
