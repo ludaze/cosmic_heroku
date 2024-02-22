@@ -654,13 +654,32 @@ def edit_purchase(request):
         print("in")
         order_no = request.GET.get('order_no')
         print(order_no)
-        cosmic_order_instance = get_object_or_404(cosmic_purchase, purchase_no=order_no)
-        items = purchase_item.objects.all()
-        item = items.filter(purchase_no=cosmic_order_instance)
-        item_names = []
-        for name in item:
-            item_names.append(name.item_name)
-        print(item_names,"item")
+        try:
+            cosmic_order_instance = cosmic_purchase.objects.get(purchase_no = order_no)
+            items = purchase_item.objects.all()
+            item = items.filter(purchase_no=cosmic_order_instance)
+            item_names = []
+            for name in item:
+                item_names.append(name.item_name)
+            print("l")
+            
+        except cosmic_purchase.DoesNotExist:
+            print("h")
+            # If it's not found in purchase_orders, try searching in import_PR
+            try:
+                cosmic_order_instance = cosmic_order.objects.get(order_no = order_no)
+                print(cosmic_order_instance,"inst")
+                items = order_item.objects.all()
+                item = items.filter(order_no=cosmic_order_instance)
+                item_names = []
+                for name in item:
+                    item_names.append(name.item_name)
+                
+            except cosmic_order.DoesNotExist:
+                order = None
+            order = None 
+        
+        
         form = EditOrderForm(instance=cosmic_order_instance)  # Initialize the form with the instance data
       
         
@@ -669,11 +688,19 @@ def edit_purchase(request):
         
     if request.method == 'POST':
         form = CosmicPurchaseForm(request.POST)
-        
-
         order_no = request.POST.get('order_no')
-        cosmic_order_instance = get_object_or_404(cosmic_purchase, purchase_no=order_no)
-        print("get",request.POST.get('transportation'))
+        try:
+            cosmic_order_instance = cosmic_purchase.objects.get(purchase_no = order_no)
+            
+        except cosmic_purchase.DoesNotExist:
+            # If it's not found in purchase_orders, try searching in import_PR
+            try:
+                cosmic_order_instance = cosmic_order.objects.get(order_no = order_no)
+                
+            except cosmic_order.DoesNotExist:
+                order = None
+            order = None 
+        
         refs_no = request.POST.get('ref_no')
         cosmic_order_instance.ref_no = refs_no
         cosmic_order_instance.measurement_type = request.POST.get('measurement_type')
@@ -724,8 +751,7 @@ def edit_purchase(request):
         cosmic_order_instance.save()
         return render(request, 'edit_purchase.html')  # Redirect to a success page or another URL
     
-    formset = formset_factory(InvoiceItemForm, extra=1)
-    formset = formset(prefix="items")
+        print(cosmic_order_instance.order_no,"d")
     
     return render(request, 'edit_purchase.html', {'form': form,'cosmic_order_instance': cosmic_order_instance, 
                                                'customers': customers})

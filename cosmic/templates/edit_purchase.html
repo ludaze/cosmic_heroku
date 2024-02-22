@@ -15,7 +15,11 @@
         <div class="col-md-12">
             <div>
                 <span class="col-md-3"></span>
+                {% if cosmic_order_instance.purchase_no %}
                 <h1>Edit Purchase Order</h1>
+                {% else %}
+                <h1>Edit Order</h1>
+                {% endif %}
             </div>
 
 
@@ -26,6 +30,7 @@
                         {% csrf_token %}
                         <div class="row">
                         <div class="col-sm-5">
+                            {% if cosmic_order_instance.purchase_no %}
                             <span class="form-group">
                                 <label class="control-label col-sm-8"> Purchase Number <span style="color: rgb(187, 17, 17);">*</span></label>
                                 <div class="col-sm-11">
@@ -33,6 +38,15 @@
                                     <input type="text" class="form-control" name="order_no" value="{{cosmic_order_instance.purchase_no}}" readonly>
                                 </div>
                             </span>
+                            {% else %}
+                            <span class="form-group">
+                                <label class="control-label col-sm-8"> Order Number <span style="color: rgb(187, 17, 17);">*</span></label>
+                                <div class="col-sm-11">
+        
+                                    <input type="text" class="form-control" name="order_no" value="{{cosmic_order_instance.order_no}}" readonly>
+                                </div>
+                            </span>
+                            {% endif %}
                             <span class="form-group">
                                 <label class="control-label col-sm-8"> Proforma Ref. No <span style="color: rgb(187, 17, 17);">*</span></label>
                                 <div class="col-sm-11">
