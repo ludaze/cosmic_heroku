@@ -32,6 +32,7 @@ urlpatterns = [
     path('create_purchase_items', views.create_purchase_items, name='create_purchase_items'),
     path('create_invoice_items', views.create_invoice_items, name='create_invoice_items'),
     path('display_single_order', views.display_single_order, name='display_single_order'),
+    path('display_single_purchase', views.display_single_purchase, name='display_single_purchase'),
     path('sales_contract', views.sales_contract, name='sales_contract'),
     
     
