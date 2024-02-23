@@ -272,10 +272,12 @@ def create_purchase_items(request):
                 final_quantity = 0.0
                 final_price = 0.00
                 pr = cosmic_purchase.objects.get(purchase_no=pr_no)
+                print(pr,"printing")
                 for form in non_empty_forms:
                     form.instance.remaining = form.cleaned_data['quantity']
                     form.instance.purchase_no = pr
                     items = form.cleaned_data['item_name']
+                    form.instance.item_name = items
                     item = item_codes.objects.all()
                     item = item.filter(item_name = items).first()
                     code = item.hs_code

@@ -129,6 +129,8 @@ class item_codes(models.Model):
     item_name = models.TextField(blank=True, null=True)
     new_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     
+    def __str__(self):
+        return self.item_name
    # item_id = models.TextField(primary_key = True)
 
 

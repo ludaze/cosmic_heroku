@@ -412,14 +412,21 @@
               {% endfor %}
                 <div id="form-lists" >
                     {% for form in formset %}
-                    
                     <div class="card-body row item-list form-group col-md-5">
-
-                        {{form.as_p}}
-
+                        {% if form.instance.field_name == 'item_name' %}
+                        <input type="text" list="id_items-{{ forloop.counter }}-item_name" class="form-control" name="id_items-{{ forloop.counter }}-item_name">
+                        <datalist id="id_items-{{ forloop.counter }}-item_name">
+                            {% for item_code in items %}
+                                <option value="{{ item_code.item_name }}"></option>
+                            {% endfor %}
+                        </datalist>
+                        {% else %}
+                            {{ form.as_p }}
+                        {% endif %}
                     </div>
-
+                    
                     {% endfor %}
+                    
                 </div>
 
                 <div id="empty-form" class="hidden"> {{ formset.empty_form.as_p}}</div>

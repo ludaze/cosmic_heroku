@@ -133,6 +133,18 @@ nav .navbar{
                         <a class="dropdown-item" href="{% url 'display_order' %}" style="font:medium">Display Sales</a>
                       </div>
                     </li>
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Purchase
+                      </a>
+                      <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style="font-size: medium;">
+                        <a class="dropdown-item" href="{% url 'create_purchase' %}" style="font: medium;">Create Purchase</a>
+                        <a class="dropdown-item" href="{% url 'display_purchase' %}" style="font:medium">Display Purchases</a>
+                      </div>
+                    </li>
+                    <a class="nav-link" href="{% url 'display_items' %}"  aria-expanded="false">
+                      Items
+                    </a>
                   </ul>
                 </div>
               </nav>

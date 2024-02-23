@@ -55,8 +55,11 @@ class OrderItemForm(forms.ModelForm):
     quantity = forms.FloatField(widget=forms.TextInput(attrs={'class': 'quantity form-control' }))
     price = forms.DecimalField(widget=forms.TextInput(attrs={'class': 'price form-control'}))
 
-    item_name = forms.CharField(
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter name'}),
+    item_name = forms.ModelChoiceField(
+        queryset=item_codes.objects.all(),
+        empty_label="Item Name", 
+        widget=forms.Select(attrs={'class': 'form-control'}),
+        to_field_name='item_name'
     )
     
     
@@ -67,6 +70,13 @@ class OrderItemForm(forms.ModelForm):
 
 class PurchaseItemForm(forms.ModelForm):
    
+    item_name = forms.ModelChoiceField(
+        queryset=item_codes.objects.all(),
+        empty_label="Item Name", 
+        widget=forms.Select(attrs={'class': 'form-control'}),
+        to_field_name='item_name'
+    )
+    
     before_vat = forms.DecimalField(
         label='Total Price',
         required=False,
@@ -76,16 +86,14 @@ class PurchaseItemForm(forms.ModelForm):
     quantity = forms.FloatField(widget=forms.TextInput(attrs={'class': 'quantity form-control' }))
     price = forms.DecimalField(widget=forms.TextInput(attrs={'class': 'price form-control'}))
 
-    item_name = forms.CharField(
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter name'}),
-    )
+    
     
     
     class Meta:
    
         model = purchase_item
         fields = [ 'item_name','price','quantity','before_vat','measurement']
-
+        
 class CosmicPurchaseForm(forms.ModelForm):
     
     purchase_no = forms.CharField(widget=forms.TextInput(attrs={'class': 'purchase_no form-control'}))
