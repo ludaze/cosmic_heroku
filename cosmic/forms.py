@@ -71,7 +71,7 @@ class OrderItemForm(forms.ModelForm):
 class PurchaseItemForm(forms.ModelForm):
    
     item_name = forms.ModelChoiceField(
-        queryset=item_codes.objects.all(),
+        queryset=item_codes.objects.all().order_by('item_name'),
         empty_label="Item Name", 
         widget=forms.Select(attrs={'class': 'form-control'}),
         to_field_name='item_name'
