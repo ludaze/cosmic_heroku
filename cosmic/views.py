@@ -56,6 +56,15 @@ def display_customer_profile(request):
                     }
     return render(request, 'customer_profile.html', context)   
 
+def delete_customer_profile(request):
+
+    name = request.GET['customer_name']
+    print("names,",name)
+    customer_instance = get_object_or_404(customer_profile, customer_name = name)
+    print(customer_instance,"instance")
+    customer_instance.delete()
+
+    return render(request, 'display_customer.html')
 def edit_customer(request):
     if request.method == 'GET':
         name = request.GET.get('customer_name')

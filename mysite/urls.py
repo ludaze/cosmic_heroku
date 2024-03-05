@@ -22,3 +22,5 @@ urlpatterns = [
     path('cosmic/', include('cosmic.urls')),
 
 ]
+
+

@@ -10,12 +10,12 @@ urlpatterns = [
     path('display_items', views.display_items, name='display_items'),
     path('display_customers', views.display_customers, name='display_customers'),
     path('edit_customer', views.edit_customer, name='edit_customer'),
+    path('delete_customer_profile', views.delete_customer_profile, name='delete_customer_profile'),
     path('display_customer_profile', views.display_customer_profile, name='display_customer_profile'),
     path('display_supplier', views.display_supplier, name='display_supplier'),
     path('display_order', views.display_order, name='display_order'),
     path('display_purchase', views.display_purchase, name='display_purchase'),
     path('display_supplier_profile', views.display_supplier_profile, name='display_supplier_profile'),
-    
     path('create_purchase', views.create_purchase, name='create_purchase'),
     path('create_shipping', views.create_shipping, name='create_shipping'),
     path('order_approval', views.order_approval, name='order_approval'),

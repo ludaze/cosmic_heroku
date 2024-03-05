@@ -1,7 +1,8 @@
 {% extends 'cosmic_base.html' %}
 {% load humanize %}
 {% block content %}
-<div class="form-group pull-left" style="margin-top: 0;margin-left: 0;">
+<div class="form-group
+" style="margin-top: 0;margin-left: 0;">
     <div style="display: flex;">
         
         
@@ -18,13 +19,13 @@
     
         
     </div>
-    <div class="table-responsive ">
-        <table class="table table-nowrap mb-0" style="margin-bottom: 0;margin-left: 0;">
+    <div class="table-responsive " style="text-align: center;">
+        <table class="table table-nowrap mb-0" style="margin-bottom: 0;">
             <thead>
                 
                 
                     {% if my_order.order_no%}
-                    <th style="width: 20%">
+                    <th style="width: 35%">
                         <h4 class="text-muted text-sm-end font-size-15 mb-1">Shipper</h4>
                         <div class="text-muted">
                             <p class="mb-1" style="line-height: 1.2;font-size: small;">{{my_order.supplier_name.supplier_name}} <br>
@@ -33,7 +34,7 @@
                         </div>
                     </th>
                     {%else%}
-                    <th style="width: 200px;">
+                    <th style="width: 35%;">
                         <h4 class="text-muted text-sm-end font-size-15 mb-1">Shipper</h4>
                         <div class="text-muted" style="line-height: 1.2;">
                             <p class="mb-1">{{my_order.supplier_name.supplier_name}}</p>
