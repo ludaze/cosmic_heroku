@@ -124,7 +124,7 @@ class EditOrderForm(forms.ModelForm):
 
 class approvalForm(forms.Form):
     selected_orders = forms.ModelMultipleChoiceField(
-        queryset= cosmic_order.objects.filter(status='Pending'),
+        queryset= cosmic_order.objects.all(),
         widget=forms.CheckboxSelectMultiple,
         required=False
     )
@@ -139,7 +139,7 @@ class approvalForm(forms.Form):
 
 class PurchaseApprovalForm(forms.Form):
     selected_orders = forms.ModelMultipleChoiceField(
-        queryset= cosmic_purchase.objects.filter(status='Pending'),
+        queryset= cosmic_purchase.objects.all(),
         widget=forms.CheckboxSelectMultiple,
         required=False
     )

@@ -19,6 +19,7 @@ urlpatterns = [
     path('order_approval', views.order_approval, name='order_approval'),
     path('purchase_approval', views.purchase_approval, name='purchase_approval'),
     path('order_status', views.order_status, name='order_status'),
+    path('purchase_status', views.purchase_status, name='purchase_status'),
     path('edit_order', views.edit_order, name='edit_order'),
     path('edit_purchase', views.edit_purchase, name='edit_purchase'),
     path('commercial_invoice', views.commercial_invoice, name='commercial_invoice'),

@@ -556,8 +556,10 @@ def order_status(request):
             
             if action == 'approve':
                 for pr_no in form.cleaned_data['selected_orders']:
+                    pr_no = pr_no.order_no
                     stats = request.POST.get(f"{pr_no}_status")
-                    purchase_order = cosmic_order.objects.get(order_no=pr_no.order_no)
+                    purchase_order = cosmic_order.objects.get(order_no=pr_no)
+                    
                     purchase_order.status = stats
                     purchase_order.approved_by = approval_name
                     purchase_order.save()
@@ -574,6 +576,48 @@ def order_status(request):
 
    
     return render(request, 'admin/order_status.html', context)
+
+@login_required 
+@user_passes_test(is_admin)
+def purchase_status(request):
+    # Your custom logic here (e.g., fetching data)
+    if not is_admin(request.user):
+        # User is not authenticated to access this view
+        messages.error(request, "You are not authorized to access this page.")
+        return redirect('login')
+
+    pending_orders = cosmic_purchase.objects.all()
+    # Handle form submission
+    
+    if request.method == 'POST':
+        form = PurchaseApprovalForm(request.POST)
+        if form.errors:
+            print(form.errors)
+        if form.is_valid():
+            action = form.cleaned_data['action']
+            approval_name = form.cleaned_data['approval']
+            
+            if action == 'approve':
+                for pr_no in form.cleaned_data['selected_orders']:
+                    pr_no = pr_no.purchase_no
+                    stats = request.POST.get(f"{pr_no}_status")
+                    purchase_order = cosmic_purchase.objects.get(purchase_no=pr_no)
+                    purchase_order.status = stats
+                    purchase_order.approved_by = approval_name
+                    purchase_order.save()
+          
+            return redirect('purchase_status')
+
+    else:
+        form = PurchaseApprovalForm()
+
+    context = {
+        'pending_orders': pending_orders,
+        'form': form,
+    }
+
+   
+    return render(request, 'admin/purchase_status.html', context)
 
 def edit_order(request):
 
