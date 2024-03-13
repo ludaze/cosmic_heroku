@@ -1403,7 +1403,10 @@ def update_order(request):
         formset = order_item_formset(request.POST)
         if formset.is_valid():
             instances = formset.save(commit=False)
-            final_price = 0
+            if instances:
+                final_price = 0
+            else:
+                final_price = cosmic_order_instance.PR_before_vat
             for instance in instances:
                 final_price += instance.before_vat
                 
@@ -1480,8 +1483,8 @@ def update_shipping(request):
         print(request.POST)
         invoice_no = request.POST.get('invoice_num')
         shipping_instance = get_object_or_404(shipping_info, invoice_num=invoice_no)
-        invoice_item_formset = modelformset_factory(invoice_item, form=InvoiceItemForm, extra=0)
-     
+        invoice_item_formset = modelformset_factory(invoice_item, form=InvoiceItemForm, extra=0)  
+        print(shipping_instance.invoice_date,"date")
         formset = invoice_item_formset(request.POST)
         if formset.is_valid():
             print("valid")
@@ -1502,18 +1505,21 @@ def update_shipping(request):
     else:
         invoice_no = request.GET.get('invoice_num')
         shipping_instance = get_object_or_404(shipping_info, invoice_num=invoice_no)
-
+        date = shipping_instance.invoice_date
+        date = str(date)
         invoice_item_formset = modelformset_factory(invoice_item, form=InvoiceItemForm, extra=0)
         queryset = invoice_item.objects.filter(invoice_num=shipping_instance)
         formset = invoice_item_formset(queryset=queryset)
+        print(shipping_instance.invoice_date,"date")
     
     for form in formset.forms:
         if form.errors:
             print(form.errors)
-    
+    print(date,"datess")
     context = {
         "formset": formset,
         'shipping_instance': shipping_instance, 
+        "date":date
     }
     return render(request, "shipping_update.html", context)
 

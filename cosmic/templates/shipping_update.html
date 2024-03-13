@@ -40,7 +40,20 @@
                 <div>
                     <div class="col-sm-6">
                      
+                        <span class="form-group">
+
+                            <label class="control-label col-sm-10">Invoice Date <span style="color: rgb(187, 17, 17);padding-top: 0;">*</span></label>
+                                    <div class="col-sm-11">
+                                        <input type="date" name="invoice_date" class="form-control datetimepicker-input"
+                                            data-target="#datepicker1"  value="{{date}}"/>
+                                    </div>
+                        </span>
+                        
     
+    
+                    </div>
+                   
+                    <div class="col-sm-5">
                         <span class="form-group">
                             <label class="control-label col-sm-7">Invoice Number</label>
                             <div class="col-sm-8">
@@ -48,12 +61,7 @@
                                 <input type="text" class="form-control" name="invoice_num"  value="{{shipping_instance.invoice_num}}">
                             </div>
                         </span>
-                        
-    
-    
                     </div>
-                   
-                    <div class="col-sm-8"></div>
                
                 </div>
 
