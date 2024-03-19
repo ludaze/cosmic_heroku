@@ -127,7 +127,7 @@ class invoice_item(models.Model):
 class item_codes(models.Model):
     hs_code = models.TextField(blank=True, null=True)
     item_name = models.TextField(blank=True, null=True)
-    new_id = models.UUIDField(primary_key=True, editable=False)
+    new_id = models.UUIDField(primary_key=True,default=uuid.uuid4, editable=False)
     
     def __str__(self):
         return self.item_name
