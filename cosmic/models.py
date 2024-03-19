@@ -111,7 +111,7 @@ class purchase_item(models.Model):
     remaining = models.TextField(blank= True, null=True)
 class invoice_item(models.Model):
     #invoice_num = models.ForeignKey('shipping_info', on_delete=models.CASCADE, db_column='invoice_num',blank=True, null=True, to_field='invoice_num')
-    #invoice_num = models.ForeignKey('shipping_info', on_delete=models.CASCADE, db_column='invoice_num',blank=True, null=True, to_field='invoice_num')
+    invoice_num = models.ForeignKey('shipping_info', on_delete=models.CASCADE, db_column='invoice_num',blank=True, null=True, to_field='invoice_num')
    
     id_numeric = models.AutoField(primary_key=True)
     hs_code = models.TextField(blank=True, null=True)
@@ -127,11 +127,11 @@ class invoice_item(models.Model):
 class item_codes(models.Model):
     hs_code = models.TextField(blank=True, null=True)
     item_name = models.TextField(blank=True, null=True)
-    new_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    new_id = models.UUIDField(primary_key=True, editable=False)
     
     def __str__(self):
         return self.item_name
-   # item_id = models.TextField(primary_key = True)
+   
 
 
    

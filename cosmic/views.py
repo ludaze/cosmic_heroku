@@ -422,13 +422,7 @@ def create_shipping(request):
             
             order = cosmic_order.objects.get(order_no=number)
             
-            try:
             
-                customer = customer_profile.objects.get(customer_name=notify_party_new)
-                ship_form.instance.notify_party3 = customer
-            except customer_profile.DoesNotExist:
-                customer = None
-                
 
             ship_form.instance.order_no = order
             ship_form.instance.final_price = 0.00
@@ -436,7 +430,7 @@ def create_shipping(request):
             ship_form.save()
             return redirect('create_order')  # Redirect to the list of purchases or any other desired view
         else:
-            print(form.data,"nval")
+            print(ship_form.data,"nval")
     
         
     form = ShippingForm()
@@ -444,7 +438,7 @@ def create_shipping(request):
     formset = formset(prefix="items")
 
     # Render the form with the supplier choices
-    customers = cosmic_customer_profile.objects.all()
+    customers = customer_profile.objects.all()
     return render(request, 'shipping_details.html', {'form': form, 'formset': formset, 'customers': customers})
 
 @login_required 
@@ -1305,7 +1299,7 @@ def create_invoice_items(request):
                 'formset': formset,
                 # 'message':success_message,
             }
-            return render(request, 'trial_edit.html', context)
+            return render(request, 'shipping_details.html', context)
     else:
        
         formset = formset_factory(InvoiceItemForm, extra=1)
@@ -1314,7 +1308,7 @@ def create_invoice_items(request):
     context = {
         'formset': formset,
     }
-    return render(request, 'trial_edit.html', context)
+    return render(request, 'shipping_details.html', context)
 
 def display_items(request):
     if request.method == 'POST':
