@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
 from cosmic import views
+from .views import *
 
 urlpatterns = [
 
@@ -35,6 +36,6 @@ urlpatterns = [
     path('display_single_order', views.display_single_order, name='display_single_order'),
     path('display_single_purchase', views.display_single_purchase, name='display_single_purchase'),
     path('sales_contract', views.sales_contract, name='sales_contract'),
-    
+    path('update_order', views.update_order, name='update_order'),
     
 ]

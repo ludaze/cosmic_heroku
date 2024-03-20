@@ -1,5 +1,6 @@
 from django import forms
 from .models import *
+from django.forms import inlineformset_factory
 
 class CustomerForm(forms.ModelForm):
     
@@ -39,6 +40,7 @@ class CosmicOrderForm(forms.ModelForm):
     
     order_no = forms.CharField(widget=forms.TextInput(attrs={'class': 'order_no form-control'}))
     freight_price = forms.DecimalField(widget=forms.TextInput(attrs={'class': 'freight_price form-control'}))
+    
     class Meta:
    
         model = cosmic_order
@@ -49,7 +51,7 @@ class OrderItemForm(forms.ModelForm):
     before_vat = forms.DecimalField(
         label='Total Price',
         required=False,
-        widget=forms.TextInput(attrs={'class': 'before_vat form-control', 'readonly': 'readonly'})
+        widget=forms.TextInput(attrs={'class': 'before_vat form-control'})
     )
     measurement = forms.CharField(widget=forms.TextInput(attrs={'class': 'measurement form-control'}), required=False)
     quantity = forms.FloatField(widget=forms.TextInput(attrs={'class': 'quantity form-control' }))
@@ -202,4 +204,7 @@ class CosmicItemForm(forms.ModelForm):
    
         model = item_codes
         fields = ['item_name','hs_code']
-        
+
+trialFormset = inlineformset_factory(
+    cosmic_order, order_item, form=OrderItemForm, extra=1, can_delete=True, can_delete_extra = True
+)        

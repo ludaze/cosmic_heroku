@@ -3,12 +3,13 @@ from django.conf import settings
 from .forms import *
 from .models import *
 from django.contrib.auth.decorators import login_required,user_passes_test
-from django.forms import formset_factory
+from django.forms import formset_factory,modelformset_factory
 from django.db.models import Sum
 from django.http import JsonResponse,HttpResponse
 from django.template.loader import get_template
 from django.contrib.auth.models import User, auth
 from num2words import num2words
+
 
 import os
 # Create your views here.
@@ -1348,3 +1349,39 @@ def index_home(request):
 
 def sales_contract(request):
     return render(request,'sales_contract.html')
+
+
+
+def update_order(request):
+     
+    if request.method == "POST":
+        print(request.POST)
+        order_no = request.POST.get('order_no')
+        cosmic_order_instance = get_object_or_404(cosmic_order, order_no=order_no)
+        order_item_formset = modelformset_factory(order_item, form=OrderItemForm, extra=0)
+     
+        formset = order_item_formset(request.POST)
+        if formset.is_valid():
+            instances = formset.save(commit=False)
+            for instance in instances:
+                instance.order_no = cosmic_order_instance
+                instance.save()
+            # Redirect to another page after saving all instances
+            return render(request, "create_order.html", context)
+    else:
+        order_no = request.GET.get('order_no')
+        cosmic_order_instance = get_object_or_404(cosmic_order, order_no=order_no)
+
+        order_item_formset = modelformset_factory(order_item, form=OrderItemForm, extra=0)
+        queryset = order_item.objects.filter(order_no=cosmic_order_instance)
+        formset = order_item_formset(queryset=queryset)
+    
+    for form in formset.forms:
+        if form.errors:
+            print(form.errors)
+    
+    context = {
+        "formset": formset,
+        'cosmic_order_instance': cosmic_order_instance, 
+    }
+    return render(request, "order_update.html", context)
