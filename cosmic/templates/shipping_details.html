@@ -589,6 +589,7 @@
         const priceFields = document.querySelectorAll('.price');
         const totalPriceField = $('#total-price');
         const totalVatField = $('#total-vat');
+        var orderNoValue = document.querySelector('input[name="order_no"]').value;
         const radioButtons2 = document.querySelectorAll('.payment_type');
         const totalNewForms = document.getElementById('id_items-TOTAL_FORMS')
         console.log(totalNewForms)
@@ -672,16 +673,12 @@
             event.preventDefault(); // Prevent the default form submission
 
             // Serialize form data
-            const formData1 = new FormData(form1);
             const formData2 = new FormData(form2);
             const formData3 = new FormData(form3);
             //console.log(univ_total,"tots")
             //const freightPrice = formData1.get('freight1');
-            const prNoValue = formData1.get('order_no');
+            const prNoValue = orderNoValue;
             const inv_no = formData2.get('invoice_num')
-            //formData1.set('PR_total_price', univ_total);
-            formData1.set('PR_before_vat', univ_vat);
-            
           
             const amount = 1
            
@@ -691,34 +688,11 @@
             formData3.append('order_no', prNoValue)
             formData3.append('invoice_num', inv_no)
             // Use fetch to submit both forms asynchronously
-            fetch(form1.action, {
-    method: 'POST',
-    body: formData1
-})
-.then(response => {
-    if (!response.ok) {
-        return response.json().then(data => {
-            const errorContainer = document.getElementById('error-container');
-            errorContainer.innerHTML = '';
-            if (data.form_errors) {
-                const errorList = document.createElement('ul');
-                for (const key in data.form_errors) {
-                    if (Object.prototype.hasOwnProperty.call(data.form_errors, key)) {
-                        const errorItem = document.createElement('li');
-                        errorItem.textContent = `${key}: ${data.form_errors[key]}`;
-                        errorList.appendChild(errorItem);
-                    }
-                }
-                errorContainer.appendChild(errorList);
-            }
-        });
-    } else {
-        return fetch(form2.action, {
+            fetch(form2.action, {
             method: 'POST',
             body: formData2
-        });
-    }
-})
+        })
+   
 .then(response => {
     if (response && !response.ok) {
         return response.json().then(data => {

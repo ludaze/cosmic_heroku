@@ -162,20 +162,21 @@ class InvoiceItemForm(forms.ModelForm):
     quantity = forms.FloatField(widget=forms.TextInput(attrs={'class': 'quantity form-control' }))
     price = forms.DecimalField(widget=forms.TextInput(attrs={'class': 'price form-control'}))
     bags = forms.DecimalField(widget=forms.TextInput(attrs={'class': 'bags form-control'}))
-    net_weight = forms.DecimalField(widget=forms.TextInput(attrs={'class': 'net_weight form-control'}))
-    gross_weight = forms.DecimalField(widget=forms.TextInput(attrs={'class': 'gross_weight form-control'}))
+    net_weight = forms.DecimalField(widget=forms.TextInput(attrs={'class': 'net_weight form-control'}), label="Net weight (Kgs)")
+    gross_weight = forms.DecimalField(widget=forms.TextInput(attrs={'class': 'gross_weight form-control'}), label="Gross weight (Kgs)")
     
-    item_name = forms.CharField(
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter name','size':'20'}),
+    item_name = forms.ModelChoiceField(
+        queryset=item_codes.objects.all(),
+        empty_label="Item Name", 
+        widget=forms.Select(attrs={'class': 'form-control'}),
+        to_field_name='item_name'
     )
-    hs_code = forms.CharField(
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'HS-CODE'}),
-    )
+    
     
     class Meta:
    
         model = invoice_item
-        fields = ['item_name','hs_code','price','quantity','before_vat','measurement','bags','net_weight','gross_weight']
+        fields = ['item_name','price','quantity','before_vat','measurement','bags','net_weight','gross_weight']
 
 class restoreForm(forms.Form):
     selected_orders = forms.ModelMultipleChoiceField(

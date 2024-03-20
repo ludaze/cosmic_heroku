@@ -156,6 +156,8 @@
                         <th style="width: 140px;">No. of Packages</th>
                         <th>Description</th>
                         <th>Unit</th>
+                        <th>Gross Weight</th>
+                        <th>Origin</th>
                         <!-- <th>Price</th>
                         <th>Amount</th> -->
                         <!-- <th class="text-end" style="width: 120px;">Total</th> -->
@@ -174,6 +176,8 @@
                                 <p class="text-muted mb-0">HS-code:{{delivery.hs_code}}</p>
                             </div>
                         </td>
+                        <td>{{delivery.measurement}}</td>
+                        <td>{{delivery.gross_weight}} kgs</td>
                         <td>{{my_order.country_of_origin}}</td>
                         
                         <!-- <td> {{delivery.price}}</td>

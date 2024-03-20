@@ -2,7 +2,7 @@
 
 import django.db.models.deletion
 from django.db import migrations, models
-
+import uuid
 
 class Migration(migrations.Migration):
 
@@ -20,6 +20,11 @@ class Migration(migrations.Migration):
             model_name='purchase_item',
             name='remaining',
             field=models.TextField(blank=True, null=True),
+        ),
+        migrations.AddField(
+            model_name='item_codes',
+            name='new_id',
+            field=models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False),
         ),
         migrations.AlterField(
             model_name='purchase_item',
