@@ -636,9 +636,10 @@ def edit_order(request):
         ship_form = ShippingForm(prefix="ship")
         customers = customer_profile.objects.all()
         last_shipping_info = shipping_info.objects.order_by('-invoice_num').first()
-        last_number = int(last_shipping_info.invoice_num.split('-')[-1]) if last_shipping_info else 0
+        print(last_shipping_info)
+        last_number = int(last_shipping_info.invoice_num.split('/')[1]) if last_shipping_info else 0
         new_number = last_number + 1
-        generated_invoice_num = f"INV-{new_number:03d}"
+        generated_invoice_num = f"CCFZE/{new_number:03d}/2024"
         
     if request.method == 'POST':
         form = CosmicOrderForm(request.POST)
