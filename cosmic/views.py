@@ -1363,11 +1363,18 @@ def update_order(request):
         formset = order_item_formset(request.POST)
         if formset.is_valid():
             instances = formset.save(commit=False)
+            final_price = 0
             for instance in instances:
+                final_price += instance.before_vat
+                
+                print("Field names:", instance.__dict__.keys())
                 instance.order_no = cosmic_order_instance
+                print(final_price,"price")
                 instance.save()
+            cosmic_order_instance.PR_before_vat = final_price
+            cosmic_order_instance.save()
             # Redirect to another page after saving all instances
-            return render(request, "create_order.html", context)
+            return render(request, "create_order.html")
     else:
         order_no = request.GET.get('order_no')
         cosmic_order_instance = get_object_or_404(cosmic_order, order_no=order_no)
