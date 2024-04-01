@@ -60,15 +60,16 @@ class OrderItemForm(forms.ModelForm):
     item_name = forms.ModelChoiceField(
         queryset=item_codes.objects.all(),
         empty_label="Item Name", 
-        widget=forms.Select(attrs={'class': 'form-control'}),
+        widget=forms.Select(attrs={'class': 'item_name form-control'}),
         to_field_name='item_name'
     )
+    hs_code = forms.CharField(label='HS CODE', required=False, widget=forms.HiddenInput(attrs={'class': 'hs_codes form-control'}))
     
     
     class Meta:
    
         model = order_item
-        fields = [ 'item_name','price','quantity','before_vat','measurement']
+        fields = [ 'item_name','hs_code','price','quantity','before_vat','measurement']
 
 class PurchaseItemForm(forms.ModelForm):
    
@@ -111,6 +112,14 @@ class ShippingForm(forms.ModelForm):
    
         model = shipping_info
         fields = [ 'invoice_num','final_price','waybill_remark','packing_remark','lading_remark', 'invoice_remark','customer_no','invoice_date','vessel','container_no','truck_waybill_no']
+
+class EditShippingForm(forms.ModelForm):
+    
+    class Meta:
+   
+        model = shipping_info
+        fields = [ 'invoice_num','final_price','waybill_remark','packing_remark','lading_remark', 'invoice_remark','customer_no','invoice_date','vessel','container_no','truck_waybill_no']
+        exclude = ['invoice_num']
 
 class EditOrderForm(forms.ModelForm):
     
@@ -164,8 +173,8 @@ class InvoiceItemForm(forms.ModelForm):
     quantity = forms.FloatField(widget=forms.TextInput(attrs={'class': 'quantity form-control' }))
     price = forms.DecimalField(widget=forms.TextInput(attrs={'class': 'price form-control'}))
     bags = forms.DecimalField(widget=forms.TextInput(attrs={'class': 'bags form-control'}))
-    net_weight = forms.DecimalField(widget=forms.TextInput(attrs={'class': 'net_weight form-control'}), label="Net weight (Kgs)")
-    gross_weight = forms.DecimalField(widget=forms.TextInput(attrs={'class': 'gross_weight form-control'}), label="Gross weight (Kgs)")
+    net_weight = forms.DecimalField(widget=forms.TextInput(attrs={'class': 'net_weight form-control'}), label="Net weight")
+    gross_weight = forms.DecimalField(widget=forms.TextInput(attrs={'class': 'gross_weight form-control'}), label="Gross weight")
     
     item_name = forms.ModelChoiceField(
         queryset=item_codes.objects.all(),

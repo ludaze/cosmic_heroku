@@ -1392,3 +1392,87 @@ def update_order(request):
         'cosmic_order_instance': cosmic_order_instance, 
     }
     return render(request, "order_update.html", context)
+
+def edit_shipping(request):
+      
+    if request.method == 'GET':
+        order_no = request.GET.get('invoice_num')
+       
+        try:
+            shipping_instance = shipping_info.objects.get(invoice_num = order_no)
+            items = purchase_item.objects.all()
+           
+            
+        except shipping_info.DoesNotExist:
+            
+            order = None 
+        
+        
+        form = EditShippingForm(instance=shipping_instance)  # Initialize the form with the instance data
+        
+    if request.method == 'POST':
+    
+        order_no = request.POST.get('invoice_num')
+        try:
+            shipping_instance = shipping_info.objects.get(invoice_num = order_no)
+            
+        except shipping_info.DoesNotExist:
+            
+            order = None 
+        shipping_instance = shipping_info.objects.get(invoice_num=order_no)
+        form = EditShippingForm(request.POST, instance=shipping_instance)
+        
+        if form.is_valid():
+            form.save()
+
+            return (render(request,"shipping_update.html"))
+
+        
+        return render(request, 'shipping_update.html')  # Redirect to a success page or another URL
+    
+    
+    return render(request, 'shipping_update.html', {'form': form,'shipping_instance': shipping_instance})
+
+
+def update_shipping(request):
+     
+    if request.method == "POST":
+        print(request.POST)
+        invoice_no = request.POST.get('invoice_num')
+        shipping_instance = get_object_or_404(shipping_info, invoice_num=invoice_no)
+        invoice_item_formset = modelformset_factory(invoice_item, form=InvoiceItemForm, extra=0)
+     
+        formset = invoice_item_formset(request.POST)
+        if formset.is_valid():
+            print("valid")
+            instances = formset.save(commit=False)
+            final_price = 0
+            for instance in instances:
+                final_price += instance.before_vat
+                
+                print("Field names:", instance.__dict__.keys())
+                instance.invoice_num = shipping_instance
+                print(final_price,"price")
+                print(instance,"instance")
+                instance.save()
+            shipping_instance.final_price = final_price
+            shipping_instance.save()
+            # Redirect to another page after saving all instances
+            return render(request, "create_order.html")
+    else:
+        invoice_no = request.GET.get('invoice_num')
+        shipping_instance = get_object_or_404(shipping_info, invoice_num=invoice_no)
+
+        invoice_item_formset = modelformset_factory(invoice_item, form=InvoiceItemForm, extra=0)
+        queryset = invoice_item.objects.filter(invoice_num=shipping_instance)
+        formset = invoice_item_formset(queryset=queryset)
+    
+    for form in formset.forms:
+        if form.errors:
+            print(form.errors)
+    
+    context = {
+        "formset": formset,
+        'shipping_instance': shipping_instance, 
+    }
+    return render(request, "shipping_update.html", context)
