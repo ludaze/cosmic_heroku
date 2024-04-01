@@ -636,11 +636,11 @@ def edit_order(request):
 
         ship_form = ShippingForm(prefix="ship")
         customers = customer_profile.objects.all()
-        last_shipping_info = shipping_info.objects.order_by('-invoice_num').first()
-        print(last_shipping_info)
-        last_number = int(last_shipping_info.invoice_num.split('/')[1]) if last_shipping_info else 0
-        new_number = last_number + 1
-        generated_invoice_num = f"CCFZE/{new_number:03d}/2024"
+        # last_shipping_info = shipping_info.objects.order_by('-invoice_num').first()
+        # print(last_shipping_info)
+        # last_number = int(last_shipping_info.invoice_num.split('/')[1]) if last_shipping_info else 0
+        # new_number = last_number + 1
+        # generated_invoice_num = f"CCFZE/{new_number:03d}/2024"
         
     if request.method == 'POST':
         form = CosmicOrderForm(request.POST)
@@ -692,7 +692,7 @@ def edit_order(request):
     
     return render(request, 'shipping_details.html', {'form': form, 'formset':formset, 'ship_form': ship_form,
                                                'cosmic_order_instance': cosmic_order_instance, 'item_names':item_names,
-                                               'customers': customers,'new_inv':generated_invoice_num, 'item':item})
+                                               'customers': customers, 'item':item})
 
 
 def edit_purchase(request):

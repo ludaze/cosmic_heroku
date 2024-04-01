@@ -73,7 +73,7 @@ class shipping_info(models.Model):
     invoice_date = models.DateField(blank=True, null=True)
     order_no = models.ForeignKey('cosmic_order', on_delete=models.CASCADE, db_column='order_no',blank=True, null=True)
     invoice_num = models.TextField(primary_key=True)
-    container_no = models.IntegerField(blank=True, null=True)
+    container_no = models.TextField(blank=True, null=True)
     truck_waybill_no = models.TextField(blank=True, null=True)
     customer_no = models.TextField(blank=True, null=True)
     freight_amount = models.FloatField(blank=True, null=True)
