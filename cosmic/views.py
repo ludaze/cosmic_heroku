@@ -35,7 +35,7 @@ def create_customer(request):
         form = CustomerForm()
     return render(request, 'create_customer.html', {'form': form })
 
-def display_customer(request):
+def display_customers(request):
     if request.method == 'GET':
         customers = customer_profile.objects.all()
         context = {
@@ -54,7 +54,38 @@ def display_customer_profile(request):
                         
                         'my_customer': customers,
                     }
-    return render(request, 'customer_profile.html', context)       
+    return render(request, 'customer_profile.html', context)   
+
+def edit_customer(request):
+    if request.method == 'GET':
+        name = request.GET.get('customer_name')
+        print(name,"name")
+        customer_instance = get_object_or_404(customer_profile, customer_name = name)
+        
+        form = CustomerForm(instance = customer_instance)
+        
+    if request.method == 'POST':
+        
+        name = request.POST.get('customer_name')
+        print("names,",name)
+        customer_instance = get_object_or_404(customer_profile, customer_name = name)
+        print('instance',customer_instance)
+        form = CustomerForm(request.POST, instance=customer_instance)
+
+        if form.errors:
+            print(form.errors,"err")
+        if form.is_valid():
+            print("valid")
+            form.save()
+
+            return (render(request,"edit_customer.html"))
+    
+    context = {
+                
+                'my_customer': customer_instance,
+            } 
+
+    return render(request, 'edit_customer.html', context)     
 
 def create_supplier(request):
     
@@ -91,7 +122,7 @@ def display_supplier_profile(request):
                     }
     return render(request, 'supplier_profile.html', context) 
 
-def create_order(request):
+def create_orders(request):
     if request.method == 'POST':
         form = CosmicOrderForm(request.POST)
         print(form.data)
@@ -112,7 +143,7 @@ def create_order(request):
             form.instance.customer_name = customer
             form.instance.supplier_name = supplier
             form.save()
-            return redirect('create_order')  # Redirect to the list of purchases or any other desired view
+            return redirect('create_orders')  # Redirect to the list of purchases or any other desired view
         else:
             print(form.data,"nval")
            # print(form_errors,"ers")
@@ -435,7 +466,7 @@ def create_shipping(request):
             ship_form.instance.final_price = 0.00
             #print(purchase.vendor_name,"name")
             ship_form.save()
-            return redirect('create_order')  # Redirect to the list of purchases or any other desired view
+            return redirect('create_orders')  # Redirect to the list of purchases or any other desired view
         else:
             print(ship_form.data,"nval")
     
@@ -1476,3 +1507,4 @@ def update_shipping(request):
         'shipping_instance': shipping_instance, 
     }
     return render(request, "shipping_update.html", context)
+
