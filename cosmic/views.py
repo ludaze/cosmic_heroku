@@ -584,7 +584,7 @@ def order_status(request):
         messages.error(request, "You are not authorized to access this page.")
         return redirect('login')
 
-    pending_orders = cosmic_order.objects.all()
+    pending_orders = cosmic_order.objects.all().order_by('order_no')
     # Handle form submission
     
     if request.method == 'POST':

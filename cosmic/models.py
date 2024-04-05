@@ -35,6 +35,7 @@ class cosmic_order(models.Model):
     approved_by = models.TextField(blank=True, null=True)
     PR_before_vat = models.FloatField(blank=True, null=True)
     status = models.TextField(blank=True, null=True, default="Pending")
+    status_remark = models.TextField(blank=True, null=True)
     ref_no = models.TextField(blank=False, null=True)
     total_quantity = models.FloatField(blank=True, null=True)
     remaining =  models.FloatField(blank=True, null=True)

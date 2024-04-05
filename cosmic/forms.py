@@ -39,7 +39,7 @@ class SupplierForm(forms.ModelForm):
 class CosmicOrderForm(forms.ModelForm):
     
     order_no = forms.CharField(widget=forms.TextInput(attrs={'class': 'order_no form-control'}))
-    freight_price = forms.DecimalField(widget=forms.TextInput(attrs={'class': 'freight_price form-control'}))
+    freight_price = forms.DecimalField(widget=forms.TextInput(attrs={'class': 'freight_price form-control'}), required=False)
     
     class Meta:
    
