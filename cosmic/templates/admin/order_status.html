@@ -38,7 +38,7 @@
                     <td><a href="#" class="order-link2" data-order-id="{{ order.order_no}}">{{ order.order_no }}</a></td>
                     <td>{{ order.status }}</td>
                     <td> <input type="text" class="form-control" placeholder="New Status" name="{{ order.order_no }}_status"></td>
-                    <td><input type="text" class="form-control" placeholder="Reason" name = "{{order.order_no}}_status_remark"> </td>
+                    <td><input type="text" class="form-control" placeholder="Reason" name = "{{order.order_no}}_status_remark" value="{{ order.status_remark }}"> </td>
                     <td>
                         <button class="btn btn-primary" type="submit" name="action" value="approve">Update</button>
                     </td>

@@ -498,6 +498,7 @@ def order_approval(request):
         return redirect('admin')
 
     pending_orders = cosmic_order.objects.filter(status='Pending')
+    pending_orders = pending_orders.order_by('order_no')
     # Handle form submission
     
     if request.method == 'POST':
@@ -541,7 +542,7 @@ def purchase_approval(request):
         messages.error(request, "You are not authorized to access this page.")
         return redirect('admin')
 
-    pending_orders = cosmic_purchase.objects.filter(status='Pending')
+    pending_orders = cosmic_purchase.objects.filter(status='Pending').order_by('purchase_no')
     # Handle form submission
     
     if request.method == 'POST':
@@ -599,9 +600,11 @@ def order_status(request):
                 for pr_no in form.cleaned_data['selected_orders']:
                     pr_no = pr_no.order_no
                     stats = request.POST.get(f"{pr_no}_status")
+                    remarks = request.POST.get(f"{pr_no}_status_remark")
                     purchase_order = cosmic_order.objects.get(order_no=pr_no)
                     
                     purchase_order.status = stats
+                    purchase_order.status_remark = remarks
                     purchase_order.approved_by = approval_name
                     purchase_order.save()
           
@@ -627,7 +630,7 @@ def purchase_status(request):
         messages.error(request, "You are not authorized to access this page.")
         return redirect('login')
 
-    pending_orders = cosmic_purchase.objects.all()
+    pending_orders = cosmic_purchase.objects.all().order_by('purchase_no')
     # Handle form submission
     
     if request.method == 'POST':
