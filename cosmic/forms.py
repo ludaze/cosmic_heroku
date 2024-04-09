@@ -140,7 +140,7 @@ class approvalForm(forms.Form):
         required=False
     )
     action = forms.ChoiceField(
-        choices=[('approve', 'Approve'), ('reject', 'Reject')],
+        choices=[('approve', 'Approve'), ('reject', 'Reject'), ('complete', 'Complete')],
         widget=forms.RadioSelect,
     )
     approval = forms.CharField(

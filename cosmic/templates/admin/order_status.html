@@ -41,6 +41,7 @@
                     <td><input type="text" class="form-control" placeholder="Reason" name = "{{order.order_no}}_status_remark" value="{{ order.status_remark }}"> </td>
                     <td>
                         <button class="btn btn-primary" type="submit" name="action" value="approve">Update</button>
+                        <button class="btn btn-success" type="submit" name="action" value="complete">Completed</button>
                     </td>
                 </tr>
             {% endfor %}
