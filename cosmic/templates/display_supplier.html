@@ -3,7 +3,7 @@
 {% block content %}
 <div class="form-group pull-left">
   <strong>
-    <h3>Customer Details</h3>
+    <h3>Supplier Details</h3>
   </strong>
   <form action="/cosmic/display_supplier_profile">
     <div class="form-group col-sm-4" style="display: flex; margin-top: 20px; ">
@@ -40,6 +40,8 @@
       <th>Supplier Name</th>
       <th>Phone Number</th>
       <th>Email</th>
+      <th>Creation Date</th>
+      <th>Actions</th>
     
     </tr>
     {% for supplier in my_supplier %}
@@ -50,6 +52,8 @@
        <td><a href="#" class="order-link" data-order-id="{{ supplier.supplier_name }}">{{ supplier.supplier_name }}</a></td>
       <td><a href="#" class="order-link" data-order-id="{{ supplier.supplier_name }}">{{ supplier.phone_number }}</a></td>
       <td><a href="#" class="order-link" data-order-id="{{ supplier.supplier_name }}">{{ supplier.email }}</a></td>
+      <td><a href="#" class="order-link" data-order-id="{{ supplier.created_at }}">{{ supplier.created_at }}</a></td>
+      <td><button type="submit" class="btn btn-danger delete-link"  onclick="return confirm('Are you sure?');" data-order-id="{{ supplier.supplier_name }}" >Delete</button></td>
      
     </tr>
     {% endfor %}
@@ -61,7 +65,9 @@
 <script>
   document.addEventListener('DOMContentLoaded', function () {
       const orderLinks = document.querySelectorAll('.order-link');
+      const deleteLinks = document.querySelectorAll('.delete-link');
       console.log("p1")
+
       orderLinks.forEach(function (link) {
           link.addEventListener('click', function (event) {
               event.preventDefault();
@@ -70,6 +76,21 @@
               window.location.href = `/cosmic/display_supplier_profile?supplier_name=${orderID}`;
           });
       });
+
+      deleteLinks.forEach(function (link) {
+          link.addEventListener('click', function (event) {
+              event.preventDefault();
+              console.log("p2")
+              const name = this.getAttribute('data-order-id');
+              console.log(name,"name")
+              window.location.href = `/cosmic/delete_supplier_profile?supplier_name=${name}`;
+          });
+        });
   });
+
+ 
+
 </script>
+
+
 {% endblock %}

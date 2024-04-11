@@ -34,6 +34,7 @@
       <th>Customer Name</th>
       <th>Phone Number</th>
       <th>Email</th>
+      <th>Creation Date</th>
       <th>Actions</th>
     
     </tr>
@@ -45,7 +46,8 @@
        <td><a href="#" class="order-link" data-order-id="{{ customer.customer_name }}">{{ customer.customer_name }}</a></td>
       <td><a href="#" class="order-link" data-order-id="{{ customer.customer_name }}">{{ customer.phone_number }}</a></td>
       <td><a href="#" class="order-link" data-order-id="{{ customer.customer_name }}">{{ customer.email }}</a></td>
-      <td><button class="btn btn-danger delete-link" data-order-id="{{ customer.customer_name }}">Delete</button></td>
+      <td><a href="#" class="order-link" data-order-id="{{ customer.date }}">{{ customer.date }}</a></td>
+      <td><button type="submit" class="btn btn-danger delete-link" onclick="return confirm('Are you sure?');" data-order-id="{{ customer.customer_name }} ">Delete</button></td>
      
     </tr>
     {% endfor %}
