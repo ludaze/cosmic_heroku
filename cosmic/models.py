@@ -19,6 +19,7 @@ class supplier_profile(models.Model):
     phone_number = models.CharField(blank=True, null=True, max_length=12)  # This field type is a guess.
     email = models.TextField(blank=True, null=True)
     comments = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True, blank=True)
 
 class cosmic_order(models.Model):
     customer_name = models.ForeignKey('customer_profile', related_name='orders_related_to_customer',on_delete=models.CASCADE, db_column='customer_name',blank=False, null=True)

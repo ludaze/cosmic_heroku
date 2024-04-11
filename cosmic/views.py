@@ -56,12 +56,22 @@ def display_customer_profile(request):
                     }
     return render(request, 'customer_profile.html', context)   
 
-def delete_customer(request, customer_name):
-    name = customer_profile.objects.get(customer_name = customer_name)
-    if request.method == 'POST':
-        name.delete()
-        return redirect('display_customers')
-    return render(request, 'delete_customer.html')
+# def delete_customer(request, customer_name):
+#     name = customer_profile.objects.get(customer_name = customer_name)
+#     if request.method == 'POST':
+#         name.delete()
+#     return redirect('display_customers')
+
+def delete_customer_profile(request):
+
+    name = request.GET['customer_name']
+    print("names,",name)
+    customer_instance = get_object_or_404(customer_profile, customer_name = name)
+    print(customer_instance,"instance")
+    customer_instance.delete()
+
+    return render(request, 'display_customer.html')
+    
 
 
 def edit_customer(request):

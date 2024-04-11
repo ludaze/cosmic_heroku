@@ -40,6 +40,7 @@
       <th>Supplier Name</th>
       <th>Phone Number</th>
       <th>Email</th>
+      <th>Creation Date</th>
     
     </tr>
     {% for supplier in my_supplier %}
@@ -50,6 +51,7 @@
        <td><a href="#" class="order-link" data-order-id="{{ supplier.supplier_name }}">{{ supplier.supplier_name }}</a></td>
       <td><a href="#" class="order-link" data-order-id="{{ supplier.supplier_name }}">{{ supplier.phone_number }}</a></td>
       <td><a href="#" class="order-link" data-order-id="{{ supplier.supplier_name }}">{{ supplier.email }}</a></td>
+      <td><a href="#" class="order-link" data-order-id="{{ customer.date }}">{{ supplier.created_at }}</a></td>
      
     </tr>
     {% endfor %}
