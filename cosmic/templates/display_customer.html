@@ -47,7 +47,7 @@
       <td><a href="#" class="order-link" data-order-id="{{ customer.customer_name }}">{{ customer.phone_number }}</a></td>
       <td><a href="#" class="order-link" data-order-id="{{ customer.customer_name }}">{{ customer.email }}</a></td>
       <td><a href="#" class="order-link" data-order-id="{{ customer.date }}">{{ customer.date }}</a></td>
-      <td><button class="btn btn-danger delete-link" data-order-id="{{ customer.customer_name }}">Delete</button></td>
+      <td> <a href="{% url 'delete_customer' customer.customer_name %}" class="btn btn-danger">Delete</a></td>
      
     </tr>
     {% endfor %}
