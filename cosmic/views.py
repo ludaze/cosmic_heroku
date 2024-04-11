@@ -218,7 +218,9 @@ def display_purchase(request):
                 'before_vat': order.before_vat,  # Assuming 'PR_before_vat' is a field in CosmicOrder
                 'total_quantity': order.total_quantity,  # Assuming 'total_quantity' is a field in CosmicOrder
                 'supplier_name': order.supplier_name,  # Assuming 'customer_name' is a field in CosmicOrder
-                'status': order.status,  # Assuming 'status' is a field in CosmicOrder
+                'status': order.status, 
+                'ref_no':order.ref_no,
+                  # Assuming 'status' is a field in CosmicOrder
             }
             orders_data.append(order_data)
             print(orders_data)
