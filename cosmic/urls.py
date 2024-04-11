@@ -12,6 +12,7 @@ urlpatterns = [
     path('edit_customer', views.edit_customer, name='edit_customer'),
     # path('delete_customer/<str:customer_name>', views.delete_customer, name="delete_customer"),
     path('delete_customer_profile', views.delete_customer_profile, name='delete_customer_profile'),
+    path('delete_supplier_profile', views.delete_supplier_profile, name='delete_supplier_profile'),
     path('display_customer_profile', views.display_customer_profile, name='display_customer_profile'),
     path('display_supplier', views.display_supplier, name='display_supplier'),
     path('display_order', views.display_order, name='display_order'),
