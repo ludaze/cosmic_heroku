@@ -18,14 +18,4 @@ class Migration(migrations.Migration):
             ),
             preserve_default=False,
         ),
-        migrations.AlterField(
-            model_name="customer_profile",
-            name="phone_number",
-            field=models.CharField(blank=True, max_length=12, null=True),
-        ),
-        migrations.AlterField(
-            model_name="supplier_profile",
-            name="phone_number",
-            field=models.CharField(blank=True, max_length=12, null=True),
-        ),
     ]
