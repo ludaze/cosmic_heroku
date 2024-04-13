@@ -478,8 +478,74 @@
         const totalPriceField = $('#total-price');
         const totalVatField = $('#total-vat');
         const quantityFields = $('.quantity');
+        const dropdowns = document.querySelectorAll('.item_name');
         
+        function updateCode(form) {
+            var itemId = form.find('.item_name').val();
+            form.find('.hs_codeS').val(3);
+            console.log(itemId)
+        }
 
+        $('.item-list').each(function () {
+            var form = $(this);
+            updateTotalPrice(form);
+            fetchCodes(form);
+        });
+
+        $(document).on('change', '.item-list .item_name', function () {
+            var form = $(this).closest('.item-list');
+            var itemId = form.find('.item_name').val();
+           
+                // Make AJAX request to Django view
+                fetch(`get_item_data/${itemId}/`)
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data.code, "code");
+                        // Update corresponding output div with fetched data
+                        var codes= form.find('.hs_codes').val(data.code); 
+                         
+                    })
+                    .catch(error => console.error('Error:', error));
+            
+        });
+        function fetchCodes(form){
+        
+dropdowns.forEach(function(dropdown) {
+    
+    dropdown.addEventListener("change", function() {
+        var form = $(this).closest('.item-list');
+        //updateCode(form);
+        const formsets = $('.item-list');
+        const itemId = dropdown.value;
+        const codes = document.querySelectorAll('.hs_code');
+        console.log(itemId, "id");
+        $('.item-list').each(function() {
+            // Within each formset, select the 'total_price' fields
+            const itemId = $(this).find('.item_name');
+            const code = $(this).find('.hs_codes');
+            
+            console.log(itemId, "id2");
+            itemId.each(function() {
+                const name = $(this).val();
+                console.log(name, "name");
+                // Make AJAX request to Django view
+                fetch(`get_item_data/${name}/`)
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data.code, "code");
+                        // Update corresponding output div with fetched data
+                        code.val(data.code); 
+                         
+                    })
+                    .catch(error => console.error('Error:', error));
+            });
+            
+            const codeInput = $(this).find('.hs_codes');
+            //codeInput.val("is");
+        });
+    });
+});
+        };
 
         addMoreBtn.addEventListener('click', add_new_form);
         submitsButton.addEventListener('click', function (event) {
@@ -645,6 +711,8 @@
             // Append the cloned form to the form list
             totalNewForms.value = currentFormsCount + 1;
             copyFormTarget.appendChild(copyEmptyForm);
+            const dropdowns = document.querySelectorAll('.item_name');
+            console.log(dropdowns,"drop")
         }
     
 });

@@ -1603,3 +1603,12 @@ def update_shipping(request):
     }
     return render(request, "shipping_update.html", context)
 
+def get_item_data(request, item_id):
+    print(item_id,"item")
+    try:
+        item = item_codes.objects.get(item_name=item_id)
+        data = {'code': item.hs_code} 
+        print(data,"code") # Assuming 'description' field exists
+        return JsonResponse(data)
+    except item_codes.DoesNotExist:
+        return JsonResponse({'error': 'Item not found'}, status=404)
