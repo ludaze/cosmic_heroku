@@ -822,7 +822,7 @@ def edit_purchase(request):
         try:
             cosmic_order_instance = cosmic_purchase.objects.get(purchase_no = order_no)
             items = purchase_item.objects.all()
-            item = items.filter(purchase_no=cosmic_order_instance)
+            item = items.filter(purchase_no=cosmic_purchase_instance)
             item_names = []
             for name in item:
                 item_names.append(name.item_name)
@@ -853,30 +853,30 @@ def edit_purchase(request):
         
     if request.method == 'POST':
         form = CosmicPurchaseForm(request.POST)
-        order_no = request.POST.get('order_no')
+        purchase_no = request.POST.get('purchase_no')
         try:
-            cosmic_order_instance = cosmic_purchase.objects.get(purchase_no = order_no)
+            cosmic_purchase_instance = cosmic_purchase.objects.get(purchase_no = purchase_no)
             
         except cosmic_purchase.DoesNotExist:
             # If it's not found in purchase_orders, try searching in import_PR
             try:
-                cosmic_order_instance = cosmic_order.objects.get(order_no = order_no)
+                cosmic_purchase_instance = cosmic_purchase.objects.get(purchase_no = purchase_no)
                 
-            except cosmic_order.DoesNotExist:
+            except cosmic_purchase.DoesNotExist:
                 order = None
             order = None 
         
         refs_no = request.POST.get('ref_no')
-        cosmic_order_instance.ref_no = refs_no
-        cosmic_order_instance.measurement_type = request.POST.get('measurement_type')
-        cosmic_order_instance.shipment_type = request.POST.get('shipment_type')
-        cosmic_order_instance.freight = request.POST.get('freight')
-        cosmic_order_instance.payment_type = request.POST.get('payment_type')
-        cosmic_order_instance.transportation = request.POST.get('transportation')
-        cosmic_order_instance.country_of_origin = request.POST.get('country_of_origin')
-        cosmic_order_instance.final_destination = request.POST.get('final_destination')
-        cosmic_order_instance.port_of_discharge = request.POST.get('port_of_discharge')
-        cosmic_order_instance.port_of_loading = request.POST.get('port_of_loading')
+        cosmic_purchase_instance.ref_no = refs_no
+        cosmic_purchase_instance.measurement_type = request.POST.get('measurement_type')
+        cosmic_purchase_instance.shipment_type = request.POST.get('shipment_type')
+        cosmic_purchase_instance.freight = request.POST.get('freight')
+        cosmic_purchase_instance.payment_type = request.POST.get('payment_type')
+        cosmic_purchase_instance.transportation = request.POST.get('transportation')
+        cosmic_purchase_instance.country_of_origin = request.POST.get('country_of_origin')
+        cosmic_purchase_instance.final_destination = request.POST.get('final_destination')
+        cosmic_purchase_instance.port_of_discharge = request.POST.get('port_of_discharge')
+        cosmic_purchase_instance.port_of_loading = request.POST.get('port_of_loading')
         consignees = request.POST.get('consignee')
         notify_partys = request.POST.get('notify_party')
         notify_party2s = request.POST.get('notify_party2')
@@ -885,40 +885,40 @@ def edit_purchase(request):
         try:
         
             consignee = customer_profile.objects.get(customer_name=consignees)
-            cosmic_order_instance.consignee = consignee
+            cosmic_purchase_instance.consignee = consignee
         except customer_profile.DoesNotExist:
-            cosmic_order_instance.notify_party  = None
+            cosmic_purchase_instance.notify_party  = None
            
         try:
         
             notify_party = customer_profile.objects.get(customer_name=notify_partys)
-            cosmic_order_instance.notify_party = notify_party
+            cosmic_purchase_instance.notify_party = notify_party
         except customer_profile.DoesNotExist:
-            cosmic_order_instance.notify_party  = None
+            cosmic_purchase_instance.notify_party  = None
 
         try:
         
             notify_party2 = customer_profile.objects.get(customer_name=notify_party2s)
-            cosmic_order_instance.notify_party2 = notify_party2
+            cosmic_purchase_instance.notify_party2 = notify_party2
         except customer_profile.DoesNotExist:
-            cosmic_order_instance.notify_party2  = None
+            cosmic_purchase_instance.notify_party2  = None
         
         
-        cosmic_order_instance.save()
+        cosmic_purchase_instance.save()
        
         my_customers = request.POST.get('customer_name')
         suppliers = request.POST.get('supplier_name')
         customer = customer_profile.objects.get(customer_name=my_customers)
-        cosmic_order_instance.customer_name = customer
+        cosmic_purchase_instance.customer_name = customer
         supplier = supplier_profile.objects.get(supplier_name=suppliers)
-        cosmic_order_instance.supplier_name = supplier
-        print(cosmic_order_instance.__dict__) 
-        cosmic_order_instance.save()
+        cosmic_purchase_instance.supplier_name = supplier
+        print(cosmic_purchase_instance.__dict__) 
+        cosmic_purchase_instance.save()
         return render(request, 'edit_purchase.html')  # Redirect to a success page or another URL
     
-        print(cosmic_order_instance.order_no,"d")
+        print(cosmic_purchase_instance.order_no,"d")
     
-    return render(request, 'edit_purchase.html', {'form': form,'cosmic_order_instance': cosmic_order_instance, 
+    return render(request, 'edit_purchase.html', {'form': form,'cosmic_purchase_instance': cosmic_purchase_instance, 
                                                'customers': customers})
 
 def print_order(request):
@@ -1468,6 +1468,49 @@ def index_home(request):
 def sales_contract(request):
     return render(request,'sales_contract.html')
 
+def update_purchase(request):
+     
+    if request.method == "POST":
+        print(request.POST)
+        purchase_no = request.POST.get('purchase_no')
+        cosmic_purchase_instance = get_object_or_404(cosmic_purchase, purchase_no=purchase_no)
+        purchase_item_formset = modelformset_factory(purchase_item, form=PurchaseItemForm, extra=0)
+     
+        formset = purchase_item_formset(request.POST)
+        if formset.is_valid():
+            instances = formset.save(commit=False)
+            if instances:
+                final_price = 0
+            else:
+                final_price = cosmic_purchase_instance.before_vat
+            for instance in instances:
+                final_price += instance.before_vat
+                
+                print("Field names:", instance.__dict__.keys())
+                instance.purchase = cosmic_purchase_instance
+                print(final_price,"price")
+                instance.save()
+            cosmic_purchase_instance.PR_before_vat = final_price
+            cosmic_purchase_instance.save()
+            # Redirect to another page after saving all instances
+            return render(request, "create_purchase.html")
+    else:
+        purchase_no = request.GET.get('purchase_no')
+        cosmic_purchase_instance = get_object_or_404(cosmic_purchase, purchase_no=purchase_no)
+
+        purchase_item_formset = modelformset_factory(purchase_item, form=PurchaseItemForm, extra=0)
+        queryset = purchase_item.objects.filter(purchase_no=cosmic_purchase_instance)
+        formset = purchase_item_formset(queryset=queryset)
+    
+    for form in formset.forms:
+        if form.errors:
+            print(form.errors)
+    
+    context = {
+        "formset": formset,
+        'cosmic_purchase_instance': cosmic_purchase_instance, 
+    }
+    return render(request, "purchase_update.html", context)
 
 
 def update_order(request):
@@ -1513,6 +1556,8 @@ def update_order(request):
         'cosmic_order_instance': cosmic_order_instance, 
     }
     return render(request, "order_update.html", context)
+
+
 
 def edit_shipping(request):
       
