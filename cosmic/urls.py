@@ -40,6 +40,7 @@ urlpatterns = [
     path('display_single_purchase', views.display_single_purchase, name='display_single_purchase'),
     path('sales_contract', views.sales_contract, name='sales_contract'),
     path('update_order', views.update_order, name='update_order'),
+    path('update_purchase', views.update_purchase, name='update_purchase'),
     path('update_shipping', views.update_shipping, name='update_shipping'),
     path('edit_shipping', views.edit_shipping, name='edit_shipping'),
     path('create_orders', views.create_orders, name='create_orders'),
