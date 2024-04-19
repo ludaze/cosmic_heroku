@@ -26,7 +26,7 @@
             <br>
 
 
-            <form method="post" action="{% url 'edit_purchase' %}" id="form1">
+            <form method="post" action="{% url 'edit_order' %}" id="form1">
                         {% csrf_token %}
                         <div class="row">
                         <div class="col-sm-5">
@@ -463,6 +463,10 @@
     body: formData1
 })
 .then(response => {
+    // return fetch(form2.action, {
+    //         method: 'POST',
+    //         body: formData2
+    //     });
     if (!response.ok) {
         return response.json().then(data => {
             const errorContainer = document.getElementById('error-container');
@@ -506,7 +510,7 @@
 })
 
 .catch(error => {
-    console.error('Error submitting forms:', error);
+    // console.error('Error submitting forms:', error);
     // Handle any general errors during form submission
 });
         });
