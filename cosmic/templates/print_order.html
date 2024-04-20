@@ -195,6 +195,7 @@
                         <th>Item</th>
                         <th>Price in USD</th>
                         <th>Quantity</th>
+                        <th>Measurement Unit</th>
                         <th class="text-end" style="width: 120px;">Total</th>
                     </tr>
                 </thead><!-- end thead -->
@@ -214,10 +215,12 @@
                         {% if my_order.country %}
                         <td> ${{delivery.price}}</td>
                         <td>{{delivery.quantity}}</td>
+                        <td> {{delivery.measurement}} </td>
                         <td> ${{delivery.total_price}} </td>
                         {% else %}
                         <td> ${{delivery.price}}</td>
                         <td>{{delivery.quantity}}</td>
+                        <td> {{delivery.measurement}} </td>
                         <td> ${{delivery.before_vat}} </td>
                         {% endif %}
                     </tr>
