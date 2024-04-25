@@ -188,10 +188,12 @@
                         <th>Description of Commodities</th>
                         <th>Net Weight</th>
                         <th>Gross Weight</th>
+                        
                         <!-- <th>Price</th>
                         <th>Amount</th> -->
                         <!-- <th class="text-end" style="width: 120px;">Total</th> -->
                     </tr>
+                    
                 </thead><!-- end thead -->
                 <tbody>
 
@@ -221,9 +223,11 @@
                         <!-- <td> {{delivery.before_vat}} </td> -->
                        
                     </tr>
+                    
                     {% endfor %}
+                    
                     {% endif %}
-
+                    
                     <!--  
                             
                                         <tr>
@@ -245,6 +249,7 @@
                             </div> -->
 
         <hr>
+        <h4 style="padding-left: 30px;">Total Number of Packages {{shipping.total_bags}}</h4>
         <div  style="margin-top: 0px;">
             <p>{{shipping.waybill_remark}}</p>
         </div>
