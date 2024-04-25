@@ -6,7 +6,7 @@
       {% if my_order.order_no%}
       <h2>Order Detail</h2>
       {%else%}
-      <h2>Purchase Detail</h2>
+      <!-- <h2>Purchase Detail</h2> -->
       {% endif %}
     </strong>
   </div>
@@ -47,14 +47,14 @@
                     <td>{{ my_order.status }}</td>
                   </tr>
                   {%else%}
-                  <tr>
+                  <!-- <tr>
                     <th>Purchase Number</th>
                     <th>Date</th>
                     <th>Total Price</th>
                     <th>Vendor Name</th>
                     <th>Status</th>
-                  </tr>
-
+                  </tr> -->
+<!-- 
                   <tr>
                     <td>
                       <a href="#" class="order-link" data-order-id="{{ my_order.purchase_no }}">{{my_order.purchase_no}}</a>
@@ -63,7 +63,7 @@
                     <td>{{ my_order.before_vat }}</td>
                     <td>{{ my_order.supplier_name.supplier_name }}</td>
                     <td>{{ my_order.status }}</td>
-                  </tr>
+                  </tr> -->
 
                   {% endif%}
                 </table>
@@ -98,7 +98,7 @@
                   </button></td>
                 </tr>
                 {% endfor %} {%else%}
-                <tr>
+                <!-- <tr>
                   <th>Purchase Number</th>
                   <th>Date</th>
                   <th>Total Price</th>
@@ -113,9 +113,9 @@
                   <td>{{ my_order.date }}</td>
                   <td>{{ my_order.before_vat }}</td>
                   <td>{{ my_order.supplier_name.supplier_name }}</td>
-                  <td>{{ my_order.status }}</td>
+                  <td>{{ my_order.status }}</td> -->
 
-                </tr>
+                <!-- </tr> -->
 
                 {% endif%}
               </table>
@@ -170,7 +170,7 @@
                 </div>
               </div>
               {%else%}
-              <div class="col-md-6">
+              <!-- <div class="col-md-6">
                 <div style="width: 20%">
                   <button type="submit" class="btn btn-primary"
                     onclick="redirectToPrintOrder('{{ my_order.purchase_no }}')">
@@ -182,7 +182,7 @@
                     onclick="redirectToEditPurchase('{{ my_order.purchase_no }}')">
                     Edit Purchase Order
                   </button>
-                </div>
+                </div> -->
 
                 <!-- 
                 <div style="width: 20%;"><button type="submit" class="btn btn-primary"
@@ -236,7 +236,7 @@
       } else if (page === "truck_waybill") {
         url = `/cosmic/truck_waybill?order_no=${orderID}&invoice_num=${invoiceID}`;
       } else if (page === "shipping_order") {
-        url = `/cosmic/edit_order?order_no=${orderID}`;
+        url = `/cosmic/edit?order_no=${orderID}`;
       }
       if (url !== "") {
         window.location.href = url;
@@ -266,11 +266,11 @@
 
     //window.location.href = `/cosmic/print_order?order_no=${orderID}&invoice_num=${invoiceID}`;
   }
-  function redirectToEditPurchase(purchaseID) {
-    window.location.href = `/cosmic/update_purchase?purchase_no=${purchaseID}`;
+  // function redirectToEditPurchase(purchaseID) {
+  //   window.location.href = `/cosmic/update_purchase?purchase_no=${purchaseID}`;
 
     //window.location.href = `/cosmic/print_order?order_no=${orderID}&invoice_num=${invoiceID}`;
-  }
+  // }
   function redirectToEditShipping(orderID) {
     window.location.href = `/cosmic/update_shipping?invoice_num=${orderID}`;
 

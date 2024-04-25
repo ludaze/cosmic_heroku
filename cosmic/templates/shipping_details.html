@@ -366,13 +366,13 @@
         });
     } else {
         // Reset forms and reload the page after successfully submitting the third form
-        //document.getElementById('form1').reset();
-        //document.getElementById('form2').reset();
+        document.getElementById('form1').reset();
+        document.getElementById('form2').reset();
         window.location.reload();
     }
 })
 .catch(error => {
-    console.error('Error submitting forms:', error);
+    // console.error('Error submitting forms:', error);
     // Handle any general errors during form submission
 });
         });
