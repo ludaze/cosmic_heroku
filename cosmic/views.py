@@ -998,6 +998,7 @@ def print_order(request):
                     }
        
     return render(request, 'print_order.html', context)
+
 def print_purchase(request):
     if request.method == 'GET':
         pr_no = request.GET['order_no']
@@ -1393,13 +1394,14 @@ def create_invoice_items(request):
         non_empty_forms = [form for form in formset if form.cleaned_data.get('item_name')]
         pr_no = request.POST.get('order_no')
         invoice_no = request.POST.get('invoice_num')
+        bags = request.POST.get('bags')
         pr = cosmic_order.objects.get(order_no = pr_no)
         invoice = shipping_info.objects.get(invoice_num = invoice_no)
         if non_empty_forms:
             print("yes")
             if formset.is_valid():
                 final_price = 0.00
-                
+                total_bags = 0
                 for form in non_empty_forms:
                     #form.instance.remaining = form.cleaned_data['quantity']
                     form.instance.order_no = pr
@@ -1411,10 +1413,13 @@ def create_invoice_items(request):
                     form.instance.hs_code = item.hs_code
                     #final_quantity += form.cleaned_data['quantity']
                     final_price += float(form.cleaned_data['before_vat'])
+                    total_bags += int(form.cleaned_data['bags'])
+                    print(total_bags)
                     print(form.cleaned_data['before_vat'])
                     form.save()
                 
                 invoice.final_price = final_price
+                invoice.total_bags = total_bags
                 #pr.total_quantity = final_quantity
                 #pr.remaining = final_quantity
                 invoice.save()
