@@ -804,9 +804,9 @@ def edit_order(request):
         cosmic_order_instance.customer_name = customer
         supplier = supplier_profile.objects.get(supplier_name=suppliers)
         cosmic_order_instance.supplier_name = supplier
-        print(cosmic_order_instance.dict) 
+        # print(cosmic_order_instance.dict) 
         cosmic_order_instance.save()
-        # return redirect('success')  
+        return redirect('display_order')  
     formset = formset_factory(InvoiceItemForm, extra=1)
     formset = formset(prefix="items")
     
