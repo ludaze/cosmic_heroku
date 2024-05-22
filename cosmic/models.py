@@ -6,7 +6,7 @@ class customer_profile(models.Model):
     customer_name = models.TextField(blank=True,primary_key=True)
     customer_address = models.TextField(blank=True)
     contact_person = models.TextField(blank=True)
-    phone_number = models.CharField(blank=True, null=True, max_length=12 )  # This field type is a guess.
+    phone_number = models.CharField(blank=True, null=True)  # This field type is a guess.
     email = models.TextField(blank=True, null=True)
     comments = models.TextField(blank=True, null=True)
     date = models.DateTimeField(auto_now_add=True, blank=True)
@@ -16,7 +16,7 @@ class supplier_profile(models.Model):
     supplier_name = models.TextField(primary_key=True)
     supplier_address = models.TextField(blank=True)
     contact_person = models.TextField(blank=True)
-    phone_number = models.CharField(blank=True, null=True, max_length=12)  # This field type is a guess.
+    phone_number = models.CharField(blank=True, null=True)  # This field type is a guess.
     email = models.TextField(blank=True, null=True)
     comments = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True, blank=True)
@@ -64,6 +64,7 @@ class cosmic_purchase(models.Model):
     approved_by = models.TextField(blank=True, null=True)
     before_vat = models.FloatField(blank=True, null=True)
     status = models.TextField(blank=True, null=True, default="Pending")
+    status_remark = models.TextField(blank=True, null=True)
     ref_no = models.TextField(blank=False, null=True)
     remaining = models.FloatField(blank=True, null=True)
     total_quantity = models.FloatField(blank=True, null=True)

@@ -63,7 +63,7 @@ class OrderItemForm(forms.ModelForm):
         widget=forms.Select(attrs={'class': 'item_name form-control'}),
         to_field_name='item_name'
     )
-    hs_code = forms.CharField(label='HS CODE', required=False, widget=forms.HiddenInput(attrs={'class': 'hs_codes form-control'}))
+    hs_code = forms.CharField(label='HS CODE', required=False, widget=forms.TextInput(attrs={'class': 'hs_codes form-control'}))
     
     
     class Meta:
