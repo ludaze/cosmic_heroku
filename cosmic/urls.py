@@ -45,5 +45,6 @@ urlpatterns = [
     path('edit_shipping', views.edit_shipping, name='edit_shipping'),
     path('create_orders', views.create_orders, name='create_orders'),
     path('completed_orders', views.completed_orders, name='completed_orders'),
+    path('get_item_data/<str:item_id>/', get_item_data, name='get_item_data'),
     path('edit_order_only', views.edit_order_only, name='edit_order_only'),
 ]

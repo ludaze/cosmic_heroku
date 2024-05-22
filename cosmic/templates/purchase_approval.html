@@ -11,7 +11,7 @@
 {% endif %}
 <form method="post">
     {% csrf_token %}
-    <div><h3>Purchase Approvals</h3></div>
+    <div><h3 style="margin: 50px;">Purchase Approvals</h3></div>
     <div>
         <div class="col-sm-7" style="text-align: right;"> Approved By:</div>
         <div class="col-sm-3">
@@ -34,8 +34,8 @@
                     <td><a href="#" class="order-link2" data-order-id="{{ order.purchase_no}}">{{ order.purchase_no }}</a></td>
                     <td>{{ order.status }}</td>
                     <td>
-                        <button type="submit" name="action" value="approve">Approve</button>
-                        <button type="submit" name="action" value="reject">Reject</button>
+                        <button type="submit" name="action" value="approve" class="btn btn-success">Approve</button>
+                        <button type="submit" name="action" value="reject" class="btn btn-danger">Reject</button>
                     </td>
                     
                 </tr>

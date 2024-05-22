@@ -237,7 +237,9 @@ def display_purchase(request):
                 'before_vat': order.before_vat,  # Assuming 'PR_before_vat' is a field in CosmicOrder
                 'total_quantity': order.total_quantity,  # Assuming 'total_quantity' is a field in CosmicOrder
                 'supplier_name': order.supplier_name,  # Assuming 'customer_name' is a field in CosmicOrder
-                'status': order.status,  # Assuming 'status' is a field in CosmicOrder
+                'status': order.status, 
+                'ref_no':order.ref_no,
+                  # Assuming 'status' is a field in CosmicOrder
             }
             orders_data.append(order_data)
             print(orders_data)
@@ -1763,3 +1765,12 @@ def update_shipping(request):
     }
     return render(request, "shipping_update.html", context)
 
+def get_item_data(request, item_id):
+    print(item_id,"item")
+    try:
+        item = item_codes.objects.get(item_name=item_id)
+        data = {'code': item.hs_code} 
+        print(data,"code") # Assuming 'description' field exists
+        return JsonResponse(data)
+    except item_codes.DoesNotExist:
+        return JsonResponse({'error': 'Item not found'}, status=404)
