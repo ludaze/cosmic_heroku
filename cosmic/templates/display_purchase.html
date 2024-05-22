@@ -92,16 +92,16 @@
               window.location.href = `/cosmic/display_single_purchase?purchase_no=${purchaseID}`;
           });
       });
-      // const orderLinks2 = document.querySelectorAll('.order-link2');
-      // console.log("p2")
-      // orderLinks2.forEach(function (link) {
-      //     link.addEventListener('click', function (event) {
-      //         event.preventDefault();
-      //         console.log("p2")
-      //         const purchaseID = this.getAttribute('data-order-id');
-      //         window.location.href = `/GRN/display_single_pruchase?PR_no=${purchaseID}`;
-      //     });
-      // });
+      const orderLinks2 = document.querySelectorAll('.order-link2');
+      console.log("p2")
+      orderLinks2.forEach(function (link) {
+          link.addEventListener('click', function (event) {
+              event.preventDefault();
+              console.log("p2")
+              const purchaseID = this.getAttribute('data-order-id');
+              window.location.href = `/GRN/display_single_pruchase?PR_no=${purchaseID}`;
+          });
+      });
   });
 </script>
 {% endblock %}
