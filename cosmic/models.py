@@ -84,7 +84,7 @@ class shipping_info(models.Model):
     total_net_weight = models.FloatField(blank=True, null=True)
     total_gross_weight = models.FloatField(blank=True, null=True)
     reference_no = models.TextField(blank=True, null=True)
-    total_bags = models.FloatField(blank=True, null=True, default=0)
+    total_bags = models.FloatField(blank=True, null=True)
     total_net_weight = models.FloatField(blank=True, null=True)
     total_gross_weight = models.FloatField(blank=True, null=True)
     invoice_remark = models.TextField(blank=True, null=True)
