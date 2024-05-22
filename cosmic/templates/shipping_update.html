@@ -211,7 +211,13 @@
             form.find('.before_vat').val(total.toFixed(2));
         }
 
-        $(document).on('input', '.item-list .quantity, .item-list .price', function () {
+        function updateTotalBags(form) {
+            var bags = parseInt(form.find('.bags').val());
+            var total_bags = 0
+            var total_bags =+ bags
+        }
+
+        $(document).on('input', '.item-list .quantity, .item-list .price, .bags', function () {
             var form = $(this).closest('.item-list');
             updateTotalPrice(form);
         });
@@ -246,17 +252,11 @@
             const prNoValue = formData1.get('invoice_num');
             //formData1.set('PR_total_price', univ_total);
             const formData2 = new FormData(form2);
-
-            //formData1.set('PR_total_price', univ_total);
-            
             const amount = 1
            
             console.log(prNoValue)
             formData2.append('invoice_num', prNoValue)
             console.log(formData2)
-            
-          
-            // Use fetch to submit both forms asynchronously
             fetch(form1.action, {
     method: 'POST',
     body: formData1

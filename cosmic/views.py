@@ -465,13 +465,13 @@ def display_single_purchase(request):
                         'my_order': orders,
                         'the_invoices':invoices,
                     }
-            return render(request, 'display_single_order.html', context)
+            return render(request, 'display_single_purchase.html', context)
         context = {
                         
                         'my_order': orders,
                         'the_invoices':invoices
                     }
-    return render(request, 'display_single_order.html', context)
+    return render(request, 'display_single_purchase.html', context)
 def create_shipping(request):
     if request.method == 'POST':
         ship_form = ShippingForm(request.POST)
@@ -802,7 +802,7 @@ def edit_order(request):
         cosmic_order_instance.customer_name = customer
         supplier = supplier_profile.objects.get(supplier_name=suppliers)
         cosmic_order_instance.supplier_name = supplier
-        print(cosmic_order_instance.dict) 
+        # print(cosmic_order_instance.dict) 
         cosmic_order_instance.save()
         return redirect('success')  
     formset = formset_factory(InvoiceItemForm, extra=1)
@@ -919,6 +919,114 @@ def edit_purchase(request):
         print(cosmic_purchase_instance.order_no,"d")
     
     return render(request, 'edit_purchase.html', {'form': form,'cosmic_purchase_instance': cosmic_purchase_instance, 
+                                               'customers': customers})
+
+def edit_order_only(request):
+      
+    if request.method == 'GET':
+        print("in")
+        order_no = request.GET.get('order_no')
+        print(order_no)
+        try:
+            cosmic_order_instance = cosmic_order.objects.get(order_no = order_no)
+            items = order_item.objects.all()
+            item = items.filter(order_no=cosmic_order_instance)
+            item_names = []
+            for name in item:
+                item_names.append(name.item_name)
+            print("l")
+            
+        except cosmic_order.DoesNotExist:
+            print("h")
+            # If it's not found in purchase_orders, try searching in import_PR
+            try:
+                cosmic_order_instance = cosmic_order.objects.get(order_no = order_no)
+                print(cosmic_order_instance,"inst")
+                items = order_item.objects.all()
+                item = items.filter(order_no=cosmic_order_instance)
+                item_names = []
+                for name in item:
+                    item_names.append(name.item_name)
+                
+            except cosmic_order.DoesNotExist:
+                order = None
+            order = None 
+        
+        
+        form = EditOrderForm(instance=cosmic_order_instance)  # Initialize the form with the instance data
+      
+        
+        customers = customer_profile.objects.all()
+        
+        
+    if request.method == 'POST':
+        form = CosmicOrderForm(request.POST)
+        order_no = request.POST.get('order_no')
+        try:
+            cosmic_order_instance = cosmic_order.objects.get(order_no = order_no)
+            
+        except cosmic_order.DoesNotExist:
+            # If it's not found in purchase_orders, try searching in import_PR
+            try:
+                cosmic_order_instance = cosmic_order.objects.get(order_no = order_no)
+                
+            except cosmic_order.DoesNotExist:
+                order = None
+            order = None 
+        
+        refs_no = request.POST.get('ref_no')
+        cosmic_order_instance.ref_no = refs_no
+        cosmic_order_instance.measurement_type = request.POST.get('measurement_type')
+        cosmic_order_instance.shipment_type = request.POST.get('shipment_type')
+        cosmic_order_instance.freight = request.POST.get('freight')
+        cosmic_order_instance.payment_type = request.POST.get('payment_type')
+        cosmic_order_instance.transportation = request.POST.get('transportation')
+        cosmic_order_instance.country_of_origin = request.POST.get('country_of_origin')
+        cosmic_order_instance.final_destination = request.POST.get('final_destination')
+        cosmic_order_instance.port_of_discharge = request.POST.get('port_of_discharge')
+        cosmic_order_instance.port_of_loading = request.POST.get('port_of_loading')
+        consignees = request.POST.get('consignee')
+        notify_partys = request.POST.get('notify_party')
+        notify_party2s = request.POST.get('notify_party2')
+        
+        
+        try:
+        
+            consignee = customer_profile.objects.get(customer_name=consignees)
+            cosmic_order_instance.consignee = consignee
+        except customer_profile.DoesNotExist:
+            cosmic_order_instance.notify_party  = None
+           
+        try:
+        
+            notify_party = customer_profile.objects.get(customer_name=notify_partys)
+            cosmic_order_instance.notify_party = notify_party
+        except customer_profile.DoesNotExist:
+            cosmic_order_instance.notify_party  = None
+
+        try:
+        
+            notify_party2 = customer_profile.objects.get(customer_name=notify_party2s)
+            cosmic_order_instance.notify_party2 = notify_party2
+        except customer_profile.DoesNotExist:
+            cosmic_order_instance.notify_party2  = None
+        
+        
+        cosmic_order_instance.save()
+       
+        my_customers = request.POST.get('customer_name')
+        suppliers = request.POST.get('supplier_name')
+        customer = customer_profile.objects.get(customer_name=my_customers)
+        cosmic_order_instance.customer_name = customer
+        supplier = supplier_profile.objects.get(supplier_name=suppliers)
+        cosmic_order_instance.supplier_name = supplier
+        print(cosmic_order_instance.__dict__) 
+        cosmic_order_instance.save()
+        return render(request, 'edit_order_only.html')  # Redirect to a success page or another URL
+    
+        print(cosmic_order_instance.order_no,"d")
+    
+    return render(request, 'edit_order_only.html', {'form': form,'cosmic_order_instance': cosmic_order_instance, 
                                                'customers': customers})
 
 def print_order(request):
@@ -1611,18 +1719,22 @@ def update_shipping(request):
         print(request.POST)
         invoice_no = request.POST.get('invoice_num')
         shipping_instance = get_object_or_404(shipping_info, invoice_num=invoice_no)
-        invoice_item_formset = modelformset_factory(invoice_item, form=InvoiceItemForm, extra=0)  
+        invoice_item_formset = modelformset_factory(invoice_item, form=InvoiceItemForm, extra=0) 
         print(shipping_instance.invoice_date,"date")
         formset = invoice_item_formset(request.POST)
         if formset.is_valid():
             print("valid")
             instances = formset.save(commit=False)
             final_price = 0
+            total_bags = 0
+            total_bags += shipping_items.bag
+            print(total_bags)
+            instance.totalbags = total_bags
             for instance in instances:
                 final_price += instance.before_vat
-                
                 print("Field names:", instance.__dict__.keys())
                 instance.invoice_num = shipping_instance
+               
                 print(final_price,"price")
                 print(instance,"instance")
                 instance.save()
