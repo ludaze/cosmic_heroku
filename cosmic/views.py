@@ -467,13 +467,13 @@ def display_single_purchase(request):
                         'my_order': orders,
                         'the_invoices':invoices,
                     }
-            return render(request, 'display_single_order.html', context)
+            return render(request, 'display_single_purchase.html', context)
         context = {
                         
                         'my_order': orders,
                         'the_invoices':invoices
                     }
-    return render(request, 'display_single_order.html', context)
+    return render(request, 'display_single_purchase.html', context)
 def create_shipping(request):
     if request.method == 'POST':
         ship_form = ShippingForm(request.POST)
