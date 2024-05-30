@@ -310,11 +310,39 @@
         </p>
         
         </div>  -->
-
-        <div style="float: right; margin-right: 70px;"> 
-            <img  alt="" src="/static/stamp.jpg" height="154px" width="154px" style="margin-top: 30px;"> <br>
+        <div>
+        <div style="margin-top: 40px; margin-left: 20px; float: left; ">
+            {% if my_order.conditions %}
+            <h4>Condition</h5> <br>
+            {{my_order.conditions}} 
+            {%endif%} 
+        </div>
+        
+        <div style="margin-top: 40px; float:right;">
+            <img  alt="" src="/static/stamp.jpg" height="154px" width="154px" style="margin-top: 10px;"> <br>
             <img  alt="" src="/static/sign.jpg" height="44px" width="134px">
         </div>
+        </div>
+    
+
+        <!-- <div class="table-responsive table-centered"  style="padding: 15px; border-collapse: collapse;">
+            <table>
+                {% if my_order.conditions %}
+                <tr>   
+                    <td><h4>Conditions</h5> <br>
+                        {{my_order.conditions}}
+                    </td>
+                    <td> <div style="margin-right: 10px;"> 
+                            <img  alt="" src="/static/stamp.jpg" height="154px" width="154px" style="margin-top: 10px;"> <br>
+                            <img  alt="" src="/static/sign.jpg" height="44px" width="134px">
+                        </div> </td>
+                     
+                </tr>
+                {%endif%} 
+                
+        </table>
+        </div> -->
+        
        
    
 </div>

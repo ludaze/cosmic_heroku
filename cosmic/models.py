@@ -46,6 +46,7 @@ class cosmic_order(models.Model):
     port_of_discharge = models.TextField(blank=True, null=True)
     final_destination = models.TextField(blank=True, null=True)
     country_of_origin = models.TextField(blank=False, null=True)
+    conditions = models.TextField(blank=True, null=True)
     
 class cosmic_purchase(models.Model):
     customer_name = models.ForeignKey('customer_profile', related_name='purchase_related_to_customer',on_delete=models.CASCADE, db_column='customer_name',blank=False, null=True)
@@ -72,6 +73,7 @@ class cosmic_purchase(models.Model):
     port_of_discharge = models.TextField(blank=True, null=True)
     final_destination = models.TextField(blank=True, null=True)
     country_of_origin = models.TextField(blank=False, null=True)
+    conditions = models.TextField(blank=True, null=True)
 
 class shipping_info(models.Model):
     invoice_date = models.DateField(blank=True, null=True)
