@@ -1042,7 +1042,7 @@ def print_order(request):
             orders = cosmic_order.objects.get(order_no=pr_no)
             pr_items = order_item.objects.all()
             pr_items = pr_items.filter(order_no=pr_no)
-            proforma_type= "order"
+            proforma_type = "order"
             
         except cosmic_order.DoesNotExist:
             try:
@@ -1053,7 +1053,6 @@ def print_order(request):
                 proforma_type = "purchase"
             except cosmic_purchase.DoesNotExist:
                 orders = None
-        
         
         if hasattr(orders, 'PR_before_vat'):
             number = float(orders.PR_before_vat)
@@ -1072,6 +1071,7 @@ def print_order(request):
         number_in_words = num2words(whole_part)
         number_in_words = number_in_words.replace(',', '')
         number_in_words = number_in_words.replace('-', ' ')
+        conditions = orders.conditions.split('.')
         num = number_in_words.upper()
         if int(decimal_part) in dicts:
             dec = " AND " + str(dicts[int(decimal_part)]) + " CENTS ONLY"
@@ -1093,6 +1093,7 @@ def print_order(request):
                         'num': num,
                         'number':number,
                         'type': proforma_type,
+                        'conditions': conditions
                         # 'shipping':shipping,
                     }
             return render(request, 'print_order.html', context)
@@ -1103,6 +1104,7 @@ def print_order(request):
                         'num': num,
                         'number':number,
                         'type': proforma_type,
+                        'conditions': conditions
                         # 'shipping':shipping,
                     }
        
