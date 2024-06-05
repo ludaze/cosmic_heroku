@@ -140,5 +140,13 @@ class item_codes(models.Model):
         return self.item_name
    # item_id = models.TextField(primary_key = True)
 
+class income(models.Model):
+    serial_no = models.TextField(blank=True, null=True),
+    amount = models.FloatField(blank=True, null=True),
+    purpose = models.TextField(blank=True, null=True),
+    reference = models.TextField(blank=True, null=True),
+    payment_type = models.TextField(blank=True, null=True),
+    details = models.TextField(blank=True, null=True),
+    date = models.DateField(blank=False)
 
    

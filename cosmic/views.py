@@ -1768,3 +1768,15 @@ def get_item_data(request, item_id):
         return JsonResponse(data)
     except item_codes.DoesNotExist:
         return JsonResponse({'error': 'Item not found'}, status=404)
+    
+def display_income(request):
+    return render(request, 'display_income.html')
+
+def display_expense(request):
+    return render(request, 'display_expense.html')
+
+def create_income(request):
+    return render(request, 'create_income.html')
+
+def create_expense(request):
+    return render(request, 'create_expense.html')

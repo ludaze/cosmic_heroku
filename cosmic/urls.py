@@ -6,9 +6,13 @@ from .views import *
 urlpatterns = [
 
     path('create_customer', views.create_customer, name='create_customer'),
+    path('create_income', views.create_income, name='create_income'),
+    path('create_expense', views.create_expense, name='create_expense'),
     path('create_supplier', views.create_supplier, name='create_supplier'),
     path('display_items', views.display_items, name='display_items'),
     path('display_customers', views.display_customers, name='display_customers'),
+    path('display_income', views.display_income, name='display_income'),
+    path('display_expense', views.display_expense, name='display_expense'),
     path('edit_customer', views.edit_customer, name='edit_customer'),
     # path('delete_customer/<str:customer_name>', views.delete_customer, name="delete_customer"),
     path('delete_customer_profile', views.delete_customer_profile, name='delete_customer_profile'),
