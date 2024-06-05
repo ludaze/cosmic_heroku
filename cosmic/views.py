@@ -1071,7 +1071,6 @@ def print_order(request):
         number_in_words = num2words(whole_part)
         number_in_words = number_in_words.replace(',', '')
         number_in_words = number_in_words.replace('-', ' ')
-        conditions = orders.conditions.split('.')
         num = number_in_words.upper()
         if int(decimal_part) in dicts:
             dec = " AND " + str(dicts[int(decimal_part)]) + " CENTS ONLY"
@@ -1093,7 +1092,6 @@ def print_order(request):
                         'num': num,
                         'number':number,
                         'type': proforma_type,
-                        'conditions': conditions
                         # 'shipping':shipping,
                     }
             return render(request, 'print_order.html', context)
@@ -1104,7 +1102,6 @@ def print_order(request):
                         'num': num,
                         'number':number,
                         'type': proforma_type,
-                        'conditions': conditions
                         # 'shipping':shipping,
                     }
        
