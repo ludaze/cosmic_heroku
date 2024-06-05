@@ -268,81 +268,63 @@
             </table><!-- end table -->
         </div><!-- end table responsive -->
     </div>
-    <!-- <div class="table-responsive table-centered"  style="padding: 15px; border-collapse: collapse;">
-        <table>
-            <th> Payment must be remitted to: 
-                <br>
-                Beneficiary: Cosmic Connection FZE <br>
-                Beneficiary Bank details: <br>
-                BANK NAME: EXIM BANK <br>
+ 
+        {% if my_order.order_no %}
+                        
+        <div style="display: flex;"> 
+            <div style="flex: 2; margin-top: 40px; margin-left: 20px">
+                <h4>Payment must be remitted to: </h4>
+                <p class="text-muted"> Beneficiary: Cosmic Connection FZE </br> 
+                Beneficiary Bank details:</br> 
+                BANK NAME: EXIM BANK</br> 
+                BANK ADDRESS: EXIM HOUSE - 13, PLACE</br> 
+                LAGARDE - P.0.BOX 4455, DJIBOUTI </br> 
+                SWIFT: EXTNDJJD </br> 
+                Account Number: 0040000193 </br> 
+                IBAN no: 000120000040000193 </br>
+                </p>
+            
+            </div>
     
-            </th>
-            <th> Conditions <br>
-                Partial Shipment to be allowed <br>
-                Transshipment to be allowed <br>
-             </th>
-            <th>
-                <img  alt="" src="/static/stamp.jpg" height="134px" width="134px" style="margin-top: 30px;"> <br>
-                <img  alt="" src="/static/sign.jpg" height="44px" width="134px">
-            </th>
-        </table>
-    </div> -->
-    
-   
-        <!-- <div style="flex: 2; margin-top: 40px; margin-left: 20px">
-            <h4>Payment must be remitted to: </h4>
-            <p class="text-muted"> Beneficiary: Cosmic Connection FZE </br> 
-            Beneficiary Bank details:</br> 
-            BANK NAME: EXIM BANK</br> 
-            BANK ADDRESS: EXIM HOUSE - 13, PLACE</br> 
-            LAGARDE - P.0.BOX 4455, DJIBOUTI </br> 
-            SWIFT: EXTNDJJD </br> 
-            Account Number: 0040000193 </br> 
-            IBAN no: 000120000040000193 </br>
+            <div style="flex: 1; margin-top: 40px;">
+            <h4>Conditions</h4>
+            <p class="text-muted">1. Partial Shipment <br> to be allowed <br>
+               2. Transshipment <br> to be allowed <br>
             </p>
-        
-        </div> -->
-
-        <!-- <div style="flex: 1; margin-top: 40px;">
-        <h4>Conditions</h4>
-        <p class="text-muted">1. Partial Shipment <br> to be allowed <br>
-           2. Transshipment <br> to be allowed <br>
-        </p>
-        
-        </div>  -->
-        <div>
-        <div style="margin-top: 40px; margin-left: 20px; float: left; ">
-            {% if my_order.conditions %}
-            <h4>Condition</h5> <br>
-            {{my_order.conditions}} 
-            {%endif%} 
-        </div>
-        
-        <div style="margin-top: 40px; float:right;">
-            <img  alt="" src="/static/stamp.jpg" height="154px" width="154px" style="margin-top: 10px;"> <br>
-            <img  alt="" src="/static/sign.jpg" height="44px" width="134px">
-        </div>
-        </div>
+            
+            </div> 
     
-
-        <!-- <div class="table-responsive table-centered"  style="padding: 15px; border-collapse: collapse;">
-            <table>
+            <div style="flex: 1;"> 
+                <img  alt="" src="/static/stamp.jpg" height="154px" width="154px" style="margin-top: 30px;"> <br>
+                <img  alt="" src="/static/sign.jpg" height="44px" width="134px">
+            </div>
+          </div> 
+       
+    </div>
+    {%else%}
+       
+            <div style="float: left; margin-left: 30px; margin-top: 30px;">
                 {% if my_order.conditions %}
                 <tr>   
                     <td><h4>Conditions</h5> <br>
                         {{my_order.conditions}}
                     </td>
-                    <td> <div style="margin-right: 10px;"> 
+                </tr>
+
+            </div>
+            <div style="float: right;"> 
                             <img  alt="" src="/static/stamp.jpg" height="154px" width="154px" style="margin-top: 10px;"> <br>
                             <img  alt="" src="/static/sign.jpg" height="44px" width="134px">
-                        </div> </td>
+            </div>
+        </div>
+               
+                    <td>  </td>
                      
                 </tr>
                 {%endif%} 
                 
-        </table>
-        </div> -->
         
+    {%endif%}   
        
    
 </div>
