@@ -269,8 +269,7 @@
         </div><!-- end table responsive -->
     </div>
  
-        {% if my_order.order_no %}
-                        
+        {%if my_order.order_no %}
         <div style="display: flex;"> 
             <div style="flex: 2; margin-top: 40px; margin-left: 20px">
                 <h4>Payment must be remitted to: </h4>
@@ -301,29 +300,18 @@
           </div> 
        
     </div>
-    {%else%}
+        {%else%}
+        <div style="float: right;"> 
+            <img  alt="" src="/static/stamp.jpg" height="154px" width="154px" style="margin-top: 10px;"> <br>
+            <img  alt="" src="/static/sign.jpg" height="44px" width="134px">
+        </div>
+        {%endif%}
+   
        
-            <!-- <div style="float: left; margin-left: 30px; margin-top: 30px;">
-                {% if my_order.conditions %}
-                <tr>   
-                    <td><h4>Conditions</h5> <br>
-                        {{my_order.conditions}}
-                    </td>
-                </tr>
-
-            </div>-->
-            <div style="float: right;"> 
-                            <img  alt="" src="/static/stamp.jpg" height="154px" width="154px" style="margin-top: 10px;"> <br>
-                            <img  alt="" src="/static/sign.jpg" height="44px" width="134px">
-            </div>
-               
-                
-        
-    {%endif%}   
-    {%endif%}
+</div>
+    
        
    
-</div>
 
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
