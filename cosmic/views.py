@@ -18,7 +18,6 @@ def is_admin(user):
     return user.is_superuser
 
 def create_customer(request):
-    
     if request.method == 'POST':
         form = CustomerForm(request.POST)
         if form.errors:
@@ -29,7 +28,6 @@ def create_customer(request):
             except Exception as e:
                 print(f"Error: {e}")
             return redirect('create_customer')
-    
     else:
         
         form = CustomerForm()
@@ -474,6 +472,7 @@ def display_single_purchase(request):
                         'the_invoices':invoices
                     }
     return render(request, 'display_single_purchase.html', context)
+
 def create_shipping(request):
     if request.method == 'POST':
         ship_form = ShippingForm(request.POST)
@@ -597,6 +596,7 @@ def purchase_approval(request):
         'form': form,
     }
     return render(request, 'purchase_approval.html', context)
+
 @login_required 
 @user_passes_test(is_admin)
 def order_status(request):
@@ -698,6 +698,7 @@ def completed_orders(request):
 
    
     return render(request, 'admin/completed_orders.html', context)
+
 @login_required 
 @user_passes_test(is_admin)
 def purchase_status(request):
@@ -1770,13 +1771,45 @@ def get_item_data(request, item_id):
         return JsonResponse({'error': 'Item not found'}, status=404)
     
 def display_income(request):
-    return render(request, 'display_income.html')
+    income = cosmic_income.objects.all()
+   
+    return render(request, 'display_income.html', {'income':income})
 
 def display_expense(request):
-    return render(request, 'display_expense.html')
+    expense = cosmic_expense.objects.all()
+
+    return render(request, 'display_expense.html', {'expense': expense})
 
 def create_income(request):
+    if request.method == 'POST':
+        form = CosmicIncomeForm(request.POST)
+        if form.errors:
+            print(form.errors)
+        if form.is_valid():
+            try:
+                form.save()
+            except Exception as e:
+                print(f"Error: {e}")
+            return redirect('create_income')
+    
+    else:
+        
+        form = CosmicIncomeForm()
     return render(request, 'create_income.html')
 
 def create_expense(request):
+    if request.method == 'POST':
+        form = CosmicExpenseForm(request.POST, request.FILES)
+        if form.errors:
+            print(form.errors)
+        if form.is_valid():
+            try:
+                form.save()
+            except Exception as e:
+                print(f"Error: {e}")
+            return redirect('create_expense')
+    
+    else:
+        
+        form = CosmicExpenseForm()
     return render(request, 'create_expense.html')

@@ -2,9 +2,9 @@ from django.contrib import admin
 from django.urls import path, include
 from cosmic import views
 from .views import *
+from django.conf.urls.static import  static,settings
 
 urlpatterns = [
-
     path('create_customer', views.create_customer, name='create_customer'),
     path('create_income', views.create_income, name='create_income'),
     path('create_expense', views.create_expense, name='create_expense'),
@@ -52,3 +52,5 @@ urlpatterns = [
     path('get_item_data/<str:item_id>/', get_item_data, name='get_item_data'),
     path('edit_order_only', views.edit_order_only, name='edit_order_only'),
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
