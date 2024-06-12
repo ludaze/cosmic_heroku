@@ -156,5 +156,5 @@ class cosmic_expense(models.Model):
    amount = models.FloatField(blank=True, null=True)
    purpose = models.TextField(blank=True, null=True)
    reference = models.TextField(blank=True, null=True)
-#    attachement = models.FileField(blank=True, null=True, upload_to="media/")
+   attachement = models.FileField(blank=True, null=True, upload_to="media/")
 
