@@ -987,6 +987,7 @@ def edit_purchase(request):
         cosmic_purchase_instance.final_destination = request.POST.get('final_destination')
         cosmic_purchase_instance.port_of_discharge = request.POST.get('port_of_discharge')
         cosmic_purchase_instance.port_of_loading = request.POST.get('port_of_loading')
+        cosmic_purchase_instance.conditions = request.POST.get('conditions')
         consignees = request.POST.get('consignee')
         notify_partys = request.POST.get('notify_party')
         notify_party2s = request.POST.get('notify_party2')
