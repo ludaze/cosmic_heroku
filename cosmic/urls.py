@@ -53,4 +53,4 @@ urlpatterns = [
     path('edit_order_only', views.edit_order_only, name='edit_order_only'),
 ]
 
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
