@@ -1798,18 +1798,25 @@ def create_income(request):
     return render(request, 'create_income.html')
 
 def create_expense(request):
+    # if request.method == 'POST':
+    #     form = CosmicExpenseForm(request.POST, request.FILES)
+    #     if form.errors:
+    #         print(form.errors)
+    #     if form.is_valid():
+    #         try:
+    #             form.save()
+    #         except Exception as e:
+    #             print(f"Error: {e}")
+    #         return redirect('create_expense')
+    
+    # else:
+    #     form = CosmicExpenseForm()
+    # return render(request, 'create_expense.html')
     if request.method == 'POST':
         form = CosmicExpenseForm(request.POST, request.FILES)
-        if form.errors:
-            print(form.errors)
         if form.is_valid():
-            try:
-                form.save()
-            except Exception as e:
-                print(f"Error: {e}")
+            form.save()
             return redirect('create_expense')
-    
     else:
-        
         form = CosmicExpenseForm()
-    return render(request, 'create_expense.html')
+    return render(request, 'create_expense.html', {'form': form})

@@ -13,6 +13,8 @@
             <br/>
                 <form method="post" action="{% url 'create_expense' %}" id="form1">
                     {% csrf_token %}
+                    <!-- {{ form.as_p }} -->
+                     
                     <div class="row">
                     <div class="col-sm-5">
                         <span class="form-group">
@@ -59,21 +61,21 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-sm-8">Amount<span style="color: rgb(187, 17, 17);">*</span></label>
+                                <label class="control-label col-sm-8" for="{{form.amount.id_for_label}}">Amount<span style="color: rgb(187, 17, 17);">*</span></label>
                                 <div class="col-sm-11">
                                     <input type="text" list="the_orders4" class="form-control" name="amount">
+                                    
                                 </div>
         
                             </div> 
                             
-                            <div class="form-group">
-                                <label class="control-label col-sm-8">Attachement<span style="color: rgb(187, 17, 17);">*</span></label>
+                             <!-- <div class="form-group">
+                               <label class="control-label col-sm-8" for="{{form.subject.id_for_label}}">Attachement<span style="color: rgb(187, 17, 17);">*</span></label>
                                 <div class="col-sm-11">
-                                    <input type="file" list="the_orders4" class="form-control" name="attachement">
-                                </div>
-                                    
-                            </div> 
-                         
+                                    {{form.attachement}}
+                                </div>  
+                                 
+                        </div> -->
                            
                         </div>
                         

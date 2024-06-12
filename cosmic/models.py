@@ -1,4 +1,5 @@
 from django.db import models
+from django.forms import ModelForm
 import uuid
 # Create your models here.
 class customer_profile(models.Model):

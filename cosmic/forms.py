@@ -1,4 +1,5 @@
 from django import forms
+from django.forms import ModelForm
 from .models import *
 from django.forms import inlineformset_factory
 
@@ -241,7 +242,7 @@ class CosmicIncomeForm(forms.ModelForm):
 
 class CosmicExpenseForm(forms.ModelForm):
 
-    # file = forms.FileField(blank)
+    # attachement = forms.FileField()
 
     class Meta:
        
