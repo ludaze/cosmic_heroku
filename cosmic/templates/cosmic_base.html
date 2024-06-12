@@ -8,9 +8,10 @@
     <script src="https://unpkg.com/htmx.org@1.9.6"></script>
     <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.bootstrap5.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet"> 
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet"> 
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/personal_style.css' %}">
     <!-- <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}"> -->
@@ -202,6 +203,32 @@ ul ul a {
                     </ul>
                 </li>
                 <li style="font-size:larger; font-weight: 500;">
+                    <a href="#expenseSubmenu" data-toggle="collapse" aria-expanded="false"
+                        class="dropdown-toggle">Expense</a>
+                    <ul class="collapse list-unstyled" id="expenseSubmenu">
+                        <li style="font-size:larger; font-weight: 500;">
+                            <a href="{% url 'create_expense' %}">Create Expense</a>
+                        </li> 
+                        <li style="font-size:larger; font-weight: 500;">
+                            <a href="{% url 'display_expense' %}">Display Expense</a>
+                        </li> 
+                     
+                    </ul>
+                </li>
+                <li style="font-size:larger; font-weight: 500;">
+                    <a href="#incomeSubmenu" data-toggle="collapse" aria-expanded="false"
+                        class="dropdown-toggle">Income</a>
+                    <ul class="collapse list-unstyled" id="incomeSubmenu">
+                        <li style="font-size:larger; font-weight: 500;">
+                            <a href="{% url 'create_income' %}">Create Income</a>
+                        </li> 
+                        <li style="font-size:larger; font-weight: 500;">
+                            <a href="{% url 'display_income' %}">Display Income</a>
+                        </li> 
+                     
+                    </ul>
+                </li>
+                <li style="font-size:larger; font-weight: 500;">
                     <a href="{% url 'display_items' %}">Display Items</a>
                 </li> 
                 <li style="font-size:larger; font-weight: 500;">
@@ -245,7 +272,14 @@ ul ul a {
                 $('#sidebar').toggleClass('active');
             });
         });
-    </script>   
+    </script>  
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.bootstrap5.js"></script>
+      
+    <script>
+      new DataTable('#example');
+    </script> 
 </body>
 
 </html>

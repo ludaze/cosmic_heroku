@@ -1,4 +1,5 @@
 from django.db import models
+from django.forms import ModelForm
 import uuid
 # Create your models here.
 class customer_profile(models.Model):
@@ -46,7 +47,6 @@ class cosmic_order(models.Model):
     port_of_discharge = models.TextField(blank=True, null=True)
     final_destination = models.TextField(blank=True, null=True)
     country_of_origin = models.TextField(blank=False, null=True)
-    conditions = models.TextField(blank=True, null=True)
     
 class cosmic_purchase(models.Model):
     customer_name = models.ForeignKey('customer_profile', related_name='purchase_related_to_customer',on_delete=models.CASCADE, db_column='customer_name',blank=False, null=True)
@@ -116,6 +116,7 @@ class purchase_item(models.Model):
     quantity =  models.FloatField(blank=True, null=True)
     measurement = models.TextField(blank=True, null=True)
     remaining = models.TextField(blank= True, null=True)
+
 class invoice_item(models.Model):
     #invoice_num = models.ForeignKey('shipping_info', on_delete=models.CASCADE, db_column='invoice_num',blank=True, null=True, to_field='invoice_num')
     invoice_num = models.ForeignKey('shipping_info', on_delete=models.CASCADE, db_column='invoice_num',blank=True, null=True, to_field='invoice_num')
@@ -140,5 +141,20 @@ class item_codes(models.Model):
         return self.item_name
    # item_id = models.TextField(primary_key = True)
 
+class cosmic_income(models.Model):
+    serial_no = models.TextField(blank=False, null=True)
+    amount = models.FloatField(blank=True, null=True)
+    purpose = models.TextField(blank=True, null=True)
+    reference = models.TextField(blank=True, null=True)
+    payment_type = models.TextField(blank=True, null=True)
+    details = models.TextField(blank=True, null=True)
+    date = models.DateField(blank=False)
 
-   
+class cosmic_expense(models.Model):
+   serial_no = models.TextField(blank=False, null=True)
+   date = models.DateField(blank=False)
+   amount = models.FloatField(blank=True, null=True)
+   purpose = models.TextField(blank=True, null=True)
+   reference = models.TextField(blank=True, null=True)
+   attachement = models.FileField(blank=True, null=True, upload_to="media/")
+
