@@ -17,9 +17,9 @@ class Migration(migrations.Migration):
                 ('date', models.DateField()),
             ],
         ),
-        migrations.AddField(
-            model_name='cosmic_purchase',
-            name='conditions',
-            field=models.TextField(blank=True, null=True),
-        ),
+        # migrations.AddField(
+        #     model_name='cosmic_purchase',
+        #     name='conditions',
+        #     field=models.TextField(blank=True, null=True),
+        # ),
     ]
