@@ -22,7 +22,7 @@
                 <tbody>
                   {% for expense in expense %}
                   <tr>
-                    <td style="text-align:left">{{ expense.serial_no }}</a></td>
+                    <td style="text-align:left"><a href="#" class="order-link" data-order-id="{{expense.serial_no}}">{{ expense.serial_no}}</a></td>
                     <td>{{ expense.date }}</td> 
                     <td>{{ expense.purpose }}</td> 
                     <td>{{ expense.reference }}</td> 
@@ -42,4 +42,26 @@
 
 <script src="../../static/js/mr/display_MR.js"></script>
 
+<!-- <script>
+
+function redirectToPrintExpense(serial_no) {
+  window.location.href = `/cosmic/print_expense?serial_no=${serial_no}`;
+}
+
+</script> -->
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const orderLinks = document.querySelectorAll(".order-link");
+  console.log("p1");
+  orderLinks.forEach(function (link) {
+    link.addEventListener("click", function (event) {
+      event.preventDefault();
+      console.log("p2");
+      const serial_no = this.getAttribute("data-order-id");
+      window.location.href = `/cosmic/print_expense?serial_no=${serial_no}`;
+    });
+  });
+});
+</script>
 {% endblock %}

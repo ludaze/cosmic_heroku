@@ -1798,6 +1798,44 @@ def create_income(request):
         form = CosmicIncomeForm()
     return render(request, 'create_income.html')
 
+def print_expense(request):
+    pr_no = request.GET['serial_no']
+    if request.method == 'GET':
+     
+        expense = cosmic_expense.objects.get(serial_no=pr_no)
+    
+        dicts = {1:"TEN",2:"TWENTY",3:"THIRTY",4:"FORTY",5:"FIFTY",6:"SIXTY",7:"SEVENTY",8:"EIGHTY",9:"NINTY"}
+        number = float(expense.amount)
+        whole_part, decimal_part = str(number).split('.')
+        number_in_words = num2words(whole_part)
+        number_in_words = number_in_words.replace(',', '')
+        number_in_words = number_in_words.replace('-', ' ')
+        num = number_in_words.upper()
+        if int(decimal_part) in dicts:
+            dec = " AND " + str(dicts[int(decimal_part)]) + " CENTS ONLY"
+        elif decimal_part == "0":
+            dec = " ONLY"
+        else:
+            dec = " AND " + num2words(decimal_part) + " CENTS ONLY"
+        print(decimal_part,dec)
+        num = num.replace(' AND', '')
+        num += dec 
+        print(expense, num)
+        print("no")
+        context = {
+            'expense': expense,
+            'num': num,
+            'number':number,
+                   
+                   }
+        
+        # return render(request, 'print_expense.html',context)
+       
+    return render(request, 'print_expense.html', context)
+
+# def print_expense(request):
+#     return render(request, 'print_expense.html')
+
 def create_expense(request):
     # if request.method == 'POST':
     #     form = CosmicExpenseForm(request.POST, request.FILES)
