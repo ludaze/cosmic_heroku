@@ -44,7 +44,7 @@
                     </th>
                     {%endif%}
                     <th >
-                        <div class="col-sm-5" style="width: 140px;padding: 0;">
+                        <!-- <div class="col-sm-5" style="width: 140px;padding: 0;">
                             <div class="text-muted text-sm-end">
                                 <div class="mt-4">
                                     <h5 class="font-size-15 mb-1" style="margin: 0;">Invoice Date:</h5>
@@ -52,11 +52,34 @@
                             </div>
                             <div class="text-muted" style="width: 200px;padding: 0;" >
                                 <h5 class="font-size-15 mb-1" style="margin: 0; line-height: 1.2">Invoice No.</h5>
-                                <p class="mb-1" style="margin: 0;">{{my_order.order_no}}</p>
+                                <p class="mb-1" style="margin: 0;">{{shipping.truck_waybill_no}}</p>
+                                
+                            </div>
+
+                            <div class="text-muted">
+                                <h5 class="font-size-15 mb-1">Proforma No.</h5>
+                                        <p>{{my_order.order_no}}</p>
                                 
                             </div>
 
                             </div>
+                        </div> -->
+
+                         
+                        <div class="text-muted">
+                            <h5 class="font-size-15 mb-1">Invoice Date:</h5>
+                                    <p>{{shipping.invoice_date}}</p>
+                            
+                        </div>
+                        <div class="text-muted">
+                            <h5 class="font-size-15 mb-1">Invoice No.</h5>
+                                    <p>{{shipping.truck_waybill_no}}</p>
+                            
+                        </div>
+                        <div class="text-muted">
+                            <h5 class="font-size-15 mb-1">Proforma No.</h5>
+                                    <p>{{my_order.order_no}}</p>
+                            
                         </div>
                         
                     </th>
