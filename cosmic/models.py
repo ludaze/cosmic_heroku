@@ -142,7 +142,7 @@ class item_codes(models.Model):
    # item_id = models.TextField(primary_key = True)
 
 class cosmic_income(models.Model):
-    serial_no = models.TextField(blank=False, null=True)
+    serial_no = models.TextField(blank=False, null=False, primary_key=True)
     amount = models.FloatField(blank=True, null=True)
     purpose = models.TextField(blank=True, null=True)
     reference = models.TextField(blank=True, null=True)
@@ -151,7 +151,7 @@ class cosmic_income(models.Model):
     date = models.DateField(blank=False)
 
 class cosmic_expense(models.Model):
-   serial_no = models.TextField(blank=False, null=True)
+   serial_no = models.TextField(blank=False, null=False, primary_key=True)
    date = models.DateField(blank=False)
    amount = models.FloatField(blank=True, null=True)
    purpose = models.TextField(blank=True, null=True)

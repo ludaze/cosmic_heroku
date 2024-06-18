@@ -425,51 +425,23 @@ def display_single_order(request):
                     }
     return render(request, 'display_single_order.html', context)
 
-def display_single_purchase(request):
+def display_single_purchase(request, purchase_no):
+    purchase= cosmic_purchase.objects.get(purchase_no = purchase_no)
     if request.method == 'GET':
-        pr_no = request.GET['purchase_no']
-        print(pr_no,"nada")
-            
-        try:
-            orders = cosmic_order.objects.get(order_no=pr_no)
-            pr_items = order_item.objects.all()
-            pr_items = pr_items.filter(order_no=pr_no)
-            print(pr_items)
-        except cosmic_order.DoesNotExist:
-            # If it's not found in purchase_orders, try searching in import_PR
-            try:
-                orders = cosmic_purchase.objects.get(purchase_no=pr_no)
-                pr_items = purchase_item.objects.all()
-                pr_items = pr_items.filter(purchase_no=pr_no)
-            except cosmic_purchase.DoesNotExist:
-                order = None
-            order = None 
-        try:
-            
-            invoices = shipping_info.objects.all()
-            invoices = invoices.filter(order_no = pr_no)
-        except shipping_info.DoesNotExist:
-            try:
-                print("trial")
-                invoices = shipping_info.objects.all()
-                invoices = invoices.filter(order_no = pr_no)
-            except shipping_info.DoesNotExist:
-                invoices = None
-            invoices = None
-        print(orders)
-        print("no")
+        pr_items = purchase_item.objects.all()
+        pr_items = pr_items.filter(purchase_no=purchase_no)
         if pr_items.exists():
             print(pr_items,"yes")
             context = {
                         'pr_items': pr_items,
-                        'my_order': orders,
-                        'the_invoices':invoices,
+                        'my_order': purchase,
+                        'purchase_no': purchase_no,
                     }
             return render(request, 'display_single_purchase.html', context)
         context = {
                         
-                        'my_order': orders,
-                        'the_invoices':invoices
+                        'my_order': purchase,
+                        'purchase_no': purchase_no
                     }
     return render(request, 'display_single_purchase.html', context)
 
@@ -987,6 +959,7 @@ def edit_purchase(request):
         cosmic_purchase_instance.final_destination = request.POST.get('final_destination')
         cosmic_purchase_instance.port_of_discharge = request.POST.get('port_of_discharge')
         cosmic_purchase_instance.port_of_loading = request.POST.get('port_of_loading')
+        cosmic_purchase_instance.conditions = request.POST.get('conditions')
         consignees = request.POST.get('consignee')
         notify_partys = request.POST.get('notify_party')
         notify_party2s = request.POST.get('notify_party2')
@@ -1796,6 +1769,44 @@ def create_income(request):
         
         form = CosmicIncomeForm()
     return render(request, 'create_income.html')
+
+def print_expense(request):
+    pr_no = request.GET['serial_no']
+    if request.method == 'GET':
+     
+        expense = cosmic_expense.objects.get(serial_no=pr_no)
+    
+        dicts = {1:"TEN",2:"TWENTY",3:"THIRTY",4:"FORTY",5:"FIFTY",6:"SIXTY",7:"SEVENTY",8:"EIGHTY",9:"NINTY"}
+        number = float(expense.amount)
+        whole_part, decimal_part = str(number).split('.')
+        number_in_words = num2words(whole_part)
+        number_in_words = number_in_words.replace(',', '')
+        number_in_words = number_in_words.replace('-', ' ')
+        num = number_in_words.upper()
+        if int(decimal_part) in dicts:
+            dec = " AND " + str(dicts[int(decimal_part)]) + " CENTS ONLY"
+        elif decimal_part == "0":
+            dec = " ONLY"
+        else:
+            dec = " AND " + num2words(decimal_part) + " CENTS ONLY"
+        print(decimal_part,dec)
+        num = num.replace(' AND', '')
+        num += dec 
+        print(expense, num)
+        print("no")
+        context = {
+            'expense': expense,
+            'num': num,
+            'number':number,
+                   
+                   }
+        
+        # return render(request, 'print_expense.html',context)
+       
+    return render(request, 'print_expense.html', context)
+
+# def print_expense(request):
+#     return render(request, 'print_expense.html')
 
 def create_expense(request):
     # if request.method == 'POST':
