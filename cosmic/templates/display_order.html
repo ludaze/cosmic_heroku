@@ -22,7 +22,7 @@
                   <tbody>
                     {% for order in my_order %}
                     <tr>
-                      <td style="text-align:left"><a href="#" class="order-link" data-order-id="{{ order.order_no }}">{{ order.order_no }}</a></td>
+                      <td style="text-align:left"><a href="/cosmic/display_single_order/{{order.order_no}}" >{{ order.order_no }}</a></td>
                       <td>{{ order.date }}</td>
                       <td>
                         {% for item in order.order_items.all %}
