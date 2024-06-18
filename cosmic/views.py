@@ -42,15 +42,16 @@ def display_customers(request):
           
         return render(request, 'display_customer.html', context)
 
-def display_customer_profile(request):
+def display_customer_profile(request, customer_name):
     if request.method == 'GET':
-        name = request.GET['customer_name']
+        # customer_name = request.GET['customer_name']
         
-        customers = customer_profile.objects.get(customer_name= name)
+        customers = customer_profile.objects.get(customer_name= customer_name)
          
         context = {
                         
                         'my_customer': customers,
+                        
                     }
     return render(request, 'customer_profile.html', context)   
 
@@ -136,11 +137,11 @@ def display_supplier(request):
           
         return render(request, 'display_supplier.html', context)
 
-def display_supplier_profile(request):
+def display_supplier_profile(request, supplier_name):
     if request.method == 'GET':
-        name = request.GET['supplier_name']
+        # name = request.GET['supplier_name']
         
-        suppliers = supplier_profile.objects.get(supplier_name= name)
+        suppliers = supplier_profile.objects.get(supplier_name= supplier_name)
          
         context = {
                         
@@ -377,34 +378,27 @@ def create_purchase_items(request):
     }
     return render(request, 'create_order.html', context)
 
-def display_single_order(request):
+def display_single_order(request, order_no):
     if request.method == 'GET':
-        pr_no = request.GET['order_no']
-        print(pr_no,"nada")
+        # pr_no = request.GET['order_no']
+
+        # print(pr_no,"nada")
             
-        try:
-            orders = cosmic_order.objects.get(order_no=pr_no)
-            pr_items = order_item.objects.all()
-            pr_items = pr_items.filter(order_no=pr_no)
-            print(pr_items)
-        except cosmic_order.DoesNotExist:
-            # If it's not found in purchase_orders, try searching in import_PR
-            try:
-                orders = cosmic_purchase.objects.get(purchase_no=pr_no)
-                pr_items = purchase_item.objects.all()
-                pr_items = pr_items.filter(purchase_no=pr_no)
-            except cosmic_purchase.DoesNotExist:
-                order = None
-            order = None 
+        orders = cosmic_order.objects.get(order_no=order_no)
+        pr_items = order_item.objects.all()
+        pr_items = pr_items.filter(order_no=order_no)
+        print(pr_items)
+       
+            
         try:
             
             invoices = shipping_info.objects.all()
-            invoices = invoices.filter(order_no = pr_no)
+            invoices = invoices.filter(order_no = order_no)
         except shipping_info.DoesNotExist:
             try:
                 print("trial")
                 invoices = shipping_info.objects.all()
-                invoices = invoices.filter(order_no = pr_no)
+                invoices = invoices.filter(order_no = order_no)
             except shipping_info.DoesNotExist:
                 invoices = None
             invoices = None

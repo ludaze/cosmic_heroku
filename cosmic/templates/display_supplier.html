@@ -28,10 +28,10 @@
       <!-- <td><a href="#" class="order-link" data-order-id="{{ order.PR_no }}">{{ order.PR_no }}</a></td>
        -->
        <!-- <td><a href="#" class="order-link" data-order-id="{{ customer.customer_name }}">{{ customer.customer_id }}</a></a></td> -->
-       <td><a href="#" class="order-link" data-order-id="{{ supplier.supplier_name }}">{{ supplier.supplier_name }}</a></td>
-      <td><a href="#" class="order-link" data-order-id="{{ supplier.supplier_name }}">{{ supplier.phone_number }}</a></td>
-      <td><a href="#" class="order-link" data-order-id="{{ supplier.supplier_name }}">{{ supplier.email }}</a></td>
-      <td><a href="#" class="order-link" data-order-id="{{ supplier.created_at }}">{{ supplier.created_at }}</a></td>
+       <td><a href="/cosmic/display_supplier_profile/{{supplier.supplier_name}}" >{{ supplier.supplier_name }}</a></td>
+      <td><a href="#">{{ supplier.phone_number }}</a></td>
+      <td><a href="#" >{{ supplier.email }}</a></td>
+      <td><a href="#">{{ supplier.created_at }}</a></td>
       <td><button type="submit" class="btn btn-danger delete-link"  onclick="return confirm('Are you sure?');" data-order-id="{{ supplier.supplier_name }}" >Delete</button></td>  
     </tr>
     {% endfor %}

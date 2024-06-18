@@ -27,10 +27,10 @@
   <tbody>
     {% for customer in my_customer %}
     <tr>
-       <td><a href="#" class="order-link" data-order-id="{{ customer.customer_name }}">{{ customer.customer_name }}</a></td>
-      <td><a href="#" class="order-link" data-order-id="{{ customer.customer_name }}">{{ customer.phone_number }}</a></td>
-      <td><a href="#" class="order-link" data-order-id="{{ customer.customer_name }}">{{ customer.email }}</a></td>
-      <td><a href="#" class="order-link" data-order-id="{{ customer.date }}">{{ customer.date }}</a></td>
+       <td><a href="/cosmic/display_customer_profile/{{customer.customer_name}}">{{ customer.customer_name }}</a></td>
+      <td><a href="#">{{ customer.phone_number }}</a></td>
+      <td><a href="#" >{{ customer.email }}</a></td>
+      <td><a href="#">{{ customer.date }}</a></td>
       <td><button type="submit" class="btn btn-danger delete-link" onclick="return confirm('Are you sure?');" data-order-id="{{ customer.customer_name }} ">Delete</button></td>
      
     </tr>
