@@ -3,13 +3,13 @@
 
 
 {% block content %}
-{% if messages %}
+<!-- {% if messages %}
 <ul class="messages">
     {% for message in messages %}
     <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
         {% endfor %}
 </ul>
-{% endif %}
+{% endif %} -->
 
 <div class="container" style="margin: 30px;">
     <div class="row">
@@ -215,6 +215,20 @@
 
     </div>
 </div>
+{% if messages %}
+{% for message in messages %}
+{% if message.tags == "error" %}
+<div class="alert alert-danger" role="alert">
+    {{message}}
+</div>
+{% else %}
+<div class="alert alert-success" role="alert">
+    {{message}}
+</div>
+{% endif %}
+{% endfor %}
+{% endif %}
+
 <div class="container">
 
     <div class="row">
@@ -229,6 +243,8 @@
         </div>
     </div>
 </div>
+
+
 
 
 <script>
@@ -369,6 +385,7 @@
         document.getElementById('form1').reset();
         document.getElementById('form2').reset();
         window.location.reload();
+        alert("Shipping Details Added!")
     }
 })
 .catch(error => {

@@ -9,7 +9,7 @@ from django.http import JsonResponse,HttpResponse
 from django.template.loader import get_template
 from django.contrib.auth.models import User, auth
 from num2words import num2words
-
+from django.contrib import messages
 
 import os
 # Create your views here.
@@ -19,12 +19,20 @@ def is_admin(user):
 
 def create_customer(request):
     if request.method == 'POST':
+        email = request.POST['email']
         form = CustomerForm(request.POST)
         if form.errors:
             print(form.errors)
+        if customer_profile.objects.filter(email = email). exists():
+            messages.error(request, 'Email Already exists')
+            return redirect('create_customer')
+        # elif customer_profile.objects.filter(name = name). exists():
+        #     messages.error(request, 'Email Already exists')
+        #     return redirect('create_customer')
         if form.is_valid():
             try:
                 form.save()
+                messages.success(request, 'Successfully Submitted')
             except Exception as e:
                 print(f"Error: {e}")
             return redirect('create_customer')
@@ -456,12 +464,12 @@ def create_shipping(request):
             # except customer_profile.DoesNotExist:
             #     customer = None
                 
-
             ship_form.instance.order_no = order
             ship_form.instance.final_price = 0.00
             #print(purchase.vendor_name,"name")
             ship_form.save()
-            return redirect('create_orders')  # Redirect to the list of purchases or any other desired view
+            messages.success(request,'Shipping added successfully')
+            return render(request,'display_order.html')  # Redirect to the list of purchases or any other desired view
         else:
             print(ship_form.data,"nval")
     
@@ -763,7 +771,7 @@ def edit_order(request):
             cosmic_order_instance.notify_party2  = None
         
         
-        cosmic_order_instance.save()
+        # cosmic_order_instance.save()
        
         my_customers = request.POST.get('customer_name')
         suppliers = request.POST.get('supplier_name')
@@ -773,13 +781,23 @@ def edit_order(request):
         cosmic_order_instance.supplier_name = supplier
         # print(cosmic_order_instance.dict) 
         cosmic_order_instance.save()
-        return redirect('success')  
+        messages.success(request, 'Successfully Submitted')
+        return redirect('display_order') 
+     
     formset = formset_factory(InvoiceItemForm, extra=1)
     formset = formset(prefix="items")
+
+    context = {
+                'form': form, 
+               'formset':formset, 
+               'ship_form': ship_form,
+                'cosmic_order_instance': cosmic_order_instance, 
+                'item_names':item_names,
+                'customers': customers, 
+                'item':item
+                }
     
-    return render(request, 'shipping_details.html', {'form': form, 'formset':formset, 'ship_form': ship_form,
-                                               'cosmic_order_instance': cosmic_order_instance, 'item_names':item_names,
-                                               'customers': customers, 'item':item})
+    return render(request, 'shipping_details.html', context)
 def edit_order_only(request):
 
     if request.method == 'GET':
@@ -1015,7 +1033,6 @@ def print_order(request):
         except cosmic_order.DoesNotExist:
             try:
                 orders = cosmic_purchase.objects.get(purchase_no=pr_no)
-                
                 pr_items = purchase_item.objects.all()
                 pr_items = pr_items.filter(purchase_no=pr_no)
                 proforma_type = "purchase"
@@ -1493,6 +1510,8 @@ def create_invoice_items(request):
                     print(total_bags)
                     print(form.cleaned_data['before_vat'])
                     form.save()
+                    # messages.success(request,"successful!")
+                    # return redirect('display_order')
                 
                 invoice.final_price = final_price
                 invoice.total_bags = total_bags
@@ -1500,7 +1519,7 @@ def create_invoice_items(request):
                 #pr.remaining = final_quantity
                 invoice.save()
                 pr.save()
-                #message.success("successful!")
+                
             else:
                 print(formset.data,"nval")
                 # errors = dict(formset.errors.items())
@@ -1515,6 +1534,7 @@ def create_invoice_items(request):
     else:
        
         formset = formset_factory(InvoiceItemForm, extra=1)
+        
         formset = formset(prefix="items")
 
     context = {
