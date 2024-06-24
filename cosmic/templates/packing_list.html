@@ -172,15 +172,15 @@
                     {% if shipping_items %}
                     {% for delivery in shipping_items %}
                     <tr>
-                        <td style="font-weight: bold;">{{delivery.bags}} bags</td>
+                        <td style="font-weight: bold;">{{delivery.bags}} packages</td>
                         <td>
                             <div>
-                                <h5 class="text-truncate font-size-14 mb-1">{{delivery.net_weight}}MT {{delivery.item_name}}</h5>
+                                <h5 class="text-truncate font-size-14 mb-1">{{delivery.net_weight|floatformat:3}}MT {{delivery.item_name}}</h5>
                                 <p class="text-muted mb-0">HS-code:{{delivery.hs_code}}</p>
                             </div>
                         </td>
                         <td>{{delivery.measurement}}</td>
-                        <td>{{delivery.gross_weight}} kgs</td>
+                        <td>{{delivery.gross_weight|floatformat:3}} </td>
                         <td>{{my_order.country_of_origin}}</td>
                         
                         <!-- <td> {{delivery.price}}</td>
