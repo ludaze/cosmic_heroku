@@ -153,7 +153,7 @@ class cosmic_income(models.Model):
     payment_type = models.TextField(blank=True, null=True)
     details = models.TextField(blank=True, null=True)
     date = models.DateField(blank=False)
-e
+
 
 class cosmic_expense(models.Model):
    serial_no = models.TextField(blank=False, null=False, primary_key=True)
