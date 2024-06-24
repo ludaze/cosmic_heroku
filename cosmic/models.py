@@ -132,6 +132,10 @@ class invoice_item(models.Model):
     gross_weight = models.FloatField(blank=True, null=True)
     bags = models.FloatField(blank=True, null=True)
 
+    
+    def __str__(self):
+        return self.invoice_num
+
 class item_codes(models.Model):
     hs_code = models.TextField(blank=True, null=True)
     item_name = models.TextField(blank=True, null=True)
@@ -149,6 +153,7 @@ class cosmic_income(models.Model):
     payment_type = models.TextField(blank=True, null=True)
     details = models.TextField(blank=True, null=True)
     date = models.DateField(blank=False)
+e
 
 class cosmic_expense(models.Model):
    serial_no = models.TextField(blank=False, null=False, primary_key=True)
