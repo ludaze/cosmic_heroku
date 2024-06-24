@@ -207,20 +207,20 @@
                     {% for delivery in shipping_items %}
                     <tr>
                         <td style="font-weight: bold;">0{{ forloop.counter }}</td>
-                        <td>{{delivery.bags}} bags</td>
+                        <td>{{delivery.bags}} packages</td>
                         <td>
                             <div>
-                                <h5 class="text-truncate font-size-14 mb-1">{{delivery.net_weight}}MT {{delivery.item_name}}</h5>
+                                <h5 class="text-truncate font-size-14 mb-1">{{delivery.net_weight|floatformat:3}} MT {{delivery.item_name}}</h5>
                                 <p class="text-muted mb-0">HS-code:{{delivery.hs_code}}</p>
                             </div>
                         </td>
                         
                         {% if delivery.measurement %}
-                        <td>{{delivery.net_weight}} {{delivery.measurement}}</td>
-                        <td>{{delivery.gross_weight}} {{delivery.measurement}}</td>
+                        <td>{{delivery.net_weight|floatformat:3}} {{delivery.measurement}}</td>
+                        <td>{{delivery.gross_weight|floatformat:3}} {{delivery.measurement}}</td>
                         {%else%}
-                        <td>{{delivery.net_weight}} {{my_order.measurement_type}}</td>
-                        <td>{{delivery.gross_weight}} {{my_order.measurement_type}}</td>
+                        <td>{{delivery.net_weight|floatformat:3}} {{my_order.measurement_type}}</td>
+                        <td>{{delivery.gross_weight|floatformat:3}} {{my_order.measurement_type}}</td>
                         {%endif%}
                         
                         <!-- <td> {{delivery.price}}</td>
