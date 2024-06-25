@@ -132,10 +132,6 @@ class invoice_item(models.Model):
     gross_weight = models.FloatField(blank=True, null=True)
     bags = models.FloatField(blank=True, null=True)
 
-    
-    def __str__(self):
-        return self.invoice_num
-
 class item_codes(models.Model):
     hs_code = models.TextField(blank=True, null=True)
     item_name = models.TextField(blank=True, null=True)
